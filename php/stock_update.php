@@ -63,7 +63,7 @@ function parseStockData($url)
                                 $price = $price_span[0]->nodeValue;
                             }
 
-                            // kolmannesta DIVistä pitäis löytyä SPAN jossa on 3 SPANia (muutoksen etumerkki, määrä ja prosenttimerkki)
+                            // kolmannesta DIVistä pitäis löytyä SPAN jossa on muutosprosentti
 
                             $change_span = $element->childNodes[2]->getElementsByTagName("span");
                             if ($change_span->length > 0)
