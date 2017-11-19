@@ -28,13 +28,16 @@ function parseStockData($url)
         $doc = new DOMDocument();
         if ($doc->loadHTML($stockpage, LIBXML_NOWARNING | LIBXML_NOERROR))
         {
+            // käy läpi kaikki A-elementit...
             $a_elements = $doc->getElementsByTagName("a");
             foreach ($a_elements as $element)
             {
+                // ...ja niiden attribuutit
                 foreach ($element->attributes as $attribute)
                 {
-                    // löytyykö A-elementti, jossa on pörssidataan täsmäävä class?
-                    if ($attribute->name == "class" && $attribute->value == "row mx-0 list-item-header stock-link")
+                    // löytyykö A-elementti, jolla on pörssidataan täsmäävä class?
+                    //if ($attribute->name == "class" && $attribute->value == "row mx-0 list-item-header stock-link")
+                    if ($attribute->name == "class" && strpos($attribute->value, "stock-link") !== false)
                     {
                         // täällä pitäis olla 3 DIV nodea...
                         if ($element->childNodes->length == 3)
@@ -69,7 +72,6 @@ function parseStockData($url)
                             }
 
                             // kolmannesta DIVistä pitäis löytyä SPAN jossa on muutosprosentti
-
                             $change_span = $element->childNodes[2]->getElementsByTagName("span");
                             if ($change_span->length > 0)
                             {
