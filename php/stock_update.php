@@ -8,6 +8,8 @@
  * Parsii pörssitiedot Kauppalehden pörssisivuilta
  */
 
+
+
 // Helsinki lista
 $xhel_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XHEL");
 // First North lista
@@ -15,8 +17,24 @@ $fnfi_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/FNFI");
 
 $full_list = array_merge($xhel_list, $fnfi_list);
 
-$json = json_encode($full_list);
-echo $json;
+//$json = json_encode($full_list);
+//echo $json;
+echo "<table>";
+echo "<tr>";
+echo "<th>Yhtiö</th>";
+echo "<th>Hinta</th>";
+echo "<th>Muutos</th>";
+echo "</tr>";
+foreach ($full_list as $entry)
+{
+    echo "<tr>";
+    echo "<td>" . $entry["company"] . "</td>";
+    echo "<td>" . $entry["price"] . "</td>";
+    echo "<td>" . $entry["change"] . "</td>";
+    echo "</tr>";
+}
+echo "</table>";
+
 
 function parseStockData($url)
 {
@@ -55,6 +73,8 @@ function parseStockData($url)
                                 {
                                     //echo "Yhtiö = " . $company_span[0]->nodeValue . "<br>";
                                     $company_name = $company_span[0]->nodeValue;
+                                    // UTF8:sta ISO-8859-1:ksi
+                                    $company_name = utf8_decode($company_name);
                                 }
                             }
 
