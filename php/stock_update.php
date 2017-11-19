@@ -61,6 +61,11 @@ function parseStockData($url)
                             {
                                 //echo "Hinta = " . $price_span[0]->nodeValue . "<br>";
                                 $price = $price_span[0]->nodeValue;
+
+                                // pilkut pisteiksi
+                                $price = str_replace(",", ".", $price);
+                                // liukuluvuksi ja takaisin
+                                $price = (string)floatval($price);
                             }
 
                             // kolmannesta DIVistä pitäis löytyä SPAN jossa on muutosprosentti
@@ -70,6 +75,11 @@ function parseStockData($url)
                             {
                                 //echo "Muutos = " . $change_span[0]->nodeValue . "<br>";
                                 $change = $change_span[0]->nodeValue;
+
+                                // pilkut pisteiksi
+                                $change = str_replace(",", ".", $change);
+                                // liukuluvuksi ja takaisin
+                                $change = (string)floatval($change);
                             }
 
                             $stock_entry = array();
