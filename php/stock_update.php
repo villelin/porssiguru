@@ -39,9 +39,9 @@ function parseStockData($url)
                         // täällä pitäis olla 3 DIV nodea...
                         if ($element->childNodes->length == 3)
                         {
-                            $company_name = "";
-                            $price = "";
-                            $change = "";
+                            $company_name = null;
+                            $price = null;
+                            $change = null;
 
                             // ensimmäisestä DIVistä pitäis löytyä H5, jonka sisällä on SPAN, jossa on yhtiön nimi
                             $company_h5 = $element->childNodes[0]->getElementsByTagName("h5");
@@ -82,12 +82,16 @@ function parseStockData($url)
                                 $change = (string)floatval($change);
                             }
 
-                            $stock_entry = array();
-                            $stock_entry["company"] = $company_name;
-                            $stock_entry["price"] = $price;
-                            $stock_entry["change"] = $change;
+                            // jos joku on null, jotain meni pieleen
+                            if ($company_name != null && $price != null && $change != null)
+                            {
+                                $stock_entry = array();
+                                $stock_entry["company"] = $company_name;
+                                $stock_entry["price"] = $price;
+                                $stock_entry["change"] = $change;
 
-                            $stock_list[] = $stock_entry;
+                                $stock_list[] = $stock_entry;
+                            }
                         }
                     }
                 }
@@ -98,11 +102,13 @@ function parseStockData($url)
         else
         {
             echo "HTML ei aukea";
+            return null;
         }
     }
     else
     {
         echo "URL ei aukea";
+        return null;
     }
 }
 
