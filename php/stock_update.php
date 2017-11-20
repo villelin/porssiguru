@@ -15,10 +15,21 @@ $xhel_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XHEL");
 // First North lista
 $fnfi_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/FNFI");
 
-$full_list = array_merge($xhel_list, $fnfi_list);
+
+
+$xsto_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XSTO");
+$xcse_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XCSE");
+
+echo "Helsinki: " . count($xhel_list) . " yhtiötä<br>";
+echo "First North: " . count($fnfi_list) . " yhtiötä<br>";
+echo "Tukholma: " . count($xsto_list) . " yhtiötä<br>";
+echo "Kööpenhamina: " . count($xcse_list) . " yhtiötä<br>";
+
+$full_list = array_merge($xhel_list, $fnfi_list, $xsto_list, $xcse_list);
 
 //$json = json_encode($full_list);
 //echo $json;
+
 echo "<table>";
 echo "<tr>";
 echo "<th>Yhtiö</th>";
@@ -34,7 +45,6 @@ foreach ($full_list as $entry)
     echo "</tr>";
 }
 echo "</table>";
-
 
 function parseStockData($url)
 {
