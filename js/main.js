@@ -1,12 +1,10 @@
 const response_element = document.querySelector("#response");
 
-document.querySelector("form").addEventListener('submit', (evt) => {
+const loginSend = ((evt) => {
   evt.preventDefault();
 
   const username_element = document.querySelector('input[name="username"]');
   const password_element = document.querySelector('input[name="password"]');
-
-  alert(`User: ${username_element.value} Pass: ${password_element.value}`);
 
   const data = new FormData();
   data.append('username', username_element.value);
@@ -27,3 +25,7 @@ document.querySelector("form").addEventListener('submit', (evt) => {
     response_element.innerHTML = "FEILAS PAHASTI";
   });
 });
+
+
+document.querySelector("form").addEventListener('submit', loginSend);
+
