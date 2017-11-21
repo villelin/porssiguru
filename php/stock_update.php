@@ -16,22 +16,17 @@ $xhel_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XHEL");
 $fnfi_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/FNFI");
 
 
-
-$xsto_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XSTO");
-$xcse_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XCSE");
-
 echo "Helsinki: " . count($xhel_list) . " yhtiötä<br>";
 echo "First North: " . count($fnfi_list) . " yhtiötä<br>";
-echo "Tukholma: " . count($xsto_list) . " yhtiötä<br>";
-echo "Kööpenhamina: " . count($xcse_list) . " yhtiötä<br>";
 
-$full_list = array_merge($xhel_list, $fnfi_list, $xsto_list, $xcse_list);
+$full_list = array_merge($xhel_list, $fnfi_list);
 
 //$json = json_encode($full_list);
 //echo $json;
 
 echo "<table>";
 echo "<tr>";
+echo "<th>Symboli</th>";
 echo "<th>Yhtiö</th>";
 echo "<th>Hinta</th>";
 echo "<th>Muutos</th>";
@@ -39,6 +34,7 @@ echo "</tr>";
 foreach ($full_list as $entry)
 {
     echo "<tr>";
+    echo "<td>" . $entry["symbol"] . "</td>";
     echo "<td>" . $entry["company"] . "</td>";
     echo "<td>" . $entry["price"] . "</td>";
     echo "<td>" . $entry["change"] . "</td>";
@@ -67,6 +63,24 @@ function parseStockData($url)
                     //if ($attribute->name == "class" && $attribute->value == "row mx-0 list-item-header stock-link")
                     if ($attribute->name == "class" && strpos($attribute->value, "stock-link") !== false)
                     {
+                        $stock_symbol = null;
+
+                        // etsi elementin href
+                        foreach ($element->attributes as $attr)
+                        {
+                            if ($attr->name == "href")
+                            {
+                                // linkki on muotoa: /porssi/porssikurssit/osake/AFAGR
+                                // ota viimeinen osa osakesymboliksi
+
+                                $string_index = strrpos($attr->value, "/");
+                                if ($string_index !== false)
+                                {
+                                    $stock_symbol = substr($attr->value, $string_index+1);
+                                }
+                            }
+                        }
+
                         // täällä pitäis olla 3 DIV nodea...
                         if ($element->childNodes->length == 3)
                         {
@@ -115,9 +129,10 @@ function parseStockData($url)
                             }
 
                             // jos joku on null, jotain meni pieleen
-                            if ($company_name != null && $price != null && $change != null)
+                            if ($company_name != null && $price != null && $change != null && $stock_symbol != null)
                             {
                                 $stock_entry = array();
+                                $stock_entry["symbol"] = $stock_symbol;
                                 $stock_entry["company"] = $company_name;
                                 $stock_entry["price"] = $price;
                                 $stock_entry["change"] = $change;
