@@ -6,12 +6,17 @@
 </head>
 <body>
     <form method="POST">
-        <input type="text" name="username" required placeholder="Käyttäjätunnus"><br>
-        <input type="password" name="password" required placeholder="Salasana"><br>
+        <input type="text" name="log_username" required placeholder="Käyttäjätunnus"><br>
+        <input type="password" name="log_password" required placeholder="Salasana"><br>
         <input type="submit" name="Lähetä" value="Lähetä">
     </form>
 
     <p id="response"></p>
+
+    <button id="nappi">Kokeile</button>
+    <p id="nappi_response"></p>
+    <br>
+    <button id="logout">Logout</button>
 
 
     <script src="js/main.js"></script>
