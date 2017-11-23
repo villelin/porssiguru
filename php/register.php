@@ -11,31 +11,8 @@ require_once('session.php');
 
 define('SALT','PörssigurunSalasananSuolaus40t9ert0e9rt8er');
 
-/*
-$username = "TYHJÄ";
-$password = "TYHJÄ";
-
-if (isset($_POST["username"])) {
-    $username = $_POST["username"];
-}
-if (isset($_POST["password"])) {
-    $password = $_POST["password"];
-}
-
-$response = array();
-
-if ($username === "Masa") {
-    $_SESSION["username"] = $username;
-    $_SESSION["password"] = $password;
-    $_SESSION["logged_in"] = true;
-    $response[] = "Masa loggas sisään";
-} else {
-    $_SESSION["username"] = $username;
-    $_SESSION["password"] = $password;
-    $_SESSION["logged_in"] = true;
-    $response[] = "Username oli " . $username . ". Password oli " . $password;
-}
-*/
+// uudella käyttäjällä on 10000€ käteistä
+define('NEW_USER_BASE_FUNDS', 10000);
 
 $response = array();
 
@@ -59,7 +36,7 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["emai
         // ei ole
         $hashed_password = hash('sha256', $password.SALT);
 
-        registerUsername($DBH, $username, $hashed_password, $email);
+        registerUsername($DBH, $username, $hashed_password, $email, NEW_USER_BASE_FUNDS);
 
         // vastaus Ajaxille
         $response["error"] = false;
@@ -92,8 +69,9 @@ function doesUsernameExist($dbh, $username) {
     }
 }
 
-function registerUsername($dbh, $username, $password, $email) {
-    $insert_query = "INSERT INTO user_account(username, email, pass, signup_date)VALUES('$username', '$email', '$password', CURRENT_TIMESTAMP)";
+function registerUsername($dbh, $username, $password, $email, $funds) {
+    $insert_query = "INSERT INTO user_account(username, email, pass, funds, description, image, signup_date)";
+    $insert_query .= "VALUES('$username', '$email', '$password', '$funds', '', '', CURRENT_TIMESTAMP)";
     $sql = $dbh->prepare($insert_query);
     $sql->execute();
 }
