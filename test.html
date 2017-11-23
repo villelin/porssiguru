@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form method="POST">
+    <form id="login_form" method="POST">
         <input type="text" name="log_username" required placeholder="Käyttäjätunnus"><br>
         <input type="password" name="log_password" required placeholder="Salasana"><br>
         <input type="submit" name="Lähetä" value="Lähetä">
@@ -17,6 +17,15 @@
     <p id="nappi_response"></p>
     <br>
     <button id="logout">Logout</button>
+
+    <form id="register_form" method="POST">
+        <input type="text" name="reg_username" required placeholder="Käyttäjätunnus"><br>
+        <input type="text" name="reg_email" required placeholder="Sähköposti"><br>
+        <input type="password" name="reg_password" required placeholder="Salasana"><br>
+        <input type="submit" name="Lähetä" value="Lähetä">
+    </form>
+
+    <p id="reg_response"></p>
 
 
     <script src="js/main.js"></script>
