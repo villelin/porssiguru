@@ -1,4 +1,5 @@
 const response_element = document.querySelector("#response");
+const login_form = document.querySelector("form");
 
 const loginSend = ((evt) => {
   evt.preventDefault();
@@ -12,13 +13,19 @@ const loginSend = ((evt) => {
 
   const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
 
-  fetch('php/register.php', settings).then((response) => {
+  fetch('php/login.php', settings).then((response) => {
     if (response.status !== 200) {
-      response_element.innerHTML = "Ei toimi";
+      response_element.innerHTML = "Palvelu ei käytössä";
     }
     else {
       response.json().then((data) => {
-        response_element.innerHTML = data;
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        message += data.message;
+        login_form.reset();
+        response_element.innerHTML = message;
       });
     }
   }).catch((error) => {
@@ -37,7 +44,12 @@ const nappiTest = ((evt) => {
       nappi_response.innerHTML = "Ei toimi";
     } else {
       response.json().then((data) => {
-        nappi_response.innerHTML = data.result;
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        message += data.message;
+        nappi_response.innerHTML = message;
       });
     }
   }).catch((error) => {
@@ -55,7 +67,12 @@ const nappiLogout = ((evt) => {
       response_element.innerHTML = "Ei toimi";
     } else {
       response.json().then((data) => {
-        response_element.innerHTML = data.result;
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        message += data.message;
+        response_element.innerHTML = message;
       });
     }
   }).catch((error) => {

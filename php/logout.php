@@ -13,7 +13,8 @@ $response = array();
 session_unset();
 session_destroy();
 
-$response["result"] = "Loggas ulos";
+$response["error"] = false;
+$response["message"] = "Loggas ulos";
 
 $json = json_encode($response);
 echo $json;

@@ -8,18 +8,20 @@
 
 require_once('session.php');
 
-$result = array();
+$response = array();
 
 if (isset($_SESSION["logged_in"])) {
     $username = $_SESSION["username"];
     $password = $_SESSION["password"];
 
-    $result["result"] = "Hei $username, salasanasi on $password";
+    $response["error"] = false;
+    $response["message"] = "Hei $username, salasanasi on $password";
 } else {
-    $result["result"] = "Et ole loggautunut sisään ";
+    $response["error"] = true;
+    $response["message"] = "Et ole loggautunut sisään ";
 }
 
-$json = json_encode($result);
+$json = json_encode($response);
 echo $json;
 
 ?>
