@@ -285,7 +285,7 @@ function updateStockDatabase($dbh, $stock_list)
         if ($update)
         {
             // päivitetään
-            $update_query = "UPDATE stock SET price=$price, variety=$change WHERE symbol='$symbol'";
+            $update_query = "UPDATE stock SET price='$price', variety='$change' WHERE symbol='$symbol'";
         }
         else
         {

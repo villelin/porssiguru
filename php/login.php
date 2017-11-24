@@ -26,15 +26,16 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
     $hashed_password = hash('sha256', $password.SALT);
 
     $result = tryLogin($DBH, $username, $hashed_password);
-    switch ($result) {
+    switch ($result["status"]) {
         case LOGIN_OK: {
             // salasana täsmää, logataan sisään
             $_SESSION["username"] = $username;
             $_SESSION["password"] = $password;
+            $_SESSION["user_id"] = $result["user_id"];
             $_SESSION["logged_in"] = true;
             // TODO: lisää sessioparametrejä?
 
-            insertLogin($DBH, $username);
+            insertLogin($DBH, $_SESSION["user_id"]);
 
             // vastaus Ajaxille
             $response["error"] = false;
@@ -63,51 +64,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             break;
         }
     }
-
-    /*
-    $query = "SELECT id, username, pass FROM user_account WHERE username='$username'";
-    $sql = $DBH->prepare($query);
-    $sql->execute();
-
-    try {
-        if ($sql->rowCount() != 0) {
-            // käyttäjätunnus löytyi
-
-            $row = $sql->fetch();
-
-            // täsmääkö salasana?
-            if ($row["pass"] === $hashed_password) {
-                // salasana täsmää, logataan sisään
-                $_SESSION["username"] = $username;
-                $_SESSION["password"] = $password;
-                $_SESSION["user_id"] = $row["id"];
-                $_SESSION["logged_in"] = true;
-                // TODO: lisää sessioparametrejä?
-
-
-
-                // vastaus Ajaxille
-                $response["error"] = false;
-                $response["message"] = "Sisäänkirjautuminen onnistui.";
-            } else {
-                // salasana ei täsmää
-
-                // vastaus Ajaxille
-                $response["error"] = true;
-                $response["message"] = "Väärä salasana.";
-            }
-        } else {
-            // käyttäjätunnusta ei löytynyt
-
-            // vastaus Ajaxille
-            $response["error"] = true;
-            $response["message"] = "Käyttäjätunnusta $username ei löydy.";
-        }
-    } catch (PDOException $e) {
-        $response["error"] = true;
-        $response["message"] = "Tietokantavirhe.";
-    }
-    */
 } else {
     $response["error"] = true;
     $response["message"] = "";
@@ -129,6 +85,9 @@ function tryLogin($dbh, $username, $hashed_password) {
     $sql = $dbh->prepare($query);
     $sql->execute();
 
+    $result = array();
+    $result["user_id"] = null;
+
     try {
         if ($sql->rowCount() != 0) {
             // käyttäjätunnus löytyi
@@ -137,47 +96,29 @@ function tryLogin($dbh, $username, $hashed_password) {
 
             // täsmääkö salasana?
             if ($row["pass"] === $hashed_password) {
-                return LOGIN_OK;
+                $result["status"] = LOGIN_OK;
+                $result["user_id"] = $row["id"];
             } else {
-                return LOGIN_WRONG_PASS;
+                $result["status"] = LOGIN_WRONG_PASS;
             }
         } else {
-            return LOGIN_NO_ACCOUNT;
+            $result["status"] = LOGIN_NO_ACCOUNT;
         }
     } catch (PDOException $e) {
-        return LOGIN_DB_ERROR;
+        $result["status"] = LOGIN_DB_ERROR;
     }
+
+    return $result;
 }
 
 /*
- * Lisää uusi sisään loggautumine tauluun
+ * Lisää uusi sisään loggautuminen tauluun
  */
 
-function insertLogin($dbh, $username) {
-    // hae user id
-    $user_query = "SELECT id FROM user_account WHERE username='$username'";
-    $sql = $dbh->prepare($user_query);
-    $sql->execute();
-
-    $user_id = null;
-
-    try {
-        if ($sql->rowCount() != 0) {
-            // löytyi
-
-            $row = $sql->fetch();
-            $user_id = $row["id"];
-        } else {
-            return;
-        }
-    } catch (PDOException $e) {
-        return;
-    }
-
-    if ($user_id != null) {
+function insertLogin($dbh, $id) {
+    if ($id != null) {
         // lisää uusi login
-
-        $login_query = "INSERT INTO user_login(user_id, login)VALUES('$user_id', CURRENT_TIMESTAMP())";
+        $login_query = "INSERT INTO user_login(user_id, login)VALUES('$id', CURRENT_TIMESTAMP())";
         $sql = $dbh->prepare($login_query);
         $sql->execute();
     }

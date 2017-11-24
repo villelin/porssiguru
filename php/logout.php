@@ -12,13 +12,14 @@ require_once('config.php');
 $response = array();
 
 if (isset($_SESSION["logged_in"])) {
+    $user_id = $_SESSION["user_id"];
     $username = $_SESSION["username"];
 
     // lisää ulosloggautuminen tauluun
-    insertLogout($DBH, $username);
+    insertLogout($DBH, $user_id);
 
     $response["error"] = false;
-    $response["message"] = "$username loggas ulos";
+    $response["message"] = "($user_id) $username loggas ulos";
 } else {
     $response["error"] = false;
     $response["message"] = "Ei oltu sisällä";
@@ -34,9 +35,9 @@ echo $json;
 /*
  * Lisää uusi ulos loggautuminen tauluun
  */
-function insertLogout($dbh, $username) {
+function insertLogout($dbh, $id) {
     // hae viimeisin login
-    $latest_query = "SELECT l.id FROM user_account AS u, user_login AS l WHERE u.username='$username' AND u.id=l.user_id ORDER BY l.login DESC LIMIT 1";
+    $latest_query = "SELECT id FROM user_login WHERE user_id='$id' ORDER BY login DESC LIMIT 1";
     $sql = $dbh->prepare($latest_query);
     $sql->execute();
 
