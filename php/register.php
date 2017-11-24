@@ -27,6 +27,8 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["emai
     $exists = doesUsernameExist($DBH, $username);
     if ($exists === null) {
         // tietokantavirhe
+        $response["error"] = true;
+        $response["message"] = "Tietokantavirhe";
     } else if ($exists) {
         // on olemassa
         // vastaus Ajaxille
@@ -53,6 +55,11 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["emai
 $json = json_encode($response);
 echo $json;
 
+/*
+ * Tarkistaa tietokannasta onko käyttäjätunnus jo olemassa
+ *
+ * Palauttaa true tai false. Null jos tietokannan käsittelyssä on virhe.
+ */
 function doesUsernameExist($dbh, $username) {
     $find_query = "SELECT id FROM user_account WHERE username='$username'";
     $sql = $dbh->prepare($find_query);
@@ -69,6 +76,9 @@ function doesUsernameExist($dbh, $username) {
     }
 }
 
+/*
+ * Rekisteröi käyttäjänimen tietokantaan
+ */
 function registerUsername($dbh, $username, $password, $email, $funds) {
     $insert_query = "INSERT INTO user_account(username, email, pass, funds, description, image, signup_date)";
     $insert_query .= "VALUES('$username', '$email', '$password', '$funds', '', '', CURRENT_TIMESTAMP)";

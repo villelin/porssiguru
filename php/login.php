@@ -4,6 +4,16 @@
  * User: Ville Linde
  * Date: 23.11.2017
  * Time: 9.38
+ *
+ *
+ * login.php:n kutsuminen yrittää logata käyttäjän sisään.
+ * Ottaa POST-parametreina arvot "username" ja "password".
+ *
+ * Palauttaa JSON objektin jonka rakenne on:
+ * {
+ *   "error": true tai false (false jos ei ollut virheitä)
+ *   "message": virheilmoitus tai joku muu teksti
+ * }
  */
 
 define('SALT','PörssigurunSalasananSuolaus40t9ert0e9rt8er');

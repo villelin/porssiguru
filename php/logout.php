@@ -4,6 +4,15 @@
  * User: Ville Linde
  * Date: 22.11.2017
  * Time: 22.21
+ *
+ * logout.php:n kutsuminen loggaa nykyisen käyttäjän ulos.
+ *
+ * Palauttaa JSON objektin jonka rakenne on:
+ * {
+ *   "error": true tai false (false jos ei ollut virheitä)
+ *   "message": virheilmoitus tai joku muu teksti
+ * }
+ *
  */
 
 require_once('session.php');
