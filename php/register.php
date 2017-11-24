@@ -36,13 +36,28 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["emai
         $response["message"] = "Käyttäjätunnus $username on jo olemassa.";
     } else {
         // ei ole
-        $hashed_password = hash('sha256', $password.SALT);
 
-        registerUsername($DBH, $username, $hashed_password, $email, NEW_USER_BASE_FUNDS);
+        // validoi tiedot
+        if (preg_match("/^[A-Za-z_][A-Za-z0-9_]{3,14}$/", $username)) {
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                // käyttäjätunnus ja E-mail OK
+                $hashed_password = hash('sha256', $password.SALT);
 
-        // vastaus Ajaxille
-        $response["error"] = false;
-        $response["message"] = "Käyttäjätunnuksen luonti onnistui.";
+                registerUsername($DBH, $username, $hashed_password, $email, NEW_USER_BASE_FUNDS);
+
+                // vastaus Ajaxille
+                $response["error"] = false;
+                $response["message"] = "Käyttäjätunnuksen luonti onnistui.";
+            } else {
+                // E-mail ei OK
+                $response["error"] = true;
+                $response["message"] = "Sähköpostiosoite ei ole oikeaa muotoa.";
+            }
+        } else {
+            // käyttäjätunnus ei OK
+            $response["error"] = true;
+            $response["message"] = "Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.";
+        }
     }
 } else {
     $response["error"] = true;
