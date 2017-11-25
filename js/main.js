@@ -92,33 +92,55 @@ const registerSend = ((evt) => {
 
   const username_element = document.querySelector('input[name="reg_username"]');
   const password_element = document.querySelector('input[name="reg_password"]');
+  const password_verify_element = document.querySelector('input[name="reg_password_verify"]');
   const email_element = document.querySelector('input[name="reg_email"]');
 
-  const data = new FormData();
-  data.append('username', username_element.value);
-  data.append('password', password_element.value);
-  data.append('email', email_element.value);
+  const username_regex = new RegExp("^[A-Za-z_][A-Za-z0-9_]{3,14}$");
+  const email_regex = new RegExp("^\\S+@\\S+\\.\\S+$");
 
-  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+  if (username_regex.exec(username_element.value) == null) {
+    // TODO: merkkaa elementti?
+    reg_response.innerHTML = "Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.";
+  }
+  else if (email_regex.exec(email_element.value) == null) {
+    // TODO: merkkaa elementti?
+    reg_response.innerHTML = "Sähköpostiosoite ei ole oikeaa muotoa.";
+  }
+  else if (password_element.value !== password_verify_element.value) {
+    reg_response.innerHTML = "Salasanan varmistus ei täsmää";
+  }
+  else {
+    const data = new FormData();
+    data.append('username', username_element.value);
+    data.append('password', password_element.value);
+    data.append('email', email_element.value);
 
-  fetch('php/register.php', settings).then((response) => {
-    if (response.status !== 200) {
-      reg_response.innerHTML = "Palvelu ei käytössä";
-    }
-    else {
-      response.json().then((data) => {
-        let message = "";
-        if (data.error == true) {
-          message += "VIRHE: ";
-        }
-        message += data.message;
-        register_form.reset();
-        reg_response.innerHTML = message;
-      });
-    }
-  }).catch((error) => {
-    reg_response.innerHTML = "FEILAS PAHASTI";
-  });
+    const settings = {
+      method: 'POST',
+      body: data,
+      cache: 'no-cache',
+      credentials: 'include'
+    };
+
+    fetch('php/register.php', settings).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          let message;
+          if (data.error == true) {
+            message = `VIRHE: ${data.message}`;
+          } else {
+            register_form.reset();
+            message = data.message;
+          }
+          reg_response.innerHTML = message;
+        });
+      } else {
+        reg_response.innerHTML = "Palvelu ei käytössä";
+      }
+    }).catch((error) => {
+      reg_response.innerHTML = "FEILAS PAHASTI";
+    });
+  }
 });
 
 
