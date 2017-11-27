@@ -81,12 +81,22 @@ const nappiLogout = ((evt) => {
         }
         message += data.message;
         response_element.innerHTML = message;
+        nappi_response.innerHTML = "";
         current_user.innerHTML = "";
       });
     }
   }).catch((error) => {
     response_element.innerHTML = "NYT FEILAS PAHASTI";
   });
+});
+
+
+const isEmpty = ((field) => {
+  if (field.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
 });
 
 
@@ -101,16 +111,22 @@ const registerSend = ((evt) => {
   const username_regex = new RegExp("^[A-Za-z_][A-Za-z0-9_]{3,14}$");
   const email_regex = new RegExp("^\\S+@\\S+\\.\\S+$");
 
-  if (username_regex.exec(username_element.value) == null) {
+  if (!isEmpty(username_element.value) && username_regex.exec(username_element.value) == null) {
     // TODO: merkkaa elementti?
     reg_response.innerHTML = "Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.";
   }
-  else if (email_regex.exec(email_element.value) == null) {
+  else if (!isEmpty(username_element.value) && email_regex.exec(email_element.value) == null) {
     // TODO: merkkaa elementti?
     reg_response.innerHTML = "Sähköpostiosoite ei ole oikeaa muotoa.";
   }
+  else if (!isEmpty(password_element.value)) {
+    reg_response.innerHTML = "Salasana on tyhjä."
+  }
+  else if (!isEmpty(password_verify_element.value)) {
+    reg_response.innerHTML = "Salasanan varmistus on tyhjä.";
+  }
   else if (password_element.value !== password_verify_element.value) {
-    reg_response.innerHTML = "Salasanan varmistus ei täsmää";
+    reg_response.innerHTML = "Salasanan varmistus ei täsmää.";
   }
   else {
     const data = new FormData();
