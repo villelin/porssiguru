@@ -111,24 +111,33 @@ const registerSend = ((evt) => {
   const username_regex = new RegExp("^[A-Za-z_][A-Za-z0-9_]{3,14}$");
   const email_regex = new RegExp("^\\S+@\\S+\\.\\S+$");
 
+  let valid = true;
+
+  let valid_message = "";
+
   if (!isEmpty(username_element.value) && username_regex.exec(username_element.value) == null) {
     // TODO: merkkaa elementti?
-    reg_response.innerHTML = "Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.";
+    valid_message += `Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.<br>`;
+    valid = false;
   }
-  else if (!isEmpty(username_element.value) && email_regex.exec(email_element.value) == null) {
+  if (!isEmpty(username_element.value) && email_regex.exec(email_element.value) == null) {
     // TODO: merkkaa elementti?
-    reg_response.innerHTML = "Sähköpostiosoite ei ole oikeaa muotoa.";
+    valid_message += `Sähköpostiosoite ei ole oikeaa muotoa.<br>`;
+    valid = false;
   }
-  else if (!isEmpty(password_element.value)) {
-    reg_response.innerHTML = "Salasana on tyhjä."
+  if (!isEmpty(password_element.value)) {
+    valid_message += `Salasana on tyhjä.<br>`;
+    valid = false;
   }
-  else if (!isEmpty(password_verify_element.value)) {
-    reg_response.innerHTML = "Salasanan varmistus on tyhjä.";
+  if (!isEmpty(password_verify_element.value)) {
+    valid_message += `Salasanan varmistus on tyhjä.<br>`;
+    valid = false;
   }
-  else if (password_element.value !== password_verify_element.value) {
-    reg_response.innerHTML = "Salasanan varmistus ei täsmää.";
+  if (password_element.value !== password_verify_element.value) {
+    valid_message += `Salasanan varmistus ei täsmää.<br>`;
+    valid = false;
   }
-  else {
+  if (valid) {
     const data = new FormData();
     data.append('username', username_element.value);
     data.append('password', password_element.value);
@@ -146,20 +155,21 @@ const registerSend = ((evt) => {
         response.json().then((data) => {
           let message;
           if (data.error == true) {
-            message = `VIRHE: ${data.message}`;
+            message += `VIRHE: ${data.message}`;
           } else {
             register_form.reset();
             message = data.message;
           }
-          reg_response.innerHTML = message;
+          valid_message += `${message}<br>`;
         });
       } else {
-        reg_response.innerHTML = "Palvelu ei käytössä";
+        valid_message += `Palvelu ei käytössä<br>`;
       }
     }).catch((error) => {
-      reg_response.innerHTML = "FEILAS PAHASTI";
+      valid_message += `FEILAS PAHASTI`;
     });
   }
+  reg_response.innerHTML = valid_message;
 });
 
 
