@@ -1,0 +1,82 @@
+CREATE TABLE user_account(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ username CHAR(15) CHARACTER SET utf8 COLLATE utf8_bin UNIQUE NOT NULL,
+ email VARCHAR(32),
+ pass VARCHAR(70) NOT NULL,
+ image VARCHAR(100),
+ funds DECIMAL(19,4),
+ description VARCHAR(200),
+ signup_date TIMESTAMP
+);
+
+CREATE TABLE stock(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ symbol VARCHAR(10) UNIQUE,
+ company VARCHAR(42),
+ price DECIMAL(19,4),
+ variety DECIMAL(19,2),
+ category VARCHAR(42) 
+);
+
+CREATE TABLE stock_event(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ user_id INT NOT NULL,
+ stock_id INT NOT NULL,
+ amount BIGINT NOT NULL,
+ transaction_type CHAR(8) NOT NULL,
+ tst TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ tet TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ FOREIGN KEY (user_id) REFERENCES user_account(id),
+ FOREIGN KEY (stock_id) REFERENCES stock(id)
+);
+
+CREATE TABLE comment(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ user_id INT,
+ commenter_id INT,
+ parent_id INT,
+ comment_text VARCHAR(200),
+ FOREIGN KEY (user_id) REFERENCES user_account(id),
+ FOREIGN KEY (commenter_id) REFERENCES user_account(id),
+ FOREIGN KEY (parent_id) REFERENCES comment(id)
+);
+
+CREATE TABLE user_login(
+ id INT PRIMARY KEY AUTO_INCREMENT,
+ user_id INT,
+ login TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ logout TIMESTAMP DEFAULT 0 ON UPDATE CURRENT_TIMESTAMP,
+ FOREIGN KEY(user_id) REFERENCES user_account(id)
+);
+
+CREATE TABLE comment_like(
+ user_id INT,
+ comment_id INT,
+ PRIMARY KEY(user_id, comment_id),
+ FOREIGN KEY (user_id) REFERENCES user_account(id),
+ FOREIGN KEY (comment_id) REFERENCES comment(id)
+);
+
+CREATE TABLE user_like(
+ user_id INT,
+ liked_id INT,
+ PRIMARY KEY (user_id, liked_id),
+ FOREIGN KEY (user_id) REFERENCES user_account(id),
+ FOREIGN KEY (liked_id) REFERENCES user_account(id)
+);
+
+CREATE TABLE user_follow(
+ user_id INT,
+ followed_id INT,
+ PRIMARY KEY (user_id, followed_id),
+ FOREIGN KEY (user_id) REFERENCES user_account(id),
+ FOREIGN KEY (followed_id) REFERENCES user_account(id)
+);
+
+CREATE TABLE user_block(
+ user_id INT,
+ blocked_id INT,
+ PRIMARY KEY (user_id, blocked_id),
+ FOREIGN KEY (user_id) REFERENCES user_account(id),
+ FOREIGN KEY (blocked_id) REFERENCES user_account(id)
+);
