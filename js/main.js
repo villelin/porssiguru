@@ -8,6 +8,38 @@ const reg_response = document.querySelector("#reg_response");
 
 const current_user = document.querySelector("#current_user");
 
+
+
+
+const getUserInfo = (() => {
+  const settings = { method: 'POST', cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/user_info.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        if (data.user_info != null) {
+          const username = data.user_info.username;
+          const email = data.user_info.email;
+          const imageurl = data.user_info.image;
+          const desc = data.user_info.description;
+          const signup = data.user_info.signup_date;
+          const funds = data.user_info.funds;
+          current_user.innerHTML = `Käyttäjä: ${username}, Email: ${email}, Image: ${imageurl}, Desc: ${desc}, Signup: ${signup}, Funds: ${funds}`;
+        }
+      });
+    } else {
+      // virhe
+    }
+  }).catch((error) => {
+    // virhe
+  });
+});
+
+
+
+
+
+
 const loginSend = ((evt) => {
   evt.preventDefault();
 
@@ -29,11 +61,13 @@ const loginSend = ((evt) => {
         let message = "";
         if (data.error == true) {
           message += "VIRHE: ";
+        } else {
+          getUserInfo();
         }
         message += data.message;
         login_form.reset();
         response_element.innerHTML = message;
-        current_user.innerHTML = `Käyttäjä: ${data.username}`;
+        //current_user.innerHTML = `Käyttäjä: ${data.username}`;
       });
     }
   }).catch((error) => {
