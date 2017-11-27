@@ -1,17 +1,51 @@
 
 const login_form = document.querySelector("#login_form");
 const register_form = document.querySelector("#register_form");
+const buy_form = document.querySelector("#buy_form");
 
 const response_element = document.querySelector("#response");
 const nappi_response = document.querySelector("#nappi_response");
 const reg_response = document.querySelector("#reg_response");
+const buy_response = document.querySelector("#buy_response");
 
 const current_user = document.querySelector("#current_user");
 
 
 
+const buySend = ((evt) => {
+  evt.preventDefault();
 
-const getUserInfo = (() => {
+  const stockid_element = document.querySelector('input[name="buy_stock_id"]');
+  const amount_element = document.querySelector('input[name="buy_amount"]');
+
+  const data = new FormData();
+  data.append('stock_id', stockid_element.value);
+  data.append('amount', amount_element.value);
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/buy.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        updateUserInfo();
+        message += data.message;
+        buy_response.innerHTML = message;
+      });
+    } else {
+      buy_response.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    buy_response.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
+const updateUserInfo = (() => {
   const settings = { method: 'POST', cache: 'no-cache', credentials: 'include' };
 
   fetch('php/user_info.php', settings).then((response) => {
@@ -62,7 +96,7 @@ const loginSend = ((evt) => {
         if (data.error == true) {
           message += "VIRHE: ";
         } else {
-          getUserInfo();
+          updateUserInfo();
         }
         message += data.message;
         login_form.reset();
@@ -211,5 +245,7 @@ document.querySelector("#nappi").addEventListener('click', nappiTest);
 document.querySelector("#logout").addEventListener('click', nappiLogout);
 document.querySelector("#login_form").addEventListener('submit', loginSend);
 document.querySelector("#register_form").addEventListener('submit', registerSend);
+document.querySelector("#buy_form").addEventListener('submit', buySend);
 
 
+updateUserInfo();
