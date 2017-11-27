@@ -44,17 +44,16 @@ const nappiTest = ((evt) => {
 
   const settings = { method: 'POST', cache: 'no-cache', credentials: 'include' };
 
-  fetch('php/test.php', settings).then((response) => {
+  fetch('php/assets.php', settings).then((response) => {
     if (response.status !== 200) {
       nappi_response.innerHTML = "Ei toimi";
     } else {
       response.json().then((data) => {
-        let message = "";
-        if (data.error == true) {
-          message += "VIRHE: ";
-        }
-        message += data.message;
-        nappi_response.innerHTML = message;
+        let list = "";
+        data.forEach((item) => {
+          list += `User ID: ${item.user_id}, Stock ID: ${item.stock_id}, Company: ${item.company}, Price: ${item.price}, Assets: ${item.assets}<br>`;
+        });
+        nappi_response.innerHTML = list;
       });
     }
   }).catch((error) => {
