@@ -16,20 +16,20 @@ if (isset($_SESSION["logged_in"])) {
     $user_id = $_SESSION["user_id"];
 
     $query = "SELECT user_id, stock.id, stock.company, stock.price, buy_sum-sell_sum AS 'assets'
-          FROM(
-           SELECT user_id, stock_id, SUM(buy) AS buy_sum, SUM(sell) AS sell_sum
-           FROM(
-            (SELECT user_id, stock_id, amount AS 'buy', 0 AS 'sell'
-            FROM stock_event
-            WHERE transaction_type='Buy' AND user_id='$user_id')
-            UNION
-            (SELECT user_id, stock_id, 0 AS 'buy', amount AS 'sell'
-            FROM stock_event
-            WHERE transaction_type='Sell' AND user_id='$user_id')
-           ) AS summed
-           GROUP BY user_id, stock_id
-          ) AS final, stock
-          WHERE final.stock_id=stock.id";
+              FROM(
+               SELECT user_id, stock_id, SUM(buy) AS buy_sum, SUM(sell) AS sell_sum
+               FROM(
+                (SELECT user_id, stock_id, amount AS 'buy', 0 AS 'sell'
+                FROM stock_event
+                WHERE transaction_type='Buy' AND user_id='$user_id')
+                UNION ALL
+                (SELECT user_id, stock_id, 0 AS 'buy', amount AS 'sell'
+                FROM stock_event
+                WHERE transaction_type='Sell' AND user_id='$user_id')
+               ) AS summed
+               GROUP BY user_id, stock_id
+              ) AS final, stock
+              WHERE final.stock_id=stock.id";
 
     $sql = $DBH->prepare($query);
     $sql->execute();

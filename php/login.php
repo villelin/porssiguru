@@ -50,6 +50,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             // vastaus Ajaxille
             $response["error"] = false;
             $response["message"] = "Sisäänkirjautuminen onnistui.";
+            $response["username"] = $username;
             break;
         }
         case LOGIN_WRONG_PASS: {

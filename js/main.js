@@ -6,6 +6,8 @@ const response_element = document.querySelector("#response");
 const nappi_response = document.querySelector("#nappi_response");
 const reg_response = document.querySelector("#reg_response");
 
+const current_user = document.querySelector("#current_user");
+
 const loginSend = ((evt) => {
   evt.preventDefault();
 
@@ -31,6 +33,7 @@ const loginSend = ((evt) => {
         message += data.message;
         login_form.reset();
         response_element.innerHTML = message;
+        current_user.innerHTML = `Käyttäjä: ${data.username}`;
       });
     }
   }).catch((error) => {
@@ -78,6 +81,7 @@ const nappiLogout = ((evt) => {
         }
         message += data.message;
         response_element.innerHTML = message;
+        current_user.innerHTML = "";
       });
     }
   }).catch((error) => {

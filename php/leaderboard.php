@@ -17,7 +17,7 @@ $query = "SELECT user_id, username, SUM(buy_sum-sell_sum) AS 'assets'
            (SELECT user_id, stock_id, amount*s.price  AS 'buy', 0 AS 'sell'
             FROM stock_event, stock AS s
             WHERE transaction_type='Buy' AND s.id=stock_id)
-            UNION
+            UNION ALL
            (SELECT user_id, stock_id, 0 AS 'buy', amount*s.price AS 'sell'
             FROM stock_event, stock AS s
             WHERE transaction_type='Sell' AND s.id=stock_id)
