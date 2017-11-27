@@ -23,13 +23,9 @@ if (isset($_SESSION['logged_in'])) {
         // haetaan käyttäjän käteiset
         $user_funds = getUserFunds($DBH, $user_id);
 
-        error_log("stock price = $stock_price, user funds = $user_funds");
-
         if ($stock_price != null && $user_funds != null) {
             // testataan onko tarpeeksi varaa
             $needed_funds = $stock_price * $amount;
-
-            error_log("needed funds = $needed_funds");
 
             if ($needed_funds <= $user_funds) {
 
@@ -99,10 +95,16 @@ function getUserFunds($dbh, $user_id) {
 
 function buyStock($dbh, $user_id, $stock_id, $amount, $needed_funds) {
     // lisää osto ja poista käyttäjältä rahaa
-    $query = "START TRANSACTION;
-              INSERT INTO stock_event(user_id, stock_id, amount, transaction_type)VALUES('$user_id', '$stock_id', '$amount', 'Buy');
-              UPDATE user_account SET funds=funds-'$needed_funds' WHERE id='$user_id';
-              COMMIT";
-    $sql = $dbh->prepare($query);
-    $sql->execute();
+    $dbh->beginTransaction();
+
+    $result1 = $dbh->exec("INSERT INTO stock_event(user_id, stock_id, amount, transaction_type)VALUES('$user_id', '$stock_id', '$amount', 'Buy')");
+    $result2 = $dbh->exec("UPDATE user_account SET funds=funds-'$needed_funds' WHERE id='$user_id'");
+
+    if ($result1 === 0 || $result2 === 0) {
+        // virhe -> rollback
+        $dbh->rollBack();
+    } else {
+        // kaikki ok -> commit
+        $dbh->commit();
+    }
 }
