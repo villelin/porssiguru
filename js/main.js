@@ -2,6 +2,7 @@
 const login_form = document.querySelector("#login_form");
 const register_form = document.querySelector("#register_form");
 const buy_form = document.querySelector("#buy_form");
+const sell_form = document.querySelector("#sell_form");
 
 const response_element = document.querySelector("#response");
 const nappi_response = document.querySelector("#nappi_response");
@@ -21,10 +22,11 @@ const buySend = ((evt) => {
   const data = new FormData();
   data.append('stock_id', stockid_element.value);
   data.append('amount', amount_element.value);
+  data.append('type', 'buy');
 
   const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
 
-  fetch('php/buy.php', settings).then((response) => {
+  fetch('php/transaction.php', settings).then((response) => {
     if (response.status === 200) {
       response.json().then((data) => {
         let message = "";
@@ -40,6 +42,40 @@ const buySend = ((evt) => {
     }
   }).catch((error) => {
     buy_response.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
+const sellSend = ((evt) => {
+  evt.preventDefault();
+
+  const stockid_element = document.querySelector('input[name="sell_stock_id"]');
+  const amount_element = document.querySelector('input[name="sell_amount"]');
+
+  const data = new FormData();
+  data.append('stock_id', stockid_element.value);
+  data.append('amount', amount_element.value);
+  data.append('type', 'sell');
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/transaction.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        updateUserInfo();
+        message += data.message;
+        sell_response.innerHTML = message;
+      });
+    } else {
+      sell_response.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    sell_response.innerHTML = "FEILAS PAHASTI";
   });
 });
 
@@ -246,6 +282,7 @@ document.querySelector("#logout").addEventListener('click', nappiLogout);
 document.querySelector("#login_form").addEventListener('submit', loginSend);
 document.querySelector("#register_form").addEventListener('submit', registerSend);
 document.querySelector("#buy_form").addEventListener('submit', buySend);
+document.querySelector("#sell_form").addEventListener('submit', sellSend);
 
 
 updateUserInfo();
