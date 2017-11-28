@@ -26,8 +26,9 @@ define('LOGIN_DB_ERROR', 4);
 
 require_once('session.php');
 require_once('config.php');
+require_once('status_response.php');
 
-$response = array();
+$response = new StatusResponse();
 
 if (isset($_POST["username"]) && isset($_POST["password"])) {
     $username = $_POST["username"];
@@ -48,46 +49,38 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             insertLogin($DBH, $_SESSION["user_id"]);
 
             // vastaus Ajaxille
-            $response["error"] = false;
-            $response["message"] = "Sisäänkirjautuminen onnistui.";
-            $response["username"] = $username;
+            $response = new OKResponse("Sisäänkirjautuminen onnistui.");
             break;
         }
         case LOGIN_WRONG_PASS: {
             // salasana ei täsmää
 
             // vastaus Ajaxille
-            $response["error"] = true;
-            $response["message"] = "Väärä salasana.";
+            $response = new FailResponse("Väärä salasana.");
             break;
         }
         case LOGIN_NO_ACCOUNT: {
             // käyttäjätunnusta ei löytynyt
 
             // vastaus Ajaxille
-            $response["error"] = true;
-            $response["message"] = "Käyttäjätunnusta $username ei löydy.";
+            $response = new FailResponse("Käyttäjätunnusta $username ei löydy.");
             break;
         }
         case LOGIN_DB_ERROR: {
-            $response["error"] = true;
-            $response["message"] = "Tietokantavirhe.";
+            $response = new FailResponse("Tietokantavirhe.");
             break;
         }
     }
 } else {
-    $response["error"] = true;
-    $response["message"] = "";
     if (!isset($_POST["username"])) {
-        $response["message"] .= "Käyttäjätunnus puuttuu. ";
+        $response = new FailResponse("Käyttäjätunnus puuttuu.");
     }
     if (!isset($_POST["password"])) {
-        $response["message"] .= "Salasana puuttuu. ";
+        $response = new FailResponse("Salasana puuttuu.");
     }
 }
 
-$json = json_encode($response);
-echo $json;
+echo $response->getJSON();
 
 
 

@@ -17,8 +17,9 @@
 
 require_once('session.php');
 require_once('config.php');
+require_once('status_response.php');
 
-$response = array();
+$response = new StatusResponse();
 
 if (isset($_SESSION["logged_in"])) {
     $user_id = $_SESSION["user_id"];
@@ -27,18 +28,15 @@ if (isset($_SESSION["logged_in"])) {
     // lisää ulosloggautuminen tauluun
     insertLogout($DBH, $user_id);
 
-    $response["error"] = false;
-    $response["message"] = "($user_id) $username loggas ulos";
+    $response = new OKResponse("($user_id) $username loggas ulos");
 } else {
-    $response["error"] = false;
-    $response["message"] = "Ei oltu sisällä";
+    $response = new OKResponse("Ei oltu sisällä");
 }
 
 session_unset();
 session_destroy();
 
-$json = json_encode($response);
-echo $json;
+echo $response->getJSON();
 
 
 /*

@@ -8,32 +8,29 @@
 
 require_once('config.php');
 require_once('session.php');
+require_once('status_response.php');
 
 define('SALT','PörssigurunSalasananSuolaus40t9ert0e9rt8er');
 
 // uudella käyttäjällä on 10000€ käteistä
 define('NEW_USER_BASE_FUNDS', 10000);
 
-$response = array();
+$response = new StatusResponse("");
 
 if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["email"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
     $email = $_POST["email"];
 
-    // TODO: validoi tiedot
-
     // onko käyttäjätunnus jo olemassa?
     $exists = doesUsernameExist($DBH, $username);
     if ($exists === null) {
         // tietokantavirhe
-        $response["error"] = true;
-        $response["message"] = "Tietokantavirhe";
+        $response = new FailResponse("Tietokantavirhe");
     } else if ($exists) {
         // on olemassa
         // vastaus Ajaxille
-        $response["error"] = true;
-        $response["message"] = "Käyttäjätunnus $username on jo olemassa.";
+        $response = new FailResponse("Käyttäjätunnus $username on jo olemassa.");
     } else {
         // ei ole
 
@@ -46,29 +43,22 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["emai
                 registerUsername($DBH, $username, $hashed_password, $email, NEW_USER_BASE_FUNDS);
 
                 // vastaus Ajaxille
-                $response["error"] = false;
-                $response["message"] = "Käyttäjätunnuksen luonti onnistui.";
+                $response = new OKResponse("Käyttäjätunnuksen luonti onnistui.");
             } else {
                 // E-mail ei OK
-                $response["error"] = true;
-                $response["message"] = "Sähköpostiosoite ei ole oikeaa muotoa.";
+                $response = new FailResponse("Sähköpostiosoite ei ole oikeaa muotoa.");
             }
         } else {
             // käyttäjätunnus ei OK
-            $response["error"] = true;
-            $response["message"] = "Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.";
+            $response = new FailResponse("Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.");
         }
     }
 } else {
-    $response["error"] = true;
-    $response["message"] = "Rekisteröinti ei toimi.";
+    $response = new FailResponse("Rekisteröinti ei toimi.");
 }
 
+echo $response->getJSON();
 
-
-
-$json = json_encode($response);
-echo $json;
 
 /*
  * Tarkistaa tietokannasta onko käyttäjätunnus jo olemassa
