@@ -7,8 +7,8 @@
  */
 
 define('SITE_ROOT', 'porssiguru');
-define('SESSION_LIFETIME', 60*60*30);       // logataan ulos 30 minuutin päästä
 
-session_set_cookie_params(SESSION_LIFETIME, SITE_ROOT);
+session_save_path(realpath(dirname($_SERVER['DOCUMENT_ROOT']) . '/porssiguru/session'));
+session_set_cookie_params(0, SITE_ROOT);
 session_name("porssiguru");
 session_start();
