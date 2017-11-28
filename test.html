@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+    <p id="current_user"></p>
     <form id="login_form" method="POST">
         <input type="text" name="log_username" required placeholder="Käyttäjätunnus"><br>
         <input type="password" name="log_password" required placeholder="Salasana"><br>
@@ -16,13 +17,29 @@
     <button id="nappi">Kokeile</button>
     <p id="nappi_response"></p>
     <br>
+
+    <form id="buy_form" method="POST">
+        Osake: <input type="number" name="buy_stock_id" required>
+        Määrä: <input type="number" name="buy_amount" required>
+        <input type="submit" name="Osta" value="Osta">
+    </form>
+    <p id="buy_response"></p>
+    <br>
+
+    <form id="sell_form" method="POST">
+        Osake: <input type="number" name="sell_stock_id" required>
+        Määrä: <input type="number" name="sell_amount" required>
+        <input type="submit" name="Myy" value="Myy">
+    </form>
+    <p id="sell_response"></p>
+
     <button id="logout">Logout</button>
 
     <form id="register_form" method="POST">
-        <input type="text" name="reg_username" required placeholder="Käyttäjätunnus"><br>
-        <input type="text" name="reg_email" required placeholder="Sähköposti"><br>
-        <input type="password" name="reg_password" required placeholder="Salasana"><br>
-        <input type="password" name="reg_password_verify" required placeholder="Salasana uudestaan"><br>
+        <input type="text" name="reg_username" placeholder="Käyttäjätunnus"><br>
+        <input type="text" name="reg_email" placeholder="Sähköposti"><br>
+        <input type="password" name="reg_password" placeholder="Salasana"><br>
+        <input type="password" name="reg_password_verify" placeholder="Salasana uudestaan"><br>
         <input type="submit" name="Lähetä" value="Lähetä">
     </form>
 

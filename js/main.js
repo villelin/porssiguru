@@ -1,10 +1,114 @@
 
 const login_form = document.querySelector("#login_form");
 const register_form = document.querySelector("#register_form");
+const buy_form = document.querySelector("#buy_form");
+const sell_form = document.querySelector("#sell_form");
 
 const response_element = document.querySelector("#response");
 const nappi_response = document.querySelector("#nappi_response");
 const reg_response = document.querySelector("#reg_response");
+const buy_response = document.querySelector("#buy_response");
+
+const current_user = document.querySelector("#current_user");
+
+
+
+const buySend = ((evt) => {
+  evt.preventDefault();
+
+  const stockid_element = document.querySelector('input[name="buy_stock_id"]');
+  const amount_element = document.querySelector('input[name="buy_amount"]');
+
+  const data = new FormData();
+  data.append('stock_id', stockid_element.value);
+  data.append('amount', amount_element.value);
+  data.append('type', 'buy');
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/transaction.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        updateUserInfo();
+        message += data.message;
+        buy_response.innerHTML = message;
+      });
+    } else {
+      buy_response.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    buy_response.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
+const sellSend = ((evt) => {
+  evt.preventDefault();
+
+  const stockid_element = document.querySelector('input[name="sell_stock_id"]');
+  const amount_element = document.querySelector('input[name="sell_amount"]');
+
+  const data = new FormData();
+  data.append('stock_id', stockid_element.value);
+  data.append('amount', amount_element.value);
+  data.append('type', 'sell');
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/transaction.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        updateUserInfo();
+        message += data.message;
+        sell_response.innerHTML = message;
+      });
+    } else {
+      sell_response.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    sell_response.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
+const updateUserInfo = (() => {
+  const settings = { method: 'POST', cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/user_info.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        if (data.user_info != null) {
+          const username = data.user_info.username;
+          const email = data.user_info.email;
+          const imageurl = data.user_info.image;
+          const desc = data.user_info.description;
+          const signup = data.user_info.signup_date;
+          const funds = data.user_info.funds;
+          current_user.innerHTML = `Käyttäjä: ${username}, Email: ${email}, Image: ${imageurl}, Desc: ${desc}, Signup: ${signup}, Funds: ${funds}`;
+        }
+      });
+    } else {
+      // virhe
+    }
+  }).catch((error) => {
+    // virhe
+  });
+});
+
+
+
+
+
 
 const loginSend = ((evt) => {
   evt.preventDefault();
@@ -27,10 +131,13 @@ const loginSend = ((evt) => {
         let message = "";
         if (data.error == true) {
           message += "VIRHE: ";
+        } else {
+          updateUserInfo();
         }
         message += data.message;
         login_form.reset();
         response_element.innerHTML = message;
+        //current_user.innerHTML = `Käyttäjä: ${data.username}`;
       });
     }
   }).catch((error) => {
@@ -44,17 +151,16 @@ const nappiTest = ((evt) => {
 
   const settings = { method: 'POST', cache: 'no-cache', credentials: 'include' };
 
-  fetch('php/test.php', settings).then((response) => {
+  fetch('php/assets.php', settings).then((response) => {
     if (response.status !== 200) {
       nappi_response.innerHTML = "Ei toimi";
     } else {
       response.json().then((data) => {
-        let message = "";
-        if (data.error == true) {
-          message += "VIRHE: ";
-        }
-        message += data.message;
-        nappi_response.innerHTML = message;
+        let list = "";
+        data.forEach((item) => {
+          list += `User ID: ${item.user_id}, Stock ID: ${item.stock_id}, Company: ${item.company}, Price: ${item.price}, Assets: ${item.assets}<br>`;
+        });
+        nappi_response.innerHTML = list;
       });
     }
   }).catch((error) => {
@@ -79,11 +185,22 @@ const nappiLogout = ((evt) => {
         }
         message += data.message;
         response_element.innerHTML = message;
+        nappi_response.innerHTML = "";
+        current_user.innerHTML = "";
       });
     }
   }).catch((error) => {
     response_element.innerHTML = "NYT FEILAS PAHASTI";
   });
+});
+
+
+const isEmpty = ((field) => {
+  if (field.length > 0) {
+    return true;
+  } else {
+    return false;
+  }
 });
 
 
@@ -98,18 +215,33 @@ const registerSend = ((evt) => {
   const username_regex = new RegExp("^[A-Za-z_][A-Za-z0-9_]{3,14}$");
   const email_regex = new RegExp("^\\S+@\\S+\\.\\S+$");
 
-  if (username_regex.exec(username_element.value) == null) {
+  let valid = true;
+
+  let valid_message = "";
+
+  if (!isEmpty(username_element.value) && username_regex.exec(username_element.value) == null) {
     // TODO: merkkaa elementti?
-    reg_response.innerHTML = "Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.";
+    valid_message += `Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.<br>`;
+    valid = false;
   }
-  else if (email_regex.exec(email_element.value) == null) {
+  if (!isEmpty(username_element.value) && email_regex.exec(email_element.value) == null) {
     // TODO: merkkaa elementti?
-    reg_response.innerHTML = "Sähköpostiosoite ei ole oikeaa muotoa.";
+    valid_message += `Sähköpostiosoite ei ole oikeaa muotoa.<br>`;
+    valid = false;
   }
-  else if (password_element.value !== password_verify_element.value) {
-    reg_response.innerHTML = "Salasanan varmistus ei täsmää";
+  if (!isEmpty(password_element.value)) {
+    valid_message += `Salasana on tyhjä.<br>`;
+    valid = false;
   }
-  else {
+  if (!isEmpty(password_verify_element.value)) {
+    valid_message += `Salasanan varmistus on tyhjä.<br>`;
+    valid = false;
+  }
+  if (password_element.value !== password_verify_element.value) {
+    valid_message += `Salasanan varmistus ei täsmää.<br>`;
+    valid = false;
+  }
+  if (valid) {
     const data = new FormData();
     data.append('username', username_element.value);
     data.append('password', password_element.value);
@@ -127,20 +259,21 @@ const registerSend = ((evt) => {
         response.json().then((data) => {
           let message;
           if (data.error == true) {
-            message = `VIRHE: ${data.message}`;
+            message += `VIRHE: ${data.message}`;
           } else {
             register_form.reset();
             message = data.message;
           }
-          reg_response.innerHTML = message;
+          valid_message += `${message}<br>`;
         });
       } else {
-        reg_response.innerHTML = "Palvelu ei käytössä";
+        valid_message += `Palvelu ei käytössä<br>`;
       }
     }).catch((error) => {
-      reg_response.innerHTML = "FEILAS PAHASTI";
+      valid_message += `FEILAS PAHASTI`;
     });
   }
+  reg_response.innerHTML = valid_message;
 });
 
 
@@ -148,5 +281,8 @@ document.querySelector("#nappi").addEventListener('click', nappiTest);
 document.querySelector("#logout").addEventListener('click', nappiLogout);
 document.querySelector("#login_form").addEventListener('submit', loginSend);
 document.querySelector("#register_form").addEventListener('submit', registerSend);
+document.querySelector("#buy_form").addEventListener('submit', buySend);
+document.querySelector("#sell_form").addEventListener('submit', sellSend);
 
 
+updateUserInfo();
