@@ -4,6 +4,14 @@
  * User: Ville Linde
  * Date: 27.11.2017
  * Time: 13.02
+ *
+ * Osta ja myy osakkeita.
+ * Käyttäjän pitää olla loggautuneena sisään ($_SESSION['logged_in'])
+ * POST-parametrit:
+ *  stock_id: Ostettavan/myytävän osakkeen ID
+ *  amount: Montako osaketta myydään
+ *  type: Operaation tyyppi ('buy' tai 'sell')
+ *
  */
 
 require_once('config.php');
@@ -19,66 +27,15 @@ if (isset($_SESSION['logged_in'])) {
 
         $transaction_type = $_POST['type'];
 
-        // haetaan osakkeen hinta
-        $stock_price = getStockPrice($DBH, $stock_id);
-
         if ($transaction_type == "buy") {
             // OSTAMINEN
-
-            // haetaan käyttäjän käteiset
-            $user_funds = getUserFunds($DBH, $user_id);
-
-            if ($stock_price !== null && $user_funds !== null) {
-                // testataan onko tarpeeksi varaa
-                $needed_funds = $stock_price * $amount;
-
-                if ($needed_funds <= $user_funds) {
-
-                    // kaikki OK, ostetaan
-                    if (buyStock($DBH, $user_id, $stock_id, $amount, $needed_funds)) {
-                        // onnistui
-                        $response["error"] = false;
-                        $response["message"] = "OK";
-                    } else {
-                        $response["error"] = true;
-                        $response["message"] = "Ostotapahtuma epäonnistui.";
-                    }
-                } else {
-                    $response["error"] = true;
-                    $response["message"] = "Ei tarpeeksi käteistä.";
-                }
-            } else {
-                $response["error"] = true;
-                $response["message"] = "Jotain meni pieleen.";
-            }
-        } else {
+            $response = attemptToBuy($DBH, $user_id, $stock_id, $amount);
+        } else if ($transaction_type == "sell") {
             // MYYMINEN
-
-            // haetaan käyttäjän omistukset
-            $user_stock = getUserStock($DBH, $user_id, $stock_id);
-
-            if ($stock_price !== null && $user_stock !== null) {
-                $sell_price = $stock_price * $amount;
-
-                if ($amount <= $user_stock) {
-                    // kaikki OK -> myydään
-
-                    if (sellStock($DBH, $user_id, $stock_id, $amount, $sell_price)) {
-                        // onnistui
-                        $response["error"] = false;
-                        $response["message"] = "OK";
-                    } else {
-                        $response["error"] = true;
-                        $response["message"] = "Myyntitapahtuma epäonnistui.";
-                    }
-                } else {
-                    $response["error"] = true;
-                    $response["message"] = "Ei tarpeeksi omistuksia.";
-                }
-            } else {
-                $response["error"] = true;
-                $response["message"] = "Jotain meni pieleen.";
-            }
+            $response = attemptToSell($DBH, $user_id, $stock_id, $amount);
+        } else {
+            $response["error"] = true;
+            $response["message"] = "Type parametri väärin.";
         }
     } else {
         $response["error"] = true;
@@ -91,6 +48,80 @@ if (isset($_SESSION['logged_in'])) {
 
 $json = json_encode($response);
 echo $json;
+
+
+
+function attemptToBuy($dbh, $user_id, $stock_id, $amount) {
+    $buy_response = array();
+
+    // haetaan osakkeen hinta
+    $stock_price = getStockPrice($dbh, $stock_id);
+
+    // haetaan käyttäjän käteiset
+    $user_funds = getUserFunds($dbh, $user_id);
+
+    if ($stock_price !== null && $user_funds !== null) {
+        // testataan onko tarpeeksi varaa
+        $needed_funds = $stock_price * $amount;
+
+        if ($needed_funds <= $user_funds) {
+
+            // kaikki OK, ostetaan
+            if (buyStock($dbh, $user_id, $stock_id, $amount, $needed_funds)) {
+                // onnistui
+                $buy_response["error"] = false;
+                $buy_response["message"] = "OK";
+            } else {
+                $buy_response["error"] = true;
+                $buy_response["message"] = "Ostotapahtuma epäonnistui.";
+            }
+        } else {
+            $buy_response["error"] = true;
+            $buy_response["message"] = "Ei tarpeeksi käteistä.";
+        }
+    } else {
+        $buy_response["error"] = true;
+        $buy_response["message"] = "Jotain meni pieleen.";
+    }
+
+    return $buy_response;
+}
+
+
+function attemptToSell($dbh, $user_id, $stock_id, $amount) {
+    $sell_response = array();
+
+    // haetaan osakkeen hinta
+    $stock_price = getStockPrice($dbh, $stock_id);
+
+    // haetaan käyttäjän omistukset
+    $user_stock = getUserStock($dbh, $user_id, $stock_id);
+
+    if ($stock_price !== null && $user_stock !== null) {
+        $sell_price = $stock_price * $amount;
+
+        if ($amount <= $user_stock) {
+            // kaikki OK -> myydään
+
+            if (sellStock($dbh, $user_id, $stock_id, $amount, $sell_price)) {
+                // onnistui
+                $sell_response["error"] = false;
+                $sell_response["message"] = "OK";
+            } else {
+                $sell_response["error"] = true;
+                $sell_response["message"] = "Myyntitapahtuma epäonnistui.";
+            }
+        } else {
+            $sell_response["error"] = true;
+            $sell_response["message"] = "Ei tarpeeksi omistuksia.";
+        }
+    } else {
+        $sell_response["error"] = true;
+        $sell_response["message"] = "Jotain meni pieleen.";
+    }
+
+    return $sell_response;
+}
 
 
 
@@ -127,7 +158,6 @@ function getUserFunds($dbh, $user_id) {
         }
     } catch (PDOException $e) {
     }
-
     return $user_funds;
 }
 
