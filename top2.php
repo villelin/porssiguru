@@ -35,7 +35,7 @@ require_once ('php/testmodal.php');
                     <span class="close">&times;</span>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, eius!</p>
                     <?php
-    include('php/testimodal.php');
+    include('php/testimodal.php');//lolololol
     ?>
                 </div>
 
