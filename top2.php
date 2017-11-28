@@ -1,3 +1,8 @@
+
+<?php
+require_once ('php/testmodal.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,47 +21,44 @@
         <div id="varat">
             <h1>66,666€</h1>
         </div>
-        <button style="cursor: pointer">lol</button>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">XX</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a id="logout">Logout</a>
+                <a id="login">Login</a>
+            </div>
+
+            <!-- MODAALI -->
+            <div id="myModal" class="modal">
+                <!-- Modaalin sisalto -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, eius!</p>
+                    <?php
+    include('php/testimodal.php');
+    ?>
+                </div>
+
+            </div>
+
+        </div>
     </hedi>
     <navi>
-        <p>uuuuuuuuuuuuuuuuu</p>
+        <a href="top.html" class="active">TOP</a>
+        <a href="osta.html">OSTA</a>
+        <a href="myy.html">MYY</a>
+        <a href="profiili.html">GURU</a>
     </navi>
 </header>
-
 <main>
-    <topRivi>
-        <img src=" http://www.placecage.com/c/70/70">
-        <h2>1.</h2><h3>CAGE</h3>
-        <h2>66666 €</h2>
-    </topRivi>
-    <topRivi>
-        <img src=" http://www.placecage.com/g/70/70">
-        <h2>2. CAGE</h2>
-        <h2>66666 €</h2>
-    </topRivi>
-    <topRivi>
-        <h2>3.</h2>
-
-        <img src=" http://www.placecage.com/70/70">
-        <h2>CAGE</h2>
-        <h2>66666 €</h2>
-    </topRivi>
-    <topRivi>
-        <img src=" http://www.placecage.com/c/70/70">
-        <h2>4. CAGE</h2>
-        <h2>66666 €</h2>
-    </topRivi>
-
-
-
-<table >
+<table>
     <tr>
         <th>GuruLista</th>
         <th></th>
         <th></th>
     </tr>
     <tr>
-        <td><img src=" http://www.placecage.com/c/100/100"></td>
+        <td><img src="http://www.placecage.com/c/100/100"></td>
         <td><h2>1.</h2>Maria Anders</td>
         <td><h3>105000</h3></td>
     </tr>
@@ -81,7 +83,8 @@
         <td>102200</td>
     </tr>
 </table>
-</main>
 
+</main>
+<script src="js/droppi.js"></script>
 </body>
 </html>
