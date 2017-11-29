@@ -1,8 +1,8 @@
-
 const login_form = document.querySelector("#login_form");
 const register_form = document.querySelector("#register_form");
 const buy_form = document.querySelector("#buy_form");
 const sell_form = document.querySelector("#sell_form");
+const comment_form = document.querySelector("#comment_form");
 
 const response_element = document.querySelector("#response");
 const nappi_response = document.querySelector("#nappi_response");
@@ -10,6 +10,8 @@ const reg_response = document.querySelector("#reg_response");
 const buy_response = document.querySelector("#buy_response");
 
 const current_user = document.querySelector("#current_user");
+const user_comments = document.querySelector("#user_comments");
+const history_element = document.querySelector("#history");
 
 
 
@@ -99,9 +101,87 @@ const updateUserInfo = (() => {
       });
     } else {
       // virhe
+      current_user.innerHTML = "";
     }
   }).catch((error) => {
     // virhe
+  });
+
+
+  const comment_data = new FormData();
+  //comment_data.append('user_id', current_user_id);
+
+  const comment_settings = { method: 'POST', body: comment_data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/get_comments.php', comment_settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let comments = "Kommentit:<br>";
+        let count = 1;
+
+        data.forEach((item) => {
+          const commenter_id = item.commenter_id;
+          const username = item.username;
+          const text = item.text;
+          const reply_to = item.reply_to;
+          const date = item.date;
+
+          comments += `${count}: (${commenter_id})${username}: ${text} - ${date}<br>`;
+          count++;
+        });
+
+        user_comments.innerHTML = comments;
+      });
+    } else {
+      // virhe
+      user_comments.innerHTML = "";
+    }
+  }).catch((error) => {
+    // virhe
+  });
+
+
+  const history_data = new FormData();
+  history_data.append('bought', true);
+  history_data.append('sold', true);
+
+  const history_settings = { method: 'POST', body: history_data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/buysell_history.php', history_settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let history = "";
+
+        if (data.bought != null) {
+          history += "<h4>Ostot:</h4>"
+          data.bought.forEach((item) => {
+            const company = item.company;
+            const amount = item.amount;
+            const date = item.date;
+
+            history += `${company}: Määrä: ${amount} - ${date}<br>`;
+          });
+        }
+        if (data.sold != null) {
+          history += "<h4>Myynnit:</h4>"
+          data.sold.forEach((item) => {
+            const company = item.company;
+            const amount = item.amount;
+            const date = item.date;
+
+            history += `${company}: Määrä: ${amount} - ${date}<br>`;
+          });
+        }
+
+        history_element.innerHTML = history;
+      });
+    } else {
+      // virhe
+      history_element.innerHTML = "";
+    }
+  }).catch((error) => {
+    // virhe
+    history_element.innerHTML = "";
   });
 });
 
@@ -187,6 +267,7 @@ const nappiLogout = ((evt) => {
         response_element.innerHTML = message;
         nappi_response.innerHTML = "";
         current_user.innerHTML = "";
+        user_comments.innerHTML = "";
       });
     }
   }).catch((error) => {
@@ -277,12 +358,48 @@ const registerSend = ((evt) => {
 });
 
 
+
+const commentSend = ((evt) => {
+  evt.preventDefault();
+
+  const commented_element = document.querySelector('input[name="commented_id"]');
+  const comment_element = document.querySelector('input[name="comment"]');
+
+  const data = new FormData();
+  data.append('commented_id', commented_element.value);
+  data.append('comment', comment_element.value);
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/add_comment.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        updateUserInfo();
+        message += data.message;
+        comment_response.innerHTML = message;
+      });
+    } else {
+      comment_response.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    comment_response.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
+
 document.querySelector("#nappi").addEventListener('click', nappiTest);
 document.querySelector("#logout").addEventListener('click', nappiLogout);
 document.querySelector("#login_form").addEventListener('submit', loginSend);
 document.querySelector("#register_form").addEventListener('submit', registerSend);
 document.querySelector("#buy_form").addEventListener('submit', buySend);
 document.querySelector("#sell_form").addEventListener('submit', sellSend);
+document.querySelector("#comment_form").addEventListener('submit', commentSend);
 
 
 updateUserInfo();
