@@ -14,7 +14,7 @@ require_once ('php/testmodal.php');
 </head>
 <body>
 <header>
-    <hedi>
+    <div id="hedi">
         <div id="logo">
             <h1>PörssiGuru </h1>
         </div>
@@ -42,13 +42,13 @@ require_once ('php/testmodal.php');
             </div>
 
         </div>
-    </hedi>
-    <navi>
+    </div>
+    <div id="navi">
         <a href="top.html" class="active">TOP</a>
         <a href="osta.html">OSTA</a>
         <a href="myy.html">MYY</a>
         <a href="profiili.html">GURU</a>
-    </navi>
+    </div>
 </header>
 <main>
 <table>
