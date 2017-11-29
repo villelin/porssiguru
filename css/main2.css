@@ -48,7 +48,6 @@ main{
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
     background-color: gainsboro;
-
 }
 
 #navi a {
@@ -57,7 +56,6 @@ main{
     padding: 14px 16px;
     text-decoration: none;
     font-size: 17px;
-
     cursor: pointer;
 }
 
@@ -85,7 +83,6 @@ ul p {
     margin: 0 auto 0 auto;
 }
 
-
 li{
     display: inline;
 }
@@ -106,8 +103,8 @@ topLista > div:nth-child(odd) {
 }
 */
 
-
-profKuka{
+/*-------------PROFIILI-TÄYTE---------------------------*/
+#profKuka{
     display:grid;
     grid-template-columns: repeat(2, auto auto);
     grid-row-gap: 1em;
@@ -116,20 +113,11 @@ profKuka{
     margin: 5px;
 }
 
-profLuvut{
+#profLuvut{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
-
 }
-profLuvutA{
-
-    grid-row-gap: 1em;
-    padding: 1em;
-    box-shadow: 1px 0px 7px 0px black;
-    margin: 5px;
-    text-align: center;
-}
-profLuvutB{
+#profLuvutA{
 
     grid-row-gap: 1em;
     padding: 1em;
@@ -137,7 +125,7 @@ profLuvutB{
     margin: 5px;
     text-align: center;
 }
-profLuvutC{
+#profLuvutB{
 
     grid-row-gap: 1em;
     padding: 1em;
@@ -145,14 +133,22 @@ profLuvutC{
     margin: 5px;
     text-align: center;
 }
-profKommentit{
+#profLuvutC{
+
+    grid-row-gap: 1em;
+    padding: 1em;
+    box-shadow: 1px 0px 7px 0px black;
+    margin: 5px;
+    text-align: center;
+}
+#profKommentit{
 
     grid-row-gap: 1em;
     padding: 1em;
     box-shadow: 1px 0px 7px 0px black;
     margin: 5px;
 }
-profHistoria{
+#profHistoria{
     display:grid;
     grid-row-gap: 1em;
     padding: 1em;
@@ -160,7 +156,7 @@ profHistoria{
     margin: 5px;
 }
 
-topRivi{
+#topRivi{
     display:grid;
     grid-row-gap: 1em;
     padding: 1em;
@@ -169,7 +165,7 @@ topRivi{
     grid-template-columns: repeat(4, 1fr);
 }
 
-topRivi:nth-child(even) {
+#topRivi:nth-child(even) {
     background-color: #fbfbfb;
 }
 
@@ -179,15 +175,12 @@ topRivi:nth-child(even) {
 tr#myy{
     background-color: #6D6DB2;
 }
-button{
+/*button{
     background: #6D6DB2;
     border:0;
     text-transform: uppercase;
     padding:5px;
-}
-
-
-
+}*/
 
 input{
     height: 100%;
@@ -203,11 +196,10 @@ form{
 }
 form input {
 
-
 }
 
 form h4{
-color: #6D6DB2;
+    color: #6D6DB2;
 }
 form a{
     color: #aaaaaa;
@@ -227,7 +219,6 @@ form .nappi, form input, form textarea{
     width: 100%;
     padding:1em;
     border:1px solid gainsboro;
-
 }
 
 form.nappi:hover{
@@ -240,7 +231,6 @@ form .nappi {
     border-radius: 0;
     /* grid-column: 1 / 3;*/
     cursor:pointer;
-
 }
 
 form .nappi:hover, form .nappi:focus{
@@ -248,7 +238,6 @@ form .nappi:hover, form .nappi:focus{
     color:white;
     outline:0;
     transition: background-color 2s ease-out;
-
 }
 
 form input.nappi{
@@ -259,7 +248,6 @@ table {
     width: 100%;
 }
 
-
 th, td {
     text-align: left;
     padding: 8px;
@@ -267,7 +255,7 @@ th, td {
 tr:nth-child(even) {background-color: #f2f2f2;}
 
 
-/*-------------DROPPI-BUTTON---------------------------*/
+/*-------------DROPPI-NAPPI---------------------------*/
 
 .dropbtn {
     background-color: #2c2c2c;
@@ -289,7 +277,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     position: relative;
     display: inline-block;
     text-align: right;
-
 }
 
 .dropdown-content {
@@ -310,9 +297,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     display: block;
     cursor: pointer;
 }
-
-
-
 
 .dropdown a:hover {background-color: #f1f1f1}
 
