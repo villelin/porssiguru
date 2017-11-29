@@ -107,7 +107,7 @@ topLista > div:nth-child(odd) {
 */
 
 
-profKuka{
+#profKuka{
     display:grid;
     grid-template-columns: repeat(2, auto auto);
     grid-row-gap: 1em;
@@ -116,12 +116,12 @@ profKuka{
     margin: 5px;
 }
 
-profLuvut{
+#profLuvut{
     display:grid;
     grid-template-columns: repeat(3, 1fr);
 
 }
-profLuvutA{
+#profLuvutA{
 
     grid-row-gap: 1em;
     padding: 1em;
@@ -129,7 +129,7 @@ profLuvutA{
     margin: 5px;
     text-align: center;
 }
-profLuvutB{
+#profLuvutB{
 
     grid-row-gap: 1em;
     padding: 1em;
@@ -137,7 +137,7 @@ profLuvutB{
     margin: 5px;
     text-align: center;
 }
-profLuvutC{
+#profLuvutC{
 
     grid-row-gap: 1em;
     padding: 1em;
@@ -145,14 +145,14 @@ profLuvutC{
     margin: 5px;
     text-align: center;
 }
-profKommentit{
+#profKommentit{
 
     grid-row-gap: 1em;
     padding: 1em;
     box-shadow: 1px 0px 7px 0px black;
     margin: 5px;
 }
-profHistoria{
+#profHistoria{
     display:grid;
     grid-row-gap: 1em;
     padding: 1em;
@@ -160,7 +160,7 @@ profHistoria{
     margin: 5px;
 }
 
-topRivi{
+#topRivi{
     display:grid;
     grid-row-gap: 1em;
     padding: 1em;
@@ -169,7 +169,7 @@ topRivi{
     grid-template-columns: repeat(4, 1fr);
 }
 
-topRivi:nth-child(even) {
+#topRivi:nth-child(even) {
     background-color: #fbfbfb;
 }
 
