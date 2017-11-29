@@ -36,28 +36,27 @@ span.onclick = () => {
   modalRek.style.display = "none"; //EI TOIMI
 }
 
-// Kun klikataan muualle kuin modaliin tai droppiin em. osat sulkeutuu EI TOIMIIIIIIIIIIIIIIIIIII**********************
+// Kun klikataan muualle kuin modaliin tai droppiin em. osat sulkeutuu
 window.onclick = (event) => {
-      if (event.target ==  modal  ) {
-        modal.style.display = "none";
+  if (event.target ==  modal  ) {
+    modal.style.display = "none";
 
-
-      }
+  }
   if (event.target ==  modalRek ) {
 
     modalRek.style.display = "none";
 
   }
-      if (!event.target.matches('.dropbtn')) {
-        const dropdowns = document.getElementsByClassName("dropdown-content");
-        let i;
-        for (i = 0; i < dropdowns.length; i++) {
-          const openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
+  if (!event.target.matches('.dropbtn')) {
+    const dropdowns = document.getElementsByClassName("dropdown-content");
+    let i;
+    for (i = 0; i < dropdowns.length; i++) {
+      const openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
+    }
+  }
 };
 
 
