@@ -36,6 +36,7 @@ CREATE TABLE comment(
  commenter_id INT,
  parent_id INT,
  comment_text VARCHAR(200),
+ comment_date NOT NULL DEFAULT CURRENT_TIMESTAMP,
  FOREIGN KEY (user_id) REFERENCES user_account(id),
  FOREIGN KEY (commenter_id) REFERENCES user_account(id),
  FOREIGN KEY (parent_id) REFERENCES comment(id)
