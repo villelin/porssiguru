@@ -7,6 +7,7 @@
 <body>
     <p id="current_user"></p>
     <p id="user_comments"></p>
+    <p id="user_likes"></p>
     <p id="history"></p>
     <form id="login_form" method="POST">
         <input type="text" name="log_username" required placeholder="Käyttäjätunnus"><br>
@@ -41,6 +42,12 @@
         <input type="submit" name="Kommentoi" value="Kommentoi">
     </form>
     <p id="comment_response"></p>
+
+    <form id="like_form" method="POST">
+        Käyttäjä: <input type="number" name="liked_id" required>
+        <input type="submit" name="Tykkää" value="Tykkää">
+    </form>
+    <p id="like_response"></p>
 
     <button id="logout">Logout</button>
 

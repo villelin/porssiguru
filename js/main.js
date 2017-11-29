@@ -3,6 +3,8 @@ const register_form = document.querySelector("#register_form");
 const buy_form = document.querySelector("#buy_form");
 const sell_form = document.querySelector("#sell_form");
 const comment_form = document.querySelector("#comment_form");
+const like_form = document.querySelector("#like_form");
+
 
 const response_element = document.querySelector("#response");
 const nappi_response = document.querySelector("#nappi_response");
@@ -12,6 +14,7 @@ const buy_response = document.querySelector("#buy_response");
 const current_user = document.querySelector("#current_user");
 const user_comments = document.querySelector("#user_comments");
 const history_element = document.querySelector("#history");
+const likes_element = document.querySelector("#user_likes");
 
 
 
@@ -84,6 +87,8 @@ const sellSend = ((evt) => {
 
 
 const updateUserInfo = (() => {
+  // *** KÄYTTÄJÄN TIEDOT ***
+
   const settings = { method: 'POST', cache: 'no-cache', credentials: 'include' };
 
   fetch('php/user_info.php', settings).then((response) => {
@@ -106,6 +111,9 @@ const updateUserInfo = (() => {
   }).catch((error) => {
     // virhe
   });
+
+
+  // *** KÄYTTÄJÄN SAAMAT KOMMENTIT ***
 
 
   const comment_data = new FormData();
@@ -141,6 +149,8 @@ const updateUserInfo = (() => {
   });
 
 
+  // *** KÄYTTÄJÄN OSTO JA MYYNTIHISTORIA ***
+
   const history_data = new FormData();
   history_data.append('bought', true);
   history_data.append('sold', true);
@@ -173,7 +183,7 @@ const updateUserInfo = (() => {
           });
         }
 
-        history_element.innerHTML = history;
+        //history_element.innerHTML = history;
       });
     } else {
       // virhe
@@ -183,6 +193,38 @@ const updateUserInfo = (() => {
     // virhe
     history_element.innerHTML = "";
   });
+
+
+
+  // *** KÄYTTÄJÄSTÄ TYKKÄYKSET ***
+
+  const likes_data = new FormData();
+  // TODO: tänne käyttäjä jonka tykkäykset halutaan
+  //likes_data.append('liked_id', 'USER_ID');
+
+  const likes_settings = { method: 'POST', body: likes_data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/get_user_likes.php', likes_settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let likes = "Tykkäykset: ";
+
+        if (data.likes != null) {
+          likes += data.likes;
+        }
+
+        likes_element.innerHTML = likes;
+      });
+    } else {
+      // virhe
+      likes_element.innerHTML = "";
+    }
+  }).catch((error) => {
+    // virhe
+    likes_element.innerHTML = "";
+  });
+
+
 });
 
 
@@ -212,8 +254,9 @@ const loginSend = ((evt) => {
         if (data.error == true) {
           message += "VIRHE: ";
         } else {
-          updateUserInfo();
+
         }
+        updateUserInfo();
         message += data.message;
         login_form.reset();
         response_element.innerHTML = message;
@@ -241,6 +284,7 @@ const nappiTest = ((evt) => {
           list += `User ID: ${item.user_id}, Stock ID: ${item.stock_id}, Company: ${item.company}, Price: ${item.price}, Assets: ${item.assets}<br>`;
         });
         nappi_response.innerHTML = list;
+        updateUserInfo();
       });
     }
   }).catch((error) => {
@@ -268,6 +312,7 @@ const nappiLogout = ((evt) => {
         nappi_response.innerHTML = "";
         current_user.innerHTML = "";
         user_comments.innerHTML = "";
+        updateUserInfo();
       });
     }
   }).catch((error) => {
@@ -392,6 +437,36 @@ const commentSend = ((evt) => {
 
 
 
+const likeSend = ((evt) => {
+  evt.preventDefault();
+
+  const liked_element = document.querySelector('input[name="liked_id"]');
+
+  const data = new FormData();
+  data.append('liked_id', liked_element.value);
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/like_user.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let message = "";
+        if (data.error == true) {
+          message += "VIRHE: ";
+        }
+        message += data.message;
+        like_response.innerHTML = message;
+      });
+    } else {
+      like_response.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    like_response.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
 
 document.querySelector("#nappi").addEventListener('click', nappiTest);
 document.querySelector("#logout").addEventListener('click', nappiLogout);
@@ -400,6 +475,7 @@ document.querySelector("#register_form").addEventListener('submit', registerSend
 document.querySelector("#buy_form").addEventListener('submit', buySend);
 document.querySelector("#sell_form").addEventListener('submit', sellSend);
 document.querySelector("#comment_form").addEventListener('submit', commentSend);
+document.querySelector("#like_form").addEventListener('submit', likeSend);
 
 
 updateUserInfo();
