@@ -17,10 +17,9 @@ define('NEW_USER_BASE_FUNDS', 10000);
 
 $response = new StatusResponse("");
 
-if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["email"])) {
+if (isset($_POST["username"]) && isset($_POST["password"])) {
     $username = $_POST["username"];
     $password = $_POST["password"];
-    $email = $_POST["email"];
 
     // onko käyttäjätunnus jo olemassa?
     $exists = doesUsernameExist($DBH, $username);
@@ -36,18 +35,13 @@ if (isset($_POST["username"]) && isset($_POST["password"]) && isset($_POST["emai
 
         // validoi tiedot
         if (preg_match("/^[A-Za-z_][A-Za-z0-9_]{3,14}$/", $username)) {
-            if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                // käyttäjätunnus ja E-mail OK
-                $hashed_password = hash('sha256', $password.SALT);
+            // käyttäjätunnus ja E-mail OK
+            $hashed_password = hash('sha256', $password.SALT);
 
-                registerUsername($DBH, $username, $hashed_password, $email, NEW_USER_BASE_FUNDS);
+            registerUsername($DBH, $username, $hashed_password, NEW_USER_BASE_FUNDS);
 
-                // vastaus Ajaxille
-                $response = new OKResponse("Käyttäjätunnuksen luonti onnistui.");
-            } else {
-                // E-mail ei OK
-                $response = new FailResponse("Sähköpostiosoite ei ole oikeaa muotoa.");
-            }
+            // vastaus Ajaxille
+            $response = new OKResponse("Käyttäjätunnuksen luonti onnistui.");
         } else {
             // käyttäjätunnus ei OK
             $response = new FailResponse("Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.");
@@ -85,8 +79,8 @@ function doesUsernameExist($dbh, $username) {
  * Rekisteröi käyttäjänimen tietokantaan
  */
 function registerUsername($dbh, $username, $password, $email, $funds) {
-    $insert_query = "INSERT INTO user_account(username, email, pass, funds, description, image, signup_date)";
-    $insert_query .= "VALUES('$username', '$email', '$password', '$funds', '', '', CURRENT_TIMESTAMP)";
+    $insert_query = "INSERT INTO user_account(username, pass, funds, description, image, signup_date)";
+    $insert_query .= "VALUES('$username', '$password', '$funds', '', '', CURRENT_TIMESTAMP)";
     $sql = $dbh->prepare($insert_query);
     $sql->execute();
 }
