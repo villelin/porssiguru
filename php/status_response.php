@@ -12,6 +12,7 @@ class StatusResponse {
     public function __construct($message = "") {
         $this->response = array();
         $this->response["message"] = $message;
+        $this->response["error"] = true;
     }
 
     public function getJSON() {
