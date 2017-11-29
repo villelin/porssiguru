@@ -1,4 +1,4 @@
-/*const logStatus = document.querySelector("#logStatus");
+const logStatus = document.querySelector("#logStatus");
 
 const loginSend = ((evt) => {
   evt.preventDefault();
@@ -22,7 +22,7 @@ const loginSend = ((evt) => {
         if (data.error == true) {
           message += "VIRHE: ";
         } else {
-          updateUserInfo();
+          window.location.replace('top.html');
         }
         message += data.message;
         login_form.reset();
@@ -35,4 +35,4 @@ const loginSend = ((evt) => {
   });
 });
 
-document.queryS*/elector("#login_form").addEventListener('submit', loginSend);
+document.querySelector("#login_form").addEventListener('submit', loginSend);

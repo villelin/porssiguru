@@ -13,6 +13,7 @@ const modalRek = document.getElementById('myModalRek');
 
 // Get the button that opens the modal
 const btn = document.getElementById('login');
+const btn2 = document.getElementById('logout');
 
 const rekLinkki = document.getElementById('rek');
 
@@ -26,6 +27,12 @@ btn.onclick = () => {
   document.getElementById("myDropdown").classList.remove("show");
   modal.style.display = "block";
 };
+
+btn2.onclick = () => {
+  document.getElementById("myDropdown").classList.remove("show");
+  modalRek.style.display = "block";
+};
+
 rekLinkki.onclick = () => {
   modal.style.display = "none";
   modalRek.style.display = "block";
@@ -36,6 +43,8 @@ span.onclick = () => {
   modal.style.display = "none";
 
 };
+
+
 
 
 
@@ -61,6 +70,9 @@ window.onclick = (event) => {
     }
   }
 };
+
+
+
 
 
 
