@@ -1,7 +1,7 @@
 <?php
 //Tietokanta
 $user = 'elinaro';
-$pass = 'xxxxxxxxxxxx';
+$pass = 'kissa';
 $host = 'mysql.metropolia.fi';
 $dbname = 'elinaro';
 

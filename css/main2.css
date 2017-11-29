@@ -34,7 +34,7 @@ main{
     box-shadow: 1px 0px 7px 0px black;
 }
 
-hedi{
+#hedi{
     display:grid;
     grid-template-columns: repeat(3, 60% 30% 10%);
     background-color: black;
@@ -43,7 +43,7 @@ hedi{
     padding: 1em;
 }
 
-navi{
+#navi{
     display:grid;
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
@@ -51,7 +51,7 @@ navi{
 
 }
 
-navi a {
+#navi a {
 
     color: black;
     padding: 14px 16px;
@@ -61,7 +61,7 @@ navi a {
     cursor: pointer;
 }
 
-navi a:hover , a:focus{
+#navi a:hover , a:focus{
     background: white;
     color:black;
     outline:0;
@@ -69,7 +69,7 @@ navi a:hover , a:focus{
 }
 
 
-navi a.active {
+#navi a.active {
     background-color: darkgrey;
 }
 

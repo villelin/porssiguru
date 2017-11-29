@@ -2,7 +2,7 @@
 
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
-function myFunction() {
+myFunction = () => {
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
@@ -21,23 +21,23 @@ const span = document.getElementsByClassName("close")[0];
 
 
 // Modaali poppaa esiin kun painiketta painetaan
-btn.onclick = function() {
+btn.onclick = () => {
   document.getElementById("myDropdown").classList.remove("show");
   modal.style.display = "block";
 }
-rekLinkki.onclick = function() {
+rekLinkki.onclick = () => {
   modal.style.display = "none";
   modalRek.style.display = "block";
 }
 
 // Kun klikataan modalin <span> (x), modali sulkeutuu
-span.onclick = function() {
+span.onclick = () => {
   modal.style.display = "none";
   modalRek.style.display = "none"; //EI TOIMI
 }
 
 // Kun klikataan muualle kuin modaliin tai droppiin em. osat sulkeutuu EI TOIMIIIIIIIIIIIIIIIIIII**********************
-window.onclick = function(event) {
+window.onclick = (event) => {
       if (event.target ==  modal  ) {
         modal.style.display = "none";
 
