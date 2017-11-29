@@ -1,37 +1,103 @@
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="manifest" href="site.webmanifest">
-        <link rel="apple-touch-icon" href="icon.png">
-        <!-- Place favicon.ico in the root directory -->
-
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-    </head>
-    <body>
-        <!--[if lte IE 9]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
-        <![endif]-->
-
-
-        <!-- Add your site or application content here -->
-        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
-
-        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
-        <script>
-            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
-            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
-        </script>
-        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PörssiGuru</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/main2.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+<header>
+    <div id="hedi">
+        <div id="logo">
+            <h1>PörssiGuru </h1>
+        </div>
+        <div id="varat">
+            <h1>66,666€</h1>
+        </div>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">XX</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a id="logout">Logout</a>
+                <a id="login">Login</a>
+            </div>
+            <!--KIRJAUTUMIS-MODAALI------------>
+            <div id="myModal" class="modal">
+                <!-- Modaalin sisalto -->
+                <div class="modal-content" >
+                    <span class="close">&times;</span>
+                    <form id="login_form" method="POST">
+                        <h4>KIRJAUDU SISÄÄN</h4>
+                        <input type="text" name="log_username" required placeholder="Käyttäjätunnus">
+                        <input type="password" name="log_password" required placeholder="Salasana">
+                        <!--<input type="password" name="reg_password_verify" required placeholder="Salasana uudestaan">-->
+                        <input class="nappi" type="submit" name="Lähetä" value="Kirjaudu">
+                        <a id="rek">Eikö tunnusta? Rekisteröidy</a>
+                        <p id="logStatus"></p>
+                    </form>
+                </div>
+            </div>
+            <!--REKISTERÖINTI-MODAALI------------------->
+            <div id="myModalRek" class="modal" >
+                <!-- Modaalin sisalto -->
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <form id="register_form" method="POST">
+                        <h4>REKISTERÖIDY</h4>
+                        <input type="text" name="reg_username" required placeholder="Käyttäjätunnus">
+                        <input type="password" name="reg_password" required placeholder="Salasana">
+                        <input type="password" name="reg_password_verify" required placeholder="Salasana uudestaan">
+                        <input class="nappi" type="submit" name="Lähetä" value="Rekisteröidy">
+                        <a class="formP">Käyttöehdot</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div id="navi">
+        <a href="top.html" class="active">TOP</a>
+        <a href="osta.html">OSTA</a>
+        <a href="myy.html">MYY</a>
+        <a href="profiili.html">GURU</a>
+    </div>-->
+</header>
+<main>
+    <table>
+        <tr>
+            <th>GuruLista</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <td><img src="http://www.placecage.com/c/100/100"></td>
+            <td><h2>1.</h2>Maria Anders</td>
+            <td><h3>105000</h3></td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/100/100"></td>
+            <td><h2>2.</h2>Christina Berglund</td>
+            <td>102200</td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/c/100/100"></td>
+            <td><h2>3.</h2>Francisco Chang</td>
+            <td>100230</td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/g/100/100"></td>
+            <td><h2>4.</h2>Roland Mendel</td>
+            <td>16200</td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/c/100/100"></td>
+            <td><h2>5.</h2>Helen Bennett</td>
+            <td>102200</td>
+        </tr>
+    </table>
+</main>
+<script src="js/droppi.js"></script>
+<script src="js/login.js"></script>
+</body>
 </html>

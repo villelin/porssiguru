@@ -1,6 +1,6 @@
 
 <?php
-require_once ('php/testmodal.php');
+
 ?>
 
 <!DOCTYPE html>
