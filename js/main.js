@@ -11,6 +11,7 @@ const buy_response = document.querySelector("#buy_response");
 
 const current_user = document.querySelector("#current_user");
 const user_comments = document.querySelector("#user_comments");
+const history_element = document.querySelector("#history");
 
 
 
@@ -137,6 +138,50 @@ const updateUserInfo = (() => {
     }
   }).catch((error) => {
     // virhe
+  });
+
+
+  const history_data = new FormData();
+  history_data.append('bought', true);
+  history_data.append('sold', true);
+
+  const history_settings = { method: 'POST', body: history_data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/buysell_history.php', history_settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let history = "";
+
+        if (data.bought != null) {
+          history += "<h4>Ostot:</h4>"
+          data.bought.forEach((item) => {
+            const company = item.company;
+            const amount = item.amount;
+            const date = item.date;
+
+            history += `${company}: Määrä: ${amount} - ${date}<br>`;
+          });
+        }
+        if (data.sold != null) {
+          history += "<h4>Myynnit:</h4>"
+          data.sold.forEach((item) => {
+            const company = item.company;
+            const amount = item.amount;
+            const date = item.date;
+
+            history += `${company}: Määrä: ${amount} - ${date}<br>`;
+          });
+        }
+
+        history_element.innerHTML = history;
+      });
+    } else {
+      // virhe
+      history_element.innerHTML = "";
+    }
+  }).catch((error) => {
+    // virhe
+    history_element.innerHTML = "";
   });
 });
 
