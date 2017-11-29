@@ -78,7 +78,7 @@ function doesUsernameExist($dbh, $username) {
 /*
  * Rekisteröi käyttäjänimen tietokantaan
  */
-function registerUsername($dbh, $username, $password, $email, $funds) {
+function registerUsername($dbh, $username, $password, $funds) {
     $insert_query = "INSERT INTO user_account(username, pass, funds, description, image, signup_date)";
     $insert_query .= "VALUES('$username', '$password', '$funds', '', '', CURRENT_TIMESTAMP)";
     $sql = $dbh->prepare($insert_query);
