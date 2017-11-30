@@ -67,7 +67,17 @@
 
     <p id="reg_response"></p>
 
+    <form id="upload_form" action="php/image_upload.php" method="post" enctype="multipart/form-data">
+        Valitse profiilikuva:
+        <input type="file" name="file_upload" id="file_upload">
+        <input type="submit" value="Valitse Kuva" name="submit">
+    </form>
+    <button id="change_image">Vaihda profiilikuva</button>
+    <p id="image_response"></p>
+    <img id="profile_img">
+
 
     <script src="js/main.js"></script>
+    <script src="js/image_upload.js"></script>
 </body>
 </html>
