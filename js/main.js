@@ -4,18 +4,19 @@ const buy_form = document.querySelector("#buy_form");
 const sell_form = document.querySelector("#sell_form");
 const comment_form = document.querySelector("#comment_form");
 const like_form = document.querySelector("#like_form");
+const testlike_form = document.querySelector("#testlike_form");
 
 
 const response_element = document.querySelector("#response");
 const nappi_response = document.querySelector("#nappi_response");
 const reg_response = document.querySelector("#reg_response");
 const buy_response = document.querySelector("#buy_response");
+const testlike_response = document.querySelector("#testlike_response");
 
 const current_user = document.querySelector("#current_user");
 const user_comments = document.querySelector("#user_comments");
 const history_element = document.querySelector("#history");
 const likes_element = document.querySelector("#user_likes");
-
 
 
 const buySend = ((evt) => {
@@ -293,6 +294,39 @@ const nappiTest = ((evt) => {
 });
 
 
+
+const likeTest = ((evt) => {
+  evt.preventDefault();
+
+  const testlike_element = document.querySelector('input[name="testlike"]');
+
+  const data = new FormData();
+  data.append('liked_id', testlike_element.value);
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/is_user_liked.php', settings).then((response) => {
+    if (response.status !== 200) {
+      testlike_response.innerHTML = "Ei toimi";
+    } else {
+      response.json().then((data) => {
+        let message;
+        if (data.liked == true) {
+          message = "Tykätty";
+        } else {
+          message = "Ei tykätty";
+        }
+
+        testlike_response.innerHTML = message;
+      });
+    }
+  }).catch((error) => {
+    testlike_response.innerHTML = "NYT FEILAS PAHASTI";
+  });
+});
+
+
+
 const nappiLogout = ((evt) => {
   evt.preventDefault();
 
@@ -476,6 +510,7 @@ document.querySelector("#buy_form").addEventListener('submit', buySend);
 document.querySelector("#sell_form").addEventListener('submit', sellSend);
 document.querySelector("#comment_form").addEventListener('submit', commentSend);
 document.querySelector("#like_form").addEventListener('submit', likeSend);
+document.querySelector("#testlike_form").addEventListener('submit', likeTest);
 
 
 updateUserInfo();

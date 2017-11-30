@@ -43,8 +43,6 @@ function countUserLikes($dbh, $user_id) {
         if ($sql->rowCount() > 0) {
             $row = $sql->fetch();
 
-            error_log("row = $row[0]");
-
             $count = $row[0];
         }
     } catch (PDOException $e) {
