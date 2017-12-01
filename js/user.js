@@ -1,6 +1,8 @@
 const current_user = document.querySelector("#current_user");
 const funds_user = document.querySelector("#funds_user");
-const lol = 36326464.24234;
+const current_user2 = document.querySelector("#current_user2");
+const since = document.querySelector("#since");
+
 
 const updateUserInfo = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
@@ -12,9 +14,18 @@ const updateUserInfo = (() => {
       response.json().then((data) => {
         if (data.user_info != null) {
           const username = data.user_info.username;
-
+          const signup = data.user_info.signup_date;
           const funds = parseFloat(data.user_info.funds);
+
+
+
+          if (since !== null){
+            since.innerHTML = "Rekisteröitynyt: " + signup ;
+          }
           current_user.innerHTML = username ;
+          if (current_user2 !== null){
+            current_user2.innerHTML = username ;
+          }
           funds_user.innerHTML = funds.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
         }
       });
