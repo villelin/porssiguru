@@ -1,8 +1,4 @@
-const btn2 = document.getElementById('logout');
 
-
-btn2.onclick = () => {
-};
 
 myFunction = () => {
   document.getElementById("myDropdown").classList.toggle("show");

@@ -1,13 +1,3 @@
-const btn = document.getElementById('login');
-const btn2 = document.getElementById('logout');
-
-btn.onclick = () => {
-
-};
-
-btn2.onclick = () => {
-
-};
 
 
 myFunction = () => {
@@ -41,7 +31,7 @@ window.onclick = (event) => {
   if (event.target === modaali) {
     modaali.style.display = "none";
   }
-  if (!event.target.matches('#dropbtn')) {
+  if (!event.target.matches('.dropbtn')) {
     const dropdowns = document.getElementsByClassName("dropdown-content");
     let i;
     for (i = 0; i < dropdowns.length; i++) {
