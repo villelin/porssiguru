@@ -15,63 +15,42 @@ $response["worth"] = 0;
 if (isset($_SESSION['logged_in'])) {
     $user_id = $_SESSION['user_id'];
 
-    // osakkeiden arvo
-    $query = "SELECT SUM(b.assets)
+    $query = "SELECT ua.assets + u.funds
               FROM
-              (SELECT (buy_sum-sell_sum)*stock.price AS 'assets'
-              FROM(
-               SELECT user_id, stock_id, SUM(buy) AS buy_sum, SUM(sell) AS sell_sum
+               (SELECT SUM(b.assets) AS assets
+               FROM
+               (SELECT (buy_sum-sell_sum)*stock.price AS 'assets'
                FROM(
-                (SELECT user_id, stock_id, amount AS 'buy', 0 AS 'sell'
-                 FROM stock_event
-                 WHERE transaction_type='Buy' AND user_id='$user_id')
-                 UNION ALL
-                (SELECT user_id, stock_id, 0 AS 'buy', amount AS 'sell'
-                 FROM stock_event
-                 WHERE transaction_type='Sell' AND user_id='$user_id')
-               ) AS summed
-               GROUP BY user_id, stock_id
-              ) AS final, stock
-              WHERE final.stock_id=stock.id) AS b";
+                SELECT user_id, stock_id, SUM(buy) AS buy_sum, SUM(sell) AS sell_sum
+                FROM(
+                 (SELECT user_id, stock_id, amount AS 'buy', 0 AS 'sell'
+                  FROM stock_event
+                  WHERE transaction_type='Buy' AND user_id='$user_id')
+                  UNION ALL
+                 (SELECT user_id, stock_id, 0 AS 'buy', amount AS 'sell'
+                  FROM stock_event
+                  WHERE transaction_type='Sell' AND user_id='$user_id')
+                ) AS summed
+                GROUP BY user_id, stock_id
+               ) AS final, stock
+              WHERE final.stock_id=stock.id) AS b
+              ) AS ua, user_account AS u
+              WHERE u.id='$user_id'";
     $sql = $DBH->prepare($query);
     $sql->execute();
-
-    $stock_worth = 0;
 
     try
     {
         if ($sql->rowCount() != 0) {
             $row = $sql->fetch();
             if ($row[0] != null) {
-                $stock_worth = $row[0];
+                $response["worth"] = $row[0];
             }
         }
     }
     catch (PDOException $e)
     {
     }
-
-    // käteisvarat
-    $funds = 0;
-
-    $query = "SELECT funds FROM user_account WHERE id='$user_id'";
-    $sql = $DBH->prepare($query);
-    $sql->execute();
-    
-    try
-    {
-        if ($sql->rowCount() != 0) {
-            $row = $sql->fetch();
-            if ($row[0] != null) {
-                $funds = $row[0];
-            }
-        }
-    }
-    catch (PDOException $e)
-    {
-    }
-
-    $response["worth"] = $stock_worth + $funds;
 }
 
 $json = json_encode($response);
