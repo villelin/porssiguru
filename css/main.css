@@ -45,7 +45,7 @@ hr {
     height: 1px;
     border: 0;
     border-top: 1px solid #ccc;
-    margin: 1em 0;
+    /*margin: 1em 0;*/
     padding: 0;
 }
 
@@ -98,9 +98,46 @@ textarea {
    ========================================================================== */
 
 
+header {
+    background-color: #6D6DB2;
+    text-align: left;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
 
+.nav {
+    overflow: hidden;
+    background-color: black;
+    padding: 0;
+    align-content: center;
+}
+.nav h1 {
+    margin: 0%;
+}
 
+.nav a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    background-color: black;
+    margin-top:0%;
+}
 
+.nav a:hover {
+    background-color: deeppink;
+    color: white;
+}
+
+.nav a.active {
+    background-color: yellow;
+    
+}
 
 
 
@@ -208,9 +245,9 @@ textarea {
 }
 
 @media print,
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 1.25dppx),
-       (min-resolution: 120dpi) {
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
     /* Style adjustments for high resolution devices */
 }
 
