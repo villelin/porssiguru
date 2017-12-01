@@ -7,7 +7,6 @@ const likes_element = document.querySelector("#user_likes");
 
 
 
-
 // *** KÄYTTÄJÄSTÄ TYKKÄYKSET ***
 
 const likes_data = new FormData();
