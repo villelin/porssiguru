@@ -24,7 +24,7 @@ class FailResponse extends StatusResponse {
 
     public function __construct($message) {
         parent::__construct($message);
-        $response["error"] = true;
+        $this->response["error"] = true;
     }
 }
 
@@ -32,6 +32,6 @@ class OKResponse extends StatusResponse {
 
     public function __construct($message) {
         parent::__construct($message);
-        $response["error"] = false;
+        $this->response["error"] = false;
     }
 }
