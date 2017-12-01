@@ -1,6 +1,6 @@
 const current_user = document.querySelector("#current_user");
 const funds_user = document.querySelector("#funds_user");
-
+const lol = 36326464.24234;
 
 const updateUserInfo = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
@@ -13,9 +13,9 @@ alert('kskkssksk');
         if (data.user_info != null) {
           const username = data.user_info.username;
 
-          const funds = data.user_info.funds;
+          const funds = parseFloat(data.user_info.funds);
           current_user.innerHTML = username ;
-          funds_user.innerHTML = parseFloat(funds) + "€";
+          funds_user.innerHTML = funds.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
         }
       });
     } else {
