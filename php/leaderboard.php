@@ -10,7 +10,7 @@ require_once('config.php');
 
 $response = array();
 
-$query = "SELECT username, user_id, stocksum.assets+u.funds AS 'assets'
+$query = "SELECT username, user_id, IFNULL(stocksum.assets,0)+u.funds AS 'assets'
           FROM
           (SELECT user_id, SUM(buy_sum-sell_sum) AS 'assets'
           FROM(

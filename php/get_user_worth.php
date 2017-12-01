@@ -15,7 +15,7 @@ $response["worth"] = 0;
 if (isset($_SESSION['logged_in'])) {
     $user_id = $_SESSION['user_id'];
 
-    $query = "SELECT ua.assets + u.funds
+    $query = "SELECT IFNULL(ua.assets,0) + u.funds
               FROM
                (SELECT SUM(b.assets) AS assets
                FROM
