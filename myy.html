@@ -22,37 +22,6 @@
                 <a id="logout">Logout</a>
                 <a id="login">Login</a>
             </div>
-            <!--KIRJAUTUMIS-MODAALI------------>
-            <div id="myModal" class="modal">
-                <!-- Modaalin sisalto -->
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <form id="register_form" method="POST">
-                        <h4>KIRJAUDU SISÄÄN</h4>
-                        <input type="text" name="reg_username" required placeholder="Käyttäjätunnus">
-                        <input type="password" name="reg_password" required placeholder="Salasana">
-                        <!--<input type="password" name="reg_password_verify" required placeholder="Salasana uudestaan">-->
-                        <input class="nappi" type="submit" name="Lähetä" value="Kirjaudu">
-                        <a id="rek">Eikö tunnusta? Rekisteröidy</a>
-                    </form>
-                </div>
-            </div>
-            <!--REKISTERÖINTI-MODAALI------------------->
-            <div id="myModalRek" class="modal">
-                <!-- Modaalin sisalto -->
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-
-                    <form id="register_form" method="POST">
-                        <h4>REKISTERÖINTI</h4>
-                        <input type="text" name="reg_username" required placeholder="Käyttäjätunnus">
-                        <input type="password" name="reg_password" required placeholder="Salasana">
-                        <input type="password" name="reg_password_verify" required placeholder="Salasana uudestaan">
-                        <input class="nappi" type="submit" name="Lähetä" value="Kirjaudu">
-                        <a >Käyttöehdot</a>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
     <div id="navi">
@@ -77,25 +46,10 @@
             <td id="hinta">6</td>
             <td id="maara">666</td>
             <td id="arvo">66666</td>
-            <td id="kpl"><input type="text" id="name" name="fname"  style="width: 100%;"></td>
+            <td id="kpl"><input type="number" name="sell_amount"  style="width: 100%;"></td>
             <td id="myy"><button style="cursor: pointer"  >MYY</button></td>
         </tr>
-        <tr>
-            <td>Berglunds snabbköp</td>
-            <td>66</td>
-            <td>666</td>
-            <td>66666</td>
-            <td id="kpl"><input type="text" id="name" name="fname"  style="width: 100%;"></td>
-            <td><button style="cursor: pointer">MYY</button></td>
-        </tr>
-        <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>666</td>
-            <td>66666</td>
-            <td>66666</td>
-            <td id="kpl"><input type="text" id="name" name="fname"  style="width: 100%;"></td>
-            <td><button style="cursor: pointer">MYY</button></td>
-        </tr>
+
     </table>
 </main>
 <script src="js/droppi.js"></script>
