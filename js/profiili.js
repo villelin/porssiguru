@@ -1,5 +1,5 @@
-const varat = document.querySelector("#varallisuus");
-
+const  varat= document.querySelector("#varallisuus");
+const arvopaperit = document.querySelector("#arvopaperit");
 
 const updateProfile = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
@@ -11,10 +11,14 @@ const updateProfile = (() => {
     if (response.status === 200) {
       response.json().then((data) => {
         /*alert(data.worth);*/
-        if (data.worth !== null) {
-        varat.innerHTML = data.worth.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
 
+        if (data.worth !== null) {
+          const  netWorth= parseFloat(data.worth);
+        arvopaperit.innerHTML = netWorth.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
         }
+
+
+
       });
     } else {
       // virhe

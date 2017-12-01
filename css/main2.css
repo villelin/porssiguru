@@ -36,7 +36,7 @@ main{
 
 #hedi{
     display:grid;
-    grid-template-columns: repeat(3, 60% 30% 10%);
+    grid-template-columns: repeat(3, 10% 80% 10%);
     background-color: black;
     color: white;
     margin-bottom: 0px;
@@ -115,7 +115,7 @@ topLista > div:nth-child(odd) {
 
 #profLuvut{
     display:grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 }
 #profLuvutA{
 
@@ -133,14 +133,7 @@ topLista > div:nth-child(odd) {
     margin: 5px;
     text-align: center;
 }
-#profLuvutB2{
 
-    grid-row-gap: 1em;
-    padding: 1em;
-    box-shadow: 1px 0px 7px 0px black;
-    margin: 5px;
-    text-align: center;
-}
 #profLuvutC{
 
     grid-row-gap: 1em;
@@ -424,10 +417,25 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 .kuvaModal img{
     cursor: pointer;
 }
+
+#lol {
+    display: none;
+}
+#lol2{
+    display: block;
+
+}
+#varat{
+    text-align: right;
+    margin-right: 10px;
+}
 /* LARGE SCREENS*/
 @media (min-width: 600px) {
 
-    header{
-
+    #lol2{
+        display: none;
+    }
+    #lol {
+        display: block;
     }
 }
