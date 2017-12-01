@@ -101,7 +101,10 @@ const updateUserInfo = (() => {
           const imageurl = data.user_info.image;
           const desc = data.user_info.description;
           const signup = data.user_info.signup_date;
-          const funds = data.user_info.funds;
+          let funds = parseFloat(data.user_info.funds);
+
+          funds = funds.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
+
           current_user.innerHTML = `Käyttäjä: ${username}, Email: ${email}, Image: ${imageurl}, Desc: ${desc}, Signup: ${signup}, Funds: ${funds}`;
         }
       });
@@ -252,6 +255,7 @@ const loginSend = ((evt) => {
     else {
       response.json().then((data) => {
         let message = "";
+        alert(data.error);
         if (data.error == true) {
           message += "VIRHE: ";
         } else {
@@ -425,6 +429,7 @@ const registerSend = ((evt) => {
             message = data.message;
           }
           valid_message += `${message}<br>`;
+          updateUserInfo();
         });
       } else {
         valid_message += `Palvelu ei käytössä<br>`;
@@ -511,6 +516,5 @@ document.querySelector("#sell_form").addEventListener('submit', sellSend);
 document.querySelector("#comment_form").addEventListener('submit', commentSend);
 document.querySelector("#like_form").addEventListener('submit', likeSend);
 document.querySelector("#testlike_form").addEventListener('submit', likeTest);
-
 
 updateUserInfo();
