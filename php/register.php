@@ -9,6 +9,7 @@
 require_once('config.php');
 require_once('session.php');
 require_once('status_response.php');
+require_once('user_common.php');
 
 define('SALT','PörssigurunSalasananSuolaus40t9ert0e9rt8er');
 
@@ -40,6 +41,17 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 
             registerUsername($DBH, $username, $hashed_password, NEW_USER_BASE_FUNDS);
 
+            // logataan sisään
+            $result = tryLogin($DBH, $username, $hashed_password);
+            if ($result["status"] == LOGIN_OK) {
+                $_SESSION["username"] = $username;
+                $_SESSION["password"] = $password;
+                $_SESSION["user_id"] = $result["user_id"];
+                $_SESSION["logged_in"] = true;
+
+                insertLogin($DBH, $_SESSION["user_id"]);
+            }
+
             // vastaus Ajaxille
             $response = new OKResponse("Käyttäjätunnuksen luonti onnistui.");
         } else {
@@ -54,35 +66,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
 echo $response->getJSON();
 
 
-/*
- * Tarkistaa tietokannasta onko käyttäjätunnus jo olemassa
- *
- * Palauttaa true tai false. Null jos tietokannan käsittelyssä on virhe.
- */
-function doesUsernameExist($dbh, $username) {
-    $find_query = "SELECT id FROM user_account WHERE username='$username'";
-    $sql = $dbh->prepare($find_query);
-    $sql->execute();
 
-    try {
-        if ($sql->rowCount() == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    } catch (PDOException $e) {
-        return null;
-    }
-}
-
-/*
- * Rekisteröi käyttäjänimen tietokantaan
- */
-function registerUsername($dbh, $username, $password, $funds) {
-    $insert_query = "INSERT INTO user_account(username, pass, funds, description, image, signup_date)";
-    $insert_query .= "VALUES('$username', '$password', '$funds', '', '', CURRENT_TIMESTAMP)";
-    $sql = $dbh->prepare($insert_query);
-    $sql->execute();
-}
 
 ?>
