@@ -15,7 +15,7 @@ $response["worth"] = 0;
 if (isset($_SESSION['logged_in'])) {
     $user_id = $_SESSION['user_id'];
 
-    $query = "SELECT SUM(assets)
+    $query = "SELECT SUM(assets) + a.funds
               FROM
               (SELECT (buy_sum-sell_sum) * stock.price AS 'assets'
               FROM(
@@ -31,7 +31,7 @@ if (isset($_SESSION['logged_in'])) {
                ) AS summed
                GROUP BY user_id, stock_id
               ) AS final, stock
-              WHERE final.stock_id=stock.id) AS assets";
+              WHERE final.stock_id=stock.id) AS assets, user_account AS a";
     $sql = $DBH->prepare($query);
     $sql->execute();
 
