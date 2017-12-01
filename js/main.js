@@ -17,6 +17,7 @@ const current_user = document.querySelector("#current_user");
 const user_comments = document.querySelector("#user_comments");
 const history_element = document.querySelector("#history");
 const likes_element = document.querySelector("#user_likes");
+const worth_element = document.querySelector("#user_worth");
 
 
 const buySend = ((evt) => {
@@ -227,6 +228,34 @@ const updateUserInfo = (() => {
     // virhe
     likes_element.innerHTML = "";
   });
+
+
+  const worth_data = new FormData();
+  // TODO: tänne käyttäjä jonka tykkäykset halutaan
+  //likes_data.append('liked_id', 'USER_ID');
+
+  const worth_settings = { method: 'POST', body: worth_data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/get_user_worth.php', worth_settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let worth = "Worth: ";
+
+        if (data.worth != null) {
+          worth += data.worth;
+        }
+
+        worth_element.innerHTML = worth;
+      });
+    } else {
+      // virhe
+      worth_element.innerHTML = "";
+    }
+  }).catch((error) => {
+    // virhe
+    worth_element.innerHTML = "";
+  });
+
 
 
 });
