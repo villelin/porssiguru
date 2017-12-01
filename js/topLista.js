@@ -26,7 +26,7 @@ const topListaus = (() => {
             const name = item.username;
             const assets = item.assets;
 
-            html +=` <tr><td>d</td><td>ddd</td><td>dddd</td></tr>`
+            html += `<tr><td>d</td><td>ddd</td><td>dddd</td></tr>`;
           });
         }
 
