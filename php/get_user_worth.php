@@ -39,7 +39,9 @@ if (isset($_SESSION['logged_in'])) {
     {
         if ($sql->rowCount() != 0) {
             $row = $sql->fetch();
-            $response["worth"] = $row[0];
+            if ($row[0] != null) {
+                $response["worth"] = $row[0];
+            }
         }
     }
     catch (PDOException $e)
