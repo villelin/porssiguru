@@ -4,7 +4,7 @@ const lol = 36326464.24234;
 
 const updateUserInfo = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
-alert('kskkssksk');
+
   const settings = {method: 'POST', cache: 'no-cache', credentials: 'include'};
 
   fetch('php/user_info.php', settings).then((response) => {

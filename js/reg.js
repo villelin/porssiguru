@@ -53,7 +53,7 @@ const registerSend = ((evt) => {
       cache: 'no-cache',
       credentials: 'include'
     };
-alert ('asdasdasd');
+/*alert ('asdasdasd');*/
     fetch('php/register.php', settings).then((response) => {
       if (response.status === 200) {
         response.json().then((data) => {
