@@ -10,9 +10,9 @@ const updateProfile = (() => {
   fetch('php/get_user_worth.php', settings).then((response) => {
     if (response.status === 200) {
       response.json().then((data) => {
-        alert(data.worth);
+        /*alert(data.worth);*/
         if (data.worth !== null) {
-        varat.innerHTML = data.worth;
+        varat.innerHTML = data.worth.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
 
         }
       });
