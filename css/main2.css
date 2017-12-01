@@ -115,7 +115,7 @@ topLista > div:nth-child(odd) {
 
 #profLuvut{
     display:grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 }
 #profLuvutA{
 
@@ -126,6 +126,14 @@ topLista > div:nth-child(odd) {
     text-align: center;
 }
 #profLuvutB{
+
+    grid-row-gap: 1em;
+    padding: 1em;
+    box-shadow: 1px 0px 7px 0px black;
+    margin: 5px;
+    text-align: center;
+}
+#profLuvutB2{
 
     grid-row-gap: 1em;
     padding: 1em;
@@ -404,7 +412,14 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 
 /* --------KUVA-----MODAALI---- */
-
+#kuvaVaihto{
+    display:grid;
+    grid-template-columns: repeat(2, auto auto);
+    grid-row-gap: 1em;
+    padding: 1em;
+    box-shadow: 1px 0px 7px 0px black;
+    margin: 5px;
+}
 
 .kuvaModal img{
     cursor: pointer;

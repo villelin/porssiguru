@@ -18,7 +18,7 @@ myFunction = () => {
 const modaali = document.getElementById('kuvaModal');
 
 // Get the button that opens the modal
-const btnK = document.getElementById('profKuva');
+const btnK = document.getElementById('pKuva');
 
 // Get the <span> element that closes the modal
 const span = document.getElementsByClassName('close')[0];
