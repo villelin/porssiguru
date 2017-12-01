@@ -1,11 +1,9 @@
 
-
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 myFunction = () => {
   document.getElementById("myDropdown").classList.toggle("show");
 };
-
 
 // Get the modal
 const modal = document.getElementById('myModal');
