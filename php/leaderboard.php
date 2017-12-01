@@ -10,7 +10,9 @@ require_once('config.php');
 
 $response = array();
 
-$query = "SELECT user_id, username, SUM(buy_sum-sell_sum) AS 'assets'
+$query = "SELECT username, user_id, stocksum.assets+u.funds AS 'assets'
+          FROM
+          (SELECT user_id, SUM(buy_sum-sell_sum) AS 'assets'
           FROM(
            SELECT user_id, stock_id, SUM(buy) AS buy_sum, SUM(sell) AS sell_sum
            FROM(
@@ -25,7 +27,8 @@ $query = "SELECT user_id, username, SUM(buy_sum-sell_sum) AS 'assets'
            GROUP BY user_id, stock_id
           ) AS final, stock, user_account AS u
           WHERE final.stock_id=stock.id AND user_id=u.id
-          GROUP BY user_id
+          GROUP BY user_id) AS stocksum, user_account AS u
+          WHERE u.id=stocksum.user_id
           ORDER BY assets DESC";
 
 if (isset($_POST["num"])) {
