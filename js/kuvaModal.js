@@ -1,8 +1,5 @@
-const btn = document.getElementById('login');
 const btn2 = document.getElementById('logout');
 
-btn.onclick = () => {
-};
 
 btn2.onclick = () => {
 };
