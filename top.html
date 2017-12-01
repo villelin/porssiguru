@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +14,7 @@
             <h1>PörssiGuru </h1>
         </div>
         <div id="varat">
-            <h1>66,666€</h1>
+            <h1 id="funds_user">66,666€</h1>
         </div>
         <div class="dropdown">
             <button onclick="myFunction()" class="dropbtn">XX</button>
@@ -24,73 +22,65 @@
                 <a id="logout">Logout</a>
                 <a id="login">Login</a>
             </div>
-
-
         </div>
     </div>
     <div id="navi">
         <a href="top.html" class="active">TOP</a>
         <a href="osta.html">OSTA</a>
         <a href="myy.html">MYY</a>
-        <a href="profiili.html">GURU</a>
+        <a id="current_user" href="profiili.html">GURU</a>
     </div>
 </header>
 <main>
-<table>
-    <tr>
-        <th>GuruLista</th>
-        <th></th>
-        <th></th>
-    </tr>
-    <tr id="hloPro">
-        <td><img src="http://www.placecage.com/c/100/100"></td>
-        <td><h2>1.</h2>Maria Anders</td>
-        <td><h3 >105000</h3></td>
-    </tr>
-    <tr>
-        <td><img src=" http://www.placecage.com/100/100"></td>
-        <td><h2>2.</h2>Christina Berglund</td>
-        <td>102200</td>
-    </tr>
-    <tr>
-        <td><img src=" http://www.placecage.com/c/100/100"></td>
-        <td><h2>3.</h2>Francisco Chang</td>
-        <td>100230</td>
-    </tr>
-    <tr>
-        <td><img src=" http://www.placecage.com/g/100/100"></td>
-        <td><h2>4.</h2>Roland Mendel</td>
-        <td>16200</td>
-    </tr>
-    <tr>
-        <td><img src=" http://www.placecage.com/c/100/100"></td>
-        <td><h2>5.</h2>Helen Bennett</td>
-        <td>102200</td>
-    </tr>
-</table>
-
-
-
-
-
-
+        <table>
+        <tr>
+            <th>GuruLista</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr id="hloPro">
+            <td><img src="http://www.placecage.com/c/100/100"></td>
+            <td><h2>1.</h2>Maria Anders</td>
+            <td><h3 >105000</h3></td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/100/100"></td>
+            <td><h2>2.</h2>Christina Berglund</td>
+            <td>102200</td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/c/100/100"></td>
+            <td><h2>3.</h2>Francisco Chang</td>
+            <td>100230</td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/g/100/100"></td>
+            <td><h2>4.</h2>Roland Mendel</td>
+            <td>16200</td>
+        </tr>
+        <tr>
+            <td><img src=" http://www.placecage.com/c/100/100"></td>
+            <td><h2>5.</h2>Helen Bennett</td>
+            <td>102200</td>
+        </tr>
+    </table>
 
 
     <!-- The Modal -->
     <div id="ProfModal" class="Pmodal">
-
         <!-- Modal content -->
         <div class="Pmodal-content">
             <span class="close">&times;</span>
 
-            <div id="profKuka">
+            <div id="profTop">
                 <div><img src="http://www.placecage.com/c/100/100"></div>
-                <div>
+                <div id="marginkuvateksti">
                     <h4>MASA</h4>
                     <p>since: 12.2.2017</p>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, veritatis!</p>
                 </div>
             </div>
+
             <div id="profLuvut">
                 <div id="profLuvutA">
                     <div><h4>SIJA</h4><h2>6</h2></div>
@@ -102,26 +92,24 @@
                     <div><h4>gurutus</h4><h2>14</h2></div>
                 </div>
             </div>
-            <div id="profHistoria">
-                <div><h4>Historia</h4></div>
-                <p>OSTO Nokia 150kpl 12.11.2017</p>
-                <p>MYYNTI Atria 111kpl 1.8.2017</p>
-                <p>Näytä enemmän...</p>
-            </div>
+
             <div id="profKommentit">
-                <div><h4>Kommentit</h4></div>
-                <p>https://davidwalsh.name/html-mysql-php</p>
+                Kommentittttttttttt
+                <p id="user_comments"></p>
+                <p id="comments"></p>
+                <form action="" id="comment_form">
+
+                    <input name="comment"  placeholder="Kirjoita tähän.." >
+                    <input type="submit">
+                </form>
+                <br>
             </div>
         </div>
-
     </div>
-
-
-
-
-
 </main>
 <script src="js/profModal.js"></script>
-
+<script src="js/user.js"></script>
 </body>
 </html>
+
+

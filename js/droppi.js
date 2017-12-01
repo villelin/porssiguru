@@ -46,8 +46,6 @@ span.onclick = () => {
 
 
 
-
-
 // Kun klikataan muualle kuin modaliin tai droppiin em. osat sulkeutuu
 window.onclick = (event) => {
   if (event.target ===  modal  ) {

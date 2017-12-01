@@ -2,13 +2,10 @@ const btn = document.getElementById('login');
 const btn2 = document.getElementById('logout');
 
 btn.onclick = () => {
-
 };
 
 btn2.onclick = () => {
-
 };
-
 
 myFunction = () => {
   document.getElementById("myDropdown").classList.toggle("show");
@@ -18,16 +15,16 @@ myFunction = () => {
 // PROFIILI MODAALI
 
 // Get the modal
-const modaali = document.getElementById('ProfModal');
+const modaali = document.getElementById('kuvaModal');
 
 // Get the button that opens the modal
-const btnP = document.getElementById("hloPro");
+const btnK = document.getElementById('profKuva');
 
 // Get the <span> element that closes the modal
-const span = document.getElementsByClassName("close")[0];
+const span = document.getElementsByClassName('close')[0];
 
 // When the user clicks the button, open the modal
-btnP.onclick = () => {
+btnK.onclick = () => {
   modaali.style.display = "block";
 };
 
@@ -41,7 +38,7 @@ window.onclick = (event) => {
   if (event.target === modaali) {
     modaali.style.display = "none";
   }
-  if (!event.target.matches('#dropbtn')) {
+  if (!event.target.matches('.dropbtn')) {
     const dropdowns = document.getElementsByClassName("dropdown-content");
     let i;
     for (i = 0; i < dropdowns.length; i++) {
