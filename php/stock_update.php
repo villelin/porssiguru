@@ -27,8 +27,6 @@ $currency_type_list[] = array('symbol' => 'DASH', 'name' => 'Dash');
 
 
 
-
-
 $time_start = microtime(true);
 
 // Helsinki lista
