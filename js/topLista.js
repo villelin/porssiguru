@@ -1,6 +1,4 @@
-const current_user = document.querySelector("#current_user");
-const funds_user = document.querySelector("#funds_user");
-const current_user2 = document.querySelector("#current_user2");
+
 
 
 const toplista = document.querySelector("#toplista");
@@ -28,12 +26,14 @@ const topListaus = (() => {
 
             html += `<tr><td>d</td><td>ddd</td><td>dddd</td></tr>`;
           });
+          toplista.innerHTML = html;
         }
 
       });
     } else {
       // virhe
       current_user.innerHTML = "";
+
     }
   }).catch((error) => {
     // virhe
