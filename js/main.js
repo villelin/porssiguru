@@ -18,7 +18,7 @@ const user_comments = document.querySelector("#user_comments");
 const history_element = document.querySelector("#history");
 const likes_element = document.querySelector("#user_likes");
 const worth_element = document.querySelector("#user_worth");
-
+const rank_element = document.querySelector("#user_rank");
 
 const buySend = ((evt) => {
   evt.preventDefault();
@@ -257,6 +257,32 @@ const updateUserInfo = (() => {
   });
 
 
+  // KÄYTTÄJÄN RANK
+  const rank_data = new FormData();
+  // TODO: tänne käyttäjä jonka rank halutaan
+  //rank_data.append('user_id', 'USER_ID');
+
+  const rank_settings = { method: 'POST', body: rank_data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/get_user_rank.php', rank_settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        let rank = "Sija: ";
+
+        if (data.rank != null) {
+          rank += data.rank;
+        }
+
+        rank_element.innerHTML = rank;
+      });
+    } else {
+      // virhe
+      rank_element.innerHTML = "";
+    }
+  }).catch((error) => {
+    // virhe
+    rank_element.innerHTML = "";
+  });
 
 });
 
