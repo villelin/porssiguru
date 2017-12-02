@@ -102,5 +102,10 @@ foreach ($user_assets as $user_id => $item) {
 // järjestetään assettien mukaan laskevasti
 usort($leaderboard, "leaderboardCompare");
 
+// jos haluttu määrä on määritelty, leikataan muut pois
+if ($num != 0) {
+    $leaderboard = array_slice($leaderboard, 0, $num);
+}
+
 $json = json_encode($leaderboard);
 echo $json;
