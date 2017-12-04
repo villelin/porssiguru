@@ -25,7 +25,7 @@ $json = json_encode($response);
 echo $json;
 
 function getUserInfo($dbh, $user_id) {
-    $query = "SELECT username, email, image, funds, description, DATE_FORMAT(signup_date, '%d/%m/%Y') AS 'signup'
+    $query = "SELECT username, image, funds, description, DATE_FORMAT(signup_date, '%d/%m/%Y') AS 'signup'
               FROM user_account
               WHERE id='$user_id'";
     $sql = $dbh->prepare($query);
@@ -37,7 +37,7 @@ function getUserInfo($dbh, $user_id) {
     {
         if ($sql->rowCount() > 0) {
             $row = $sql->fetch();
-            $result = array("username" => $row["username"], "email" => $row["email"], "image" => $row["image"],
+            $result = array("username" => $row["username"], "image" => $row["image"],
                 "description" => $row["description"], "signup_date" => $row["signup"], "funds" => $row["funds"]);
         }
     }

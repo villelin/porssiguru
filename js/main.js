@@ -5,6 +5,7 @@ const sell_form = document.querySelector("#sell_form");
 const comment_form = document.querySelector("#comment_form");
 const like_form = document.querySelector("#like_form");
 const testlike_form = document.querySelector("#testlike_form");
+const testprofile_form = document.querySelector("#testprofile_form");
 
 
 const response_element = document.querySelector("#response");
@@ -12,6 +13,9 @@ const nappi_response = document.querySelector("#nappi_response");
 const reg_response = document.querySelector("#reg_response");
 const buy_response = document.querySelector("#buy_response");
 const testlike_response = document.querySelector("#testlike_response");
+const testprofile_rank = document.querySelector("#testprofile_rank");
+const testprofile_worth = document.querySelector("#testprofile_worth");
+const testprofile_info = document.querySelector("#testprofile_info");
 
 const current_user = document.querySelector("#current_user");
 const user_comments = document.querySelector("#user_comments");
@@ -98,7 +102,6 @@ const updateUserInfo = (() => {
       response.json().then((data) => {
         if (data.user_info != null) {
           const username = data.user_info.username;
-          const email = data.user_info.email;
           const imageurl = data.user_info.image;
           const desc = data.user_info.description;
           const signup = data.user_info.signup_date;
@@ -106,7 +109,7 @@ const updateUserInfo = (() => {
 
           funds = funds.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
 
-          current_user.innerHTML = `Käyttäjä: ${username}, Email: ${email}, Image: ${imageurl}, Desc: ${desc}, Signup: ${signup}, Funds: ${funds}`;
+          current_user.innerHTML = `Käyttäjä: ${username}, Image: ${imageurl}, Desc: ${desc}, Signup: ${signup}, Funds: ${funds}`;
         }
       });
     } else {
@@ -561,6 +564,67 @@ const likeSend = ((evt) => {
 
 
 
+const testProfile = ((evt) => {
+  evt.preventDefault();
+
+  const user_element = document.querySelector('input[name="testprofile"]');
+
+  const data = new FormData();
+  data.append('user_id', user_element.value);
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/user_info.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        if (data.user_info != null) {
+          const username = data.user_info.username;
+          const imageurl = data.user_info.image;
+          const desc = data.user_info.description;
+          const signup = data.user_info.signup_date;
+          let funds = parseFloat(data.user_info.funds);
+
+          funds = funds.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
+
+          testprofile_info.innerHTML = `Käyttäjä: ${username}, Image: ${imageurl}, Desc: ${desc}, Signup: ${signup}, Funds: ${funds}`;
+        }
+      });
+    } else {
+      testprofile_info.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    testprofile_info.innerHTML = "FEILAS PAHASTI";
+  });
+
+
+  fetch('php/get_user_rank.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        testprofile_rank.innerHTML = data.rank;
+      });
+    } else {
+      testprofile_info.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    testprofile_info.innerHTML = "FEILAS PAHASTI";
+  });
+
+
+  fetch('php/get_user_worth.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        testprofile_worth.innerHTML = data.worth;
+      });
+    } else {
+      testprofile_worth.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    testprofile_worth.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
 
 document.querySelector("#nappi").addEventListener('click', nappiTest);
 document.querySelector("#logout").addEventListener('click', nappiLogout);
@@ -571,5 +635,6 @@ document.querySelector("#sell_form").addEventListener('submit', sellSend);
 document.querySelector("#comment_form").addEventListener('submit', commentSend);
 document.querySelector("#like_form").addEventListener('submit', likeSend);
 document.querySelector("#testlike_form").addEventListener('submit', likeTest);
+document.querySelector("#testprofile_form").addEventListener('submit', testProfile);
 
 updateUserInfo();
