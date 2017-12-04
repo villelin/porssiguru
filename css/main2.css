@@ -32,13 +32,14 @@ main{
     display:grid;
     padding: 10px 5px 50px 5px;
     box-shadow: 1px 0px 7px 0px black;
+    background-color: white;
 }
 
 #hedi{
     display:grid;
     grid-template-columns: repeat(3, 10% 80% 10%);
     background-color: black;
-    color: white;
+    color: #C49F66;
     margin-bottom: 0px;
     padding: 1em;
 }
@@ -47,7 +48,7 @@ main{
     display:grid;
     grid-template-columns: repeat(4, 1fr);
     text-align: center;
-    background-color: gainsboro;
+    background-color: white;
 }
 
 #navi a {
@@ -68,7 +69,7 @@ main{
 
 
 #navi a.active {
-    background-color: darkgrey;
+    background-color: #C49F66;
 }
 
 ul {
@@ -206,7 +207,7 @@ form input {
 }
 
 form h4{
-    color: #6D6DB2;
+    color: #C49F66;
 }
 form a{
     color: #aaaaaa;
@@ -232,7 +233,7 @@ form.nappi:hover{
     cursor:pointer;
 }
 form .nappi {
-    background: #6D6DB2;
+    background: #C49F66;
     border:0;
     text-transform: uppercase;
     border-radius: 0;
@@ -241,7 +242,7 @@ form .nappi {
 }
 
 form .nappi:hover, form .nappi:focus{
-    background: #6D6DB2;
+    background: #C49F66;
     color:white;
     outline:0;
     transition: background-color 2s ease-out;
@@ -388,6 +389,9 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     color: black;
 
 }
+
+
+
 
 #profTop{
     display:grid;
