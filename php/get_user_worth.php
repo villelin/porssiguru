@@ -12,9 +12,21 @@ require_once('session.php');
 $response = array();
 $response["worth"] = 0;
 
-if (isset($_SESSION['logged_in'])) {
+if (isset($_POST['user_id'])) {
+    $user_id = $_POST['user_id'];
+
+    $response["worth"] = getUserWorth($DBH, $user_id);
+} else if (isset($_SESSION['logged_in'])) {
     $user_id = $_SESSION['user_id'];
 
+    $response["worth"] = getUserWorth($DBH, $user_id);
+}
+
+$json = json_encode($response);
+echo $json;
+
+
+function getUserWorth($dbh, $user_id) {
     // käyttäjän osakkeet
     $query = "SELECT SUM(assets)
               FROM(
@@ -34,7 +46,7 @@ if (isset($_SESSION['logged_in'])) {
                ) AS final, stock
                WHERE final.stock_id=stock.id
               ) AS a";
-    $sql = $DBH->prepare($query);
+    $sql = $dbh->prepare($query);
     $sql->execute();
 
     $user_stock = 0;
@@ -55,7 +67,7 @@ if (isset($_SESSION['logged_in'])) {
     // käyttäjän käteiset
     $query = "SELECT funds FROM user_account WHERE id='$user_id'";
 
-    $sql = $DBH->prepare($query);
+    $sql = $dbh->prepare($query);
     $sql->execute();
 
     $user_funds= 0;
@@ -73,8 +85,5 @@ if (isset($_SESSION['logged_in'])) {
     {
     }
 
-    $response["worth"] = $user_stock + $user_funds;
+    return $user_stock + $user_funds;
 }
-
-$json = json_encode($response);
-echo $json;
