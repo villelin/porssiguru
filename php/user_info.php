@@ -8,6 +8,7 @@
 
 require_once('config.php');
 require_once('session.php');
+require_once('user_common.php');
 
 $response = array();
 
@@ -24,26 +25,3 @@ if (isset($_POST['user_id'])) {
 $json = json_encode($response);
 echo $json;
 
-function getUserInfo($dbh, $user_id) {
-    $query = "SELECT username, image, funds, description, DATE_FORMAT(signup_date, '%d/%m/%Y') AS 'signup'
-              FROM user_account
-              WHERE id='$user_id'";
-    $sql = $dbh->prepare($query);
-    $sql->execute();
-
-    $result = "";
-
-    try
-    {
-        if ($sql->rowCount() > 0) {
-            $row = $sql->fetch();
-            $result = array("username" => $row["username"], "image" => $row["image"],
-                "description" => $row["description"], "signup_date" => $row["signup"], "funds" => $row["funds"]);
-        }
-    }
-    catch (PDOException $e)
-    {
-    }
-
-    return $result;
-}

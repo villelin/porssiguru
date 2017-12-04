@@ -98,6 +98,156 @@ function registerUsername($dbh, $username, $password, $funds) {
 }
 
 
+/*
+ * Palauttaa käyttäjän nykyisen rankingin
+ */
+function getUserRank($dbh, $user_id) {
+    $leaderboard = getLeaderboard($dbh, 0);
+
+    foreach($leaderboard as $index => $item) {
+        if ($item["user_id"] == $user_id) {
+            return $index+1;
+        }
+    }
+    return null;
+}
+
+
+
+function getUserInfo($dbh, $user_id) {
+    $query = "SELECT username, image, funds, description, DATE_FORMAT(signup_date, '%d/%m/%Y') AS 'signup'
+              FROM user_account
+              WHERE id='$user_id'";
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $result = "";
+
+    try
+    {
+        if ($sql->rowCount() > 0) {
+            $row = $sql->fetch();
+            $result = array("username" => $row["username"], "image" => $row["image"],
+                "description" => $row["description"], "signup_date" => $row["signup"], "funds" => $row["funds"]);
+        }
+    }
+    catch (PDOException $e)
+    {
+    }
+
+    return $result;
+}
+
+
+
+function getUserWorth($dbh, $user_id) {
+    // käyttäjän osakkeet
+    $query = "SELECT SUM(assets)
+              FROM(
+               SELECT user_id, (buy_sum-sell_sum)*stock.price AS 'assets'
+               FROM(
+                SELECT user_id, stock_id, SUM(buy) AS buy_sum, SUM(sell) AS sell_sum
+                FROM(
+                (SELECT user_id, stock_id, amount AS 'buy', 0 AS 'sell'
+                 FROM stock_event
+                 WHERE transaction_type='Buy' AND user_id='$user_id')
+                 UNION ALL
+                (SELECT user_id, stock_id, 0 AS 'buy', amount AS 'sell'
+                 FROM stock_event
+                 WHERE transaction_type='Sell' AND user_id='$user_id')
+                ) AS summed
+                GROUP BY user_id, stock_id
+               ) AS final, stock
+               WHERE final.stock_id=stock.id
+              ) AS a";
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $user_stock = 0;
+
+    try
+    {
+        if ($sql->rowCount() != 0) {
+            $row = $sql->fetch();
+            if ($row[0] != null) {
+                $user_stock = $row[0];
+            }
+        }
+    }
+    catch (PDOException $e)
+    {
+    }
+
+    // käyttäjän käteiset
+    $query = "SELECT funds FROM user_account WHERE id='$user_id'";
+
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $user_funds= 0;
+
+    try
+    {
+        if ($sql->rowCount() != 0) {
+            $row = $sql->fetch();
+            if ($row[0] != null) {
+                $user_funds = $row[0];
+            }
+        }
+    }
+    catch (PDOException $e)
+    {
+    }
+
+    return $user_stock + $user_funds;
+}
+
+
+
+function getUserComments($dbh, $user_id) {
+    $query = "SELECT c.id, c.username, m.comment_text, m.parent_id, m.comment_date
+              FROM user_account AS u, user_account AS c, comment AS m
+              WHERE m.user_id=u.id AND m.commenter_id=c.id AND u.id='$user_id'";
+
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $results = array();
+
+    try {
+        while ($row = $sql->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+            $results[] = array("commenter_id" => $row["id"], "username" => $row["username"], "text" => $row["comment_text"],
+                "reply_to" => $row["parent_id"], "date" => $row["comment_date"]);
+        }
+    } catch (PDOException $e) {
+    }
+
+    return $results;
+}
+
+
+function countUserLikes($dbh, $user_id) {
+    $query = "SELECT COUNT(liked_id) FROM user_like WHERE liked_id='$user_id'";
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $count = 0;
+
+    try {
+        if ($sql->rowCount() > 0) {
+            $row = $sql->fetch();
+
+            $count = $row[0];
+        }
+    } catch (PDOException $e) {
+    }
+
+    return $count;
+}
+
+
+
+
 
 function leaderboardCompare($a, $b) {
     if ($a["assets"] > $b["assets"]) {

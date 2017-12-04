@@ -8,6 +8,7 @@
 
 require_once('config.php');
 require_once('session.php');
+require_once('user_common.php');
 
 $response = array();
 $response["likes"] = 0;
@@ -30,23 +31,3 @@ if (isset($_POST['user_id'])) {
 
 $json = json_encode($response);
 echo $json;
-
-
-function countUserLikes($dbh, $user_id) {
-    $query = "SELECT COUNT(liked_id) FROM user_like WHERE liked_id='$user_id'";
-    $sql = $dbh->prepare($query);
-    $sql->execute();
-
-    $count = 0;
-
-    try {
-        if ($sql->rowCount() > 0) {
-            $row = $sql->fetch();
-
-            $count = $row[0];
-        }
-    } catch (PDOException $e) {
-    }
-
-    return $count;
-}
