@@ -16,7 +16,7 @@ const updateProfile = (() => {
     if (response.status === 200) {
       response.json().then((data) => {
         profiilinimi.innerHTML = data.username;
-        since.innerHTML = data.signup;
+        since.innerHTML = "Rekisteröitynyt: " + data.signup;
         rank.innerHTML = data.rank;
         usertext.innerHTML = data.description;
         arvopaperit.innerHTML = parseFloat(data.worth).toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
