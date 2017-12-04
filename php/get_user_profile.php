@@ -20,6 +20,8 @@ if (isset($_SESSION['logged_in'])) {
     $user_comments = getUserComments($DBH, $user_id);
     $user_info = getUserInfo($DBH, $user_id);
     $user_likes = countUserLikes($DBH, $user_id);
+    $buy_history = getBuyHistory($DBH, $user_id);
+    $sell_history = getSellHistory($DBH, $user_id);
 
     $response["rank"] = $user_rank;
     $response["worth"] = $user_worth;
@@ -29,6 +31,8 @@ if (isset($_SESSION['logged_in'])) {
     $response["signup"] = $user_info["signup_date"];
     $response["likes"] = $user_likes;
     $response["comments"] = $user_comments;
+    $response["buy_history"] = $buy_history;
+    $response["sell_history"] = $sell_history;
 }
 
 $json = json_encode($response);

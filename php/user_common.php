@@ -205,7 +205,7 @@ function getUserWorth($dbh, $user_id) {
 
 
 function getUserComments($dbh, $user_id) {
-    $query = "SELECT c.id, c.username, m.comment_text, m.parent_id, m.comment_date
+    $query = "SELECT c.id, c.username, m.comment_text, m.parent_id, DATE_FORMAT(m.comment_date, '%d/%m/%Y %k:%i:%s') AS 'comment_date'
               FROM user_account AS u, user_account AS c, comment AS m
               WHERE m.user_id=u.id AND m.commenter_id=c.id AND u.id='$user_id'";
 
@@ -243,6 +243,48 @@ function countUserLikes($dbh, $user_id) {
     }
 
     return $count;
+}
+
+
+function getBuyHistory($dbh, $user_id) {
+    $query = "SELECT s.company, amount, DATE_FORMAT(tst, '%d/%m/%Y %k:%i:%s') AS 'tst'
+              FROM stock_event, stock AS s
+              WHERE transaction_type='Buy' AND s.id=stock_id AND user_id='$user_id'
+              ORDER BY tst DESC";
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $buy_list = array();
+
+    try {
+        while ($row = $sql->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+            $buy_list[] = array("company" => $row["company"], "amount" => $row["amount"], "date" => $row["tst"]);
+        }
+    } catch (PDOException $e) {
+    }
+
+    return $buy_list;
+}
+
+
+function getSellHistory($dbh, $user_id) {
+    $query = "SELECT s.company, amount, DATE_FORMAT(tst, '%d/%m/%Y %k:%i:%s') AS 'tst'
+              FROM stock_event, stock AS s
+              WHERE transaction_type='Sell' AND s.id=stock_id AND user_id='$user_id'
+              ORDER BY tst DESC";
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $sell_list = array();
+
+    try {
+        while ($row = $sql->fetch(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT)) {
+            $sell_list[] = array("company" => $row["company"], "amount" => $row["amount"], "date" => $row["tst"]);
+        }
+    } catch (PDOException $e) {
+    }
+
+    return $sell_list;
 }
 
 
