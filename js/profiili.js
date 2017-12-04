@@ -1,6 +1,8 @@
 const  varat= document.querySelector("#varallisuus");
 const arvopaperit = document.querySelector("#arvopaperit");
 
+const rank = document.querySelector("#profLuvutA h2");
+
 const updateProfile = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
 
@@ -24,6 +26,22 @@ const updateProfile = (() => {
       // virhe
       
 
+    }
+  }).catch((error) => {
+    // virhe
+  });
+
+
+  fetch('php/get_user_rank.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        /*alert(data.worth);*/
+        if (data.rank !== null) {
+          rank.innerHTML = data.rank;
+        }
+      });
+    } else {
+      // virhe
     }
   }).catch((error) => {
     // virhe
