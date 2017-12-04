@@ -31,7 +31,7 @@ window.onclick = (event) => {
   if (event.target === modaali) {
     modaali.style.display = "none";
   }
-  if (!event.target.matches('.dropbtn')) {
+  if (!event.target.matches('#dropbtn')) {
     const dropdowns = document.getElementsByClassName("dropdown-content");
     let i;
     for (i = 0; i < dropdowns.length; i++) {
