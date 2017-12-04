@@ -17,16 +17,7 @@ if (isset($_SESSION['logged_in'])) {
         $user_id = $_SESSION['user_id'];
         $liked_id = $_POST['liked_id'];
 
-        $query = "SELECT * FROM user_like WHERE user_id='$user_id' AND liked_id='$liked_id'";
-        $sql = $DBH->prepare($query);
-        $sql->execute();
-
-        try {
-            if ($sql->rowCount() > 0) {
-                $response["liked"] = true;
-            }
-        } catch (PDOException $e) {
-        }
+        $response["liked"] = doesUserLikeUser($user_id, $liked_id);
     }
 }
 

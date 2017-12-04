@@ -288,6 +288,25 @@ function getSellHistory($dbh, $user_id) {
 }
 
 
+function doesUserLikeUser($dbh, $user_id, $liked_id)
+{
+    $query = "SELECT * FROM user_like WHERE user_id='$user_id' AND liked_id='$liked_id'";
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $result = false;
+
+    try {
+        if ($sql->rowCount() > 0) {
+            $result = true;
+        }
+    } catch (PDOException $e) {
+    }
+
+    return $result;
+}
+
+
 
 
 
