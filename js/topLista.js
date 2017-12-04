@@ -42,7 +42,6 @@ const openProf=((id) =>{
 
 const topListaus = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
-
   const settings = {method: 'POST', body: data, cache: 'no-cache', credentials: 'include'};
 
   fetch('php/leaderboard.php', settings).then((response) => {
@@ -82,3 +81,6 @@ const topListaus = (() => {
 
 
 topListaus();
+
+
+window.setTimeout(topListaus, 60000);
