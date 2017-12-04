@@ -23,8 +23,15 @@ const topListaus = (() => {
             const id = item.user_id;
             const name = item.username;
             const assets = item.assets;
+            let image = item.image;
+            let urli;
+            if (image == null){
+              urli = "http://www.placecage.com/c/100/100";
+            }else{
+              urli = "uploads/" + image;
+            }
 
-            html += `<tr><td>d</td><td>ddd</td><td>dddd</td></tr>`;
+            html += `<tr><td><img src="${urli}"></td><td>ddd</td><td>dddd</td></tr>`;
           });
           toplista.innerHTML = html;
         }
