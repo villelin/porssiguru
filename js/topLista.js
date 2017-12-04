@@ -9,6 +9,37 @@ const toplista = document.querySelector("#toplista");
 const data = new FormData();
 data.append('num', '15');
 
+
+const openProf=((id) =>{
+  const modaali = document.getElementById('ProfModal');
+  modaali.style.display = "block";
+
+
+  /*const settings = {method: 'POST', cache: 'no-cache', credentials: 'include'};
+
+
+  fetch('php/get_user_worth.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+
+
+        if (data.worth !== null) {
+          const  netWorth= parseFloat(data.worth);
+          arvopaperit.innerHTML = netWorth.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
+        }
+
+      });
+    } else {
+      // virhe
+
+    }
+  }).catch((error) => {
+    // virhe
+  });*/
+});
+
+
+
 const topListaus = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
 
@@ -18,20 +49,22 @@ const topListaus = (() => {
     if (response.status === 200) {
       response.json().then((data) => {
         if (data != null) {
-        let html="";
-          data.forEach((item) => {
+          let html="";
+          data.forEach((item, index) => {
             const id = item.user_id;
             const name = item.username;
-            const assets = item.assets;
+
+            let  assets= parseFloat(item.assets);
+            assets = assets.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
             let image = item.image;
             let urli;
-            if (image == null){
+            if (image.length == 0){
               urli = "http://www.placecage.com/c/100/100";
             }else{
               urli = "uploads/" + image;
             }
 
-            html += `<tr><td><img src="${urli}"></td><td>ddd</td><td>dddd</td></tr>`;
+            html += `<tr onclick="openProf(${id})"><td><img src="${urli}"></td><td>${index + 1}</td><td>${name}</td><td>${assets} </td></tr>`;
           });
           toplista.innerHTML = html;
         }
