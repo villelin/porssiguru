@@ -148,7 +148,7 @@ function getLeaderboard($dbh, $num)
     }
 
     // käyttäjien käteiset
-    $query = "SELECT id, username, funds FROM user_account";
+    $query = "SELECT id, username, funds, image FROM user_account";
     $sql = $dbh->prepare($query);
     $sql->execute();
 
@@ -159,9 +159,11 @@ function getLeaderboard($dbh, $num)
             $user_id = $row[0];
             $username = $row[1];
             $funds = $row[2];
+            $image = $row[3];
 
             $user_assets["$user_id"]["funds"] = $funds;
             $user_assets["$user_id"]["username"] = $username;
+            $user_assets["$user_id"]["image"] = $image;
         }
     } catch (PDOException $e) {
     }
@@ -180,7 +182,7 @@ function getLeaderboard($dbh, $num)
 
         $assets = $stock + $funds;
 
-        $leaderboard[] = array("user_id" => $user_id, "username" => $item["username"], "assets" => $assets);
+        $leaderboard[] = array("user_id" => $user_id, "username" => $item["username"], "assets" => $assets, "image" => $item["image"]);
     }
 
     // järjestetään assettien mukaan laskevasti
