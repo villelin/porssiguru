@@ -34,6 +34,10 @@ const openProfile = ((id) => {
           const profiilikuva = document.querySelector("#profiilikuva");
           const likeicon = document.querySelector("#likeicon");
 
+          const form_userid = document.querySelector('input[name="user_id"');
+
+          form_userid.setAttribute("value", id);
+
           profiilinimi.innerHTML = data.username;
           profiilirek.innerHTML = "Rekisteröitynyt: " + data.signup;
           rank.innerHTML = data.rank;
@@ -140,3 +144,32 @@ const likeSend = ((evt) => {
 
 document.querySelector("#like_form").addEventListener('submit', likeSend);
   */
+
+
+const kommentoi = ((evt) => {
+  evt.preventDefault();
+
+  const comment_text = document.querySelector("#comment_text");
+  const user_id = document.querySelector('input[name="user_id"]');
+
+  const data = new FormData();
+  data.append('commented_id', user_id.value);
+  data.append('comment', comment_text.value);
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/add_comment.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        // päivitetään profiili
+        openProfile(user_id.value);
+      });
+    } else {
+      // virhe
+    }
+  }).catch((error) => {
+    // virhe
+  });
+});
+
+document.querySelector("#comment_form").addEventListener('submit', kommentoi);
