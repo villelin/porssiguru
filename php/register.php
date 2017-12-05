@@ -35,7 +35,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         // ei ole
 
         // validoi tiedot
-        if (preg_match("/^[A-Za-z_][A-Za-z0-9_]{3,14}$/", $username)) {
+        if (preg_match("/^[A-Za-z0-9_äöå]{3,8}$/", $username)) {
             // käyttäjätunnus ja E-mail OK
             $hashed_password = hash('sha256', $password.SALT);
 
@@ -48,8 +48,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
                 $_SESSION["password"] = $password;
                 $_SESSION["user_id"] = $result["user_id"];
                 $_SESSION["logged_in"] = true;
-
-                insertLogin($DBH, $_SESSION["user_id"]);
             }
 
             // vastaus Ajaxille

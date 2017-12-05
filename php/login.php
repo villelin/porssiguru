@@ -41,8 +41,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             $_SESSION["logged_in"] = true;
             // TODO: lisää sessioparametrejä?
 
-            insertLogin($DBH, $_SESSION["user_id"]);
-
             // vastaus Ajaxille
             $response = new OKResponse("Sisäänkirjautuminen onnistui.");
             break;

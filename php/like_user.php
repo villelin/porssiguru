@@ -21,17 +21,13 @@ if (isset($_SESSION['logged_in'])) {
         // käyttäjien pitää olla valideja
         if ($user_id != null && $liked_id != null) {
             // ei tykätä itsestä
-            if ($liked_id != $user_id) {
-                $result = $DBH->exec("INSERT INTO user_like(user_id, liked_id)VALUES('$user_id', '$liked_id')");
+            $result = $DBH->exec("INSERT INTO user_like(user_id, liked_id)VALUES('$user_id', '$liked_id')");
 
-                // ei muuttuneita rivejä -> joku meni pieleen tai jo tykätty tästä henkilöstä
-                if ($result === 0) {
-                    $response = new FailResponse("Tykkääminen ei onnistu");
-                } else {
-                    $response = new OKResponse("OK");
-                }
+            // ei muuttuneita rivejä -> joku meni pieleen tai jo tykätty tästä henkilöstä
+            if ($result === 0) {
+                $response = new FailResponse("Tykkääminen ei onnistu");
             } else {
-                $response = new FailResponse("Yritettiin tykätä itsestä.");
+                $response = new OKResponse("OK");
             }
         } else {
             $response = new FailResponse("Jotain meni pieleen.");
