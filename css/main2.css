@@ -432,6 +432,11 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     cursor: pointer;
 }
 
+#logo{
+    align-self: end;
+
+}
+
 #lol {
     display: none;
 }
@@ -442,14 +447,16 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 #varat{
     text-align: right;
     margin-right: 10px;
+    font-size: 15px;
+    align-self: end;
 }
 
 #likeicon{
     cursor: pointer;
-
+    color:black;
 }
 #likeicon:hover{
-    color:red;
+    color:#C49F66;
 }
 
 
@@ -458,22 +465,33 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 .sija{
     text-align: center;
     font-size: 30px;
+    max-width: 50px;
+}
+.otsikkosija{
+    text-align: center;
 }
 
 .kuva{
     width:80px;
 }
 .kayttaja{
-
+    font-weight: bold;
 }
 
 .nettovarat{
     text-align: right;
 
+
 }
 
 
-
+.otsikkonettovarat{
+    text-align: right;
+}
+.topOtsikko{
+    font-size: 12px;
+    color: #aaaaaa;
+}
 
 /* LARGE SCREENS*/
 @media (min-width: 600px) {

@@ -30,7 +30,7 @@ const topListaus = (() => {
 
             html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
           });
-          toplista.innerHTML = html;
+          toplista.innerHTML = `<tr class="topOtsikko" ><td class="otsikkosija">SIJA</td><td>KÄYTÄJÄ</td><td></td><td class="otsikkonettovarat">NETTOVARAT</td></tr>` + html;
         }
 
       });
