@@ -10,6 +10,8 @@ const kommentit = document.querySelector("#profKommentit p");
 
 const rank = document.querySelector("#profLuvutA h2");
 
+const vaihtokuva = document.querySelector("#vaihtokuva");
+
 const updateProfile = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
 
@@ -33,6 +35,9 @@ const updateProfile = (() => {
         }
 
         profiilikuva.src = imageurl;
+
+        // kuvan vaihdon kuva
+        vaihtokuva.src = imageurl;
 
         let comments = "";
         data.comments.forEach((item) => {
@@ -58,6 +63,64 @@ const updateProfile = (() => {
   }).catch((error) => {
     // virhe
   });
-})
+});
+
+
+
+let image_chosen = null;
+
+const uploadEvent = ((event) => {
+  event.preventDefault();
+
+  const file_element = document.querySelector('input[name="file_upload"]');
+
+  if (file_element.files && file_element.files[0]) {
+    let width;
+    let height;
+    let fileSize;
+    const reader = new FileReader();
+    reader.addEventListener('load', (event) => {
+      image_chosen = reader.result;
+      const uri = event.target.result;
+      vaihtokuva.src = uri;
+    });
+    reader.addEventListener('error', (event) => {
+      console.error(`Ei pystyny lataa - koodi ${event.target.error.code}`);
+      image_chosen = null;
+    });
+
+    reader.readAsDataURL(file_element.files[0]);
+  }
+});
+
+const imageChange = ((event) => {
+  event.preventDefault();
+
+  if (image_chosen !== null) {
+    const data = new FormData();
+    data.append('image', image_chosen);
+
+    const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+    fetch('php/image_upload.php', settings).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          // päivitä sivu, että uusi profiilikuva päivittyy
+          // Tietokanta on varmaan valmis sekunnin päästä. Ehkä.
+          window.setTimeout(() => { window.location.reload(true); }, 1000);
+        });
+      } else {
+        // virhe
+      }
+    }).catch((error) => {
+      // virhe
+    });
+  } else {
+    // virhe
+  }
+});
 
 updateProfile();
+
+document.querySelector("#upload_form").addEventListener('submit', uploadEvent);
+document.querySelector("#change_image").addEventListener('click', imageChange);

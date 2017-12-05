@@ -70,11 +70,14 @@
         <div class="Pmodal-content">
             <span class="close">&times;</span>
             <div id="kuvaVaihto">
-                <div><img src="http://www.placecage.com/c/100/100" ></div>
-                <div>
-                    <h4>MASA</h4>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda atque consequatur consequuntur dignissimos dolorem et ex excepturi expedita fugiat illum inventore iste labore maiores molestiae nam odio odit, optio quaerat quas quia. A aliquid atque aut autem enim, fugiat, libero magnam minus nemo nesciunt optio porro praesentium qui quos repellendus sapiente sunt veniam voluptates! Accusantium commodi inventore itaque magnam perspiciatis veniam, vitae. A architecto autem cupiditate ex impedit iure perspiciatis quo rerum sapiente, vel! Ab accusamus ad aliquam architecto corporis delectus ducimus esse, et expedita fuga, illum magni natus nemo odio officiis quibusdam repellendus reprehenderit rerum sunt suscipit, vitae voluptate?</p>
-                </div>
+                <div><img id="vaihtokuva" src="http://www.placecage.com/c/100/100" width="100px" height="100px"></div>
+                <form id="upload_form" action="php/image_upload.php" method="post" enctype="multipart/form-data">
+                    Valitse profiilikuva:
+                    <input type="file" name="file_upload" id="file_upload">
+                    <input type="submit" value="Lataa Kuva" name="submit">
+                </form>
+                <button id="change_image">Vaihda profiilikuva</button>
+                <p id="image_response"></p>
             </div>
         </div>
     </div>
