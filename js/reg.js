@@ -53,7 +53,7 @@ const registerSend = ((evt) => {
       cache: 'no-cache',
       credentials: 'include'
     };
-/*alert ('asdasdasd');*/
+
     fetch('php/register.php', settings).then((response) => {
       if (response.status === 200) {
         response.json().then((data) => {
@@ -63,8 +63,10 @@ const registerSend = ((evt) => {
           } else {
             register_form.reset();
             message = data.message;
+            window.location.replace('top.html');
           }
           valid_message += `${message}<br>`;
+          reg_response.innerHTML = valid_message;
         });
       } else {
         valid_message += `Palvelu ei käytössä<br>`;
