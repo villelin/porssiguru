@@ -27,7 +27,7 @@ const registerSend = ((evt) => {
 
   if (!isEmpty(username_element.value) && username_regex.exec(username_element.value) == null) {
     // TODO: merkkaa elementti?
-    valid_message += `Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.<br>`;
+    valid_message += `Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 3-8 merkkiä pitkä.<br>`;
     valid = false;
   }
   if (!isEmpty(password_element.value)) {

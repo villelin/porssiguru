@@ -54,7 +54,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             $response = new OKResponse("Käyttäjätunnuksen luonti onnistui.");
         } else {
             // käyttäjätunnus ei OK
-            $response = new FailResponse("Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 4-15 merkkiä pitkä.");
+            $response = new FailResponse("Käyttäjätunnuksessa sallitaan vain aakkoset, numerot ja alaviivat ja se saa olla 3-8 merkkiä pitkä.");
         }
     }
 } else {
