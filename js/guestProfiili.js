@@ -53,10 +53,11 @@ const openProfile = ((id) => {
 
 
           if (data.is_liked) {
-            likeicon.style.display = "none";
+            likeicon.style.color = "#C49F66";
             likes.innerHTML = `${data.likes}`;
             likes.style.display = "block";
           } else {
+            likeicon.style.color = "black";
             likeicon.style.display = "inline-block";
             likes.innerHTML = "";
             likes.style.display = "none";
