@@ -288,7 +288,7 @@ function updateStockDatabase($dbh, $stock_list)
         else
         {
             // lisätään
-            $update_query = "INSERT INTO stock(symbol, company, price, variety, category)VALUES('$symbol', '$name', '$price', '$change', '$category')";
+            $update_query = "INSERT INTO stock(symbol, company, price, variety)VALUES('$symbol', '$name', '$price', '$change')";
         }
 
         // tiedot kantaan

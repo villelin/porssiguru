@@ -15,7 +15,6 @@ CREATE TABLE stock(
  company VARCHAR(42),
  price DECIMAL(19,4),
  variety DECIMAL(19,2),
- category VARCHAR(42) 
 );
 
 CREATE TABLE stock_event(
