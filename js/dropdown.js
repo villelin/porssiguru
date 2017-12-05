@@ -13,6 +13,9 @@ window.onclick = (event) => {
       if (openDropdown.classList.contains('show')) {
         openDropdown.classList.remove('show');
       }
+      if (event.target === modaali) {
+        modaali.style.display = "none";
+      }
     }
   }
 };

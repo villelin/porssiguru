@@ -5,11 +5,20 @@ const testlike_form = document.querySelector("#testlike_form");
 const testlike_response = document.querySelector("#testlike_response");
 
 const likes_element = document.querySelector("#user_likes");
+const modaali = document.getElementById('ProfModal');
+const span = document.getElementsByClassName('close')[0];
+
+span.onclick = () => {
+  modaali.style.display = "none";
+};
+
 
 
 const openProfile = ((id) => {
 
   modaali.style.display = "block";
+
+
 
   const data = new FormData();
   data.append('user_id', id);

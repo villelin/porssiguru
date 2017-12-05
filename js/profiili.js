@@ -22,6 +22,7 @@ const updateProfile = (() => {
         since.innerHTML = "Rekisteröitynyt: " + data.signup;
         rank.innerHTML = data.rank;
         usertext.innerHTML = data.description;
+
         arvopaperit.innerHTML = parseFloat(data.worth).toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
 
         let imageurl;
