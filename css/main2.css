@@ -172,8 +172,12 @@ topLista > div:nth-child(odd) {
 
 
 }
+#topRivi{
+
+}
+
 #topRivi:nth-child(even) {
-    background-color: yellow;
+
 }
 
 /*form label {
@@ -308,6 +312,10 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 
 
 .show {display:block;}
+
+
+
+
 
 
 /*-----------LOGIN-MODAL------------------------------------*/
@@ -445,6 +453,28 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 
 
+/* TOPLISTA TYYLITYKSET*/
+
+.sija{
+    text-align: center;
+    font-size: 30px;
+}
+
+.kuva{
+    width:80px;
+}
+.kayttaja{
+
+}
+
+.nettovarat{
+    text-align: right;
+
+}
+
+
+
+
 /* LARGE SCREENS*/
 @media (min-width: 600px) {
 
@@ -454,4 +484,18 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     #lol {
         display: block;
     }
+
+    .nettovarat{
+        text-align: right;
+        font-size: 30px;
+    }
+    .kayttaja{
+        font-size: 25px;
+    }
+
+
+
+
+
 }
+

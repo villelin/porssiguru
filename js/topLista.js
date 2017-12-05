@@ -28,7 +28,7 @@ const topListaus = (() => {
               urli = "uploads/" + image;
             }
 
-            html += `<tr onclick="openProfile(${id})"><td><img src="${urli}"></td><td>${index + 1}</td><td>${name}</td><td>${assets} </td></tr>`;
+            html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
           });
           toplista.innerHTML = html;
         }
