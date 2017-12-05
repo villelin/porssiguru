@@ -1,63 +1,9 @@
-
 const toplista = document.querySelector("#toplista");
+
+
 
 const data = new FormData();
 data.append('num', '15');
-
-const openProf=((id) =>{
-  const modaali = document.getElementById('ProfModal');
-  modaali.style.display = "block";
-
-
-  // Get the <span> element that closes the modal
-  const span = document.getElementsByClassName('close')[0];
-
-// When the user clicks on <span> (x), close the modal
-  span.onclick = () => {
-    modaali.style.display = "none";
-  };
-
-// When the user clicks anywhere outside of the modal, close it
-  window.onclick = (event) => {
-    if (event.target === modaali) {
-      modaali.style.display = "none";
-    }
-
-  };
-
-
-  /*const settings = {method: 'POST', cache: 'no-cache', credentials: 'include'};
-
-
-  fetch('php/get_user_worth.php', settings).then((response) => {
-    if (response.status === 200) {
-      response.json().then((data) => {
-
-
-        if (data.worth !== null) {
-          const  netWorth= parseFloat(data.worth);
-          arvopaperit.innerHTML = netWorth.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
-        }
-
-      });
-    } else {
-      // virhe
-
-    }
-  }).catch((error) => {
-    // virhe
-  });*/
-});
-
-
-
-
-
-
-
-
-
-
 
 const topListaus = (() => {
   // *** KÄYTTÄJÄN TIEDOT ***
@@ -82,7 +28,7 @@ const topListaus = (() => {
               urli = "uploads/" + image;
             }
 
-            html += `<tr onclick="openProf(${id})"><td><img src="${urli}"></td><td>${index + 1}</td><td>${name}</td><td>${assets} </td></tr>`;
+            html += `<tr onclick="openProfile(${id})"><td><img src="${urli}"></td><td>${index + 1}</td><td>${name}</td><td>${assets} </td></tr>`;
           });
           toplista.innerHTML = html;
         }

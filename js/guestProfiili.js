@@ -6,8 +6,80 @@ const testlike_response = document.querySelector("#testlike_response");
 const likes_element = document.querySelector("#user_likes");
 
 
+const openProfile = ((id) => {
+  const modaali = document.getElementById('ProfModal');
+  modaali.style.display = "block";
+
+  const data = new FormData();
+  data.append('user_id', id);
+
+  const settings = {
+    method: 'POST',
+    body: data,
+    cache: 'no-cache',
+    credentials: 'include'
+  };
+
+  if (modaali != null) {
+    fetch('php/get_guest_profile.php', settings).then((response) => {
+      if (response.status === 200) {
+        response.json().then((data) => {
+          const profiilinimi = document.querySelector("#profiilinimi");
+          const profiilirek = document.querySelector("#profiilirek");
+          const arvopaperit = document.querySelector("#arvopaperit");
+          const rank = document.querySelector("#rankki");
+          const likes = document.querySelector("#user_likes");
+          const kommentit = document.querySelector("#user_comments");
+          const usertext = document.querySelector("#omateksti");
+          const profiilikuva = document.querySelector("#profiilikuva");
+          const likeicon = document.querySelector("#likeicon");
+
+          profiilinimi.innerHTML = data.username;
+          profiilirek.innerHTML = "Rekisteröitynyt: " + data.signup;
+          rank.innerHTML = data.rank;
+          usertext.innerHTML = data.description;
+          arvopaperit.innerHTML = parseFloat(data.worth).
+              toLocaleString('fi-FI', {style: 'currency', currency: 'EUR'});
+
+
+          if (data.is_liked) {
+            likeicon.style.display = "none";
+            likes.innerHTML = `${data.likes}`;
+            likes.style.display = "block";
+          } else {
+            likeicon.style.display = "inline-block";
+            likes.innerHTML = "";
+            likes.style.display = "none";
+          }
+
+          let imageurl;
+          if (data.image.length == 0) {
+            imageurl = "http://placecage.com/c/100/100";
+          } else {
+            imageurl = "uploads/" + data.image;
+          }
+
+          profiilikuva.src = imageurl;
+
+          let comments = "";
+          data.comments.forEach((item) => {
+            comments +=`<strong>${item.username}:</strong> ${item.text} -  ${item.date}<br>`;
+          });
+          kommentit.innerHTML = comments;
+        });
+      } else {
+        // virhe
+      }
+    }).catch((error) => {
+      // virhe
+    });
+  }
+});
+
+
 
 // *** KÄYTTÄJÄSTÄ TYKKÄYKSET ***
+  /*
 
 const likes_data = new FormData();
 // TODO: tänne käyttäjä jonka tykkäykset halutaan
@@ -67,3 +139,4 @@ const likeSend = ((evt) => {
 
 
 document.querySelector("#like_form").addEventListener('submit', likeSend);
+  */
