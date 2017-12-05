@@ -435,6 +435,16 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     text-align: right;
     margin-right: 10px;
 }
+
+#likeicon{
+    cursor: pointer;
+
+}
+#likeicon:hover{
+    color:red;
+}
+
+
 /* LARGE SCREENS*/
 @media (min-width: 600px) {
 

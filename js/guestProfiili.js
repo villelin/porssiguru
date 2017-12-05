@@ -17,9 +17,7 @@ span.onclick = () => {
 const openProfile = ((id) => {
 
   modaali.style.display = "block";
-
-
-
+  
   const data = new FormData();
   data.append('user_id', id);
 
