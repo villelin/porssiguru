@@ -40,21 +40,33 @@ const updateProfile = (() => {
         vaihtokuva.src = imageurl;
 
         let comments = "";
+        comments += "<table>";
         data.comments.forEach((item) => {
-          comments += `${item.commenter_id}, ${item.username}, ${item.text}, ${item.date}<br>`;
+          comments += "<tr>";
+          comments += `<td><strong>${item.username}</strong></td><td>${item.text}</td><td>${item.date}</td>`;
+          comments += "</tr>";
         });
+        comments += "</table>";
         kommentit.innerHTML = comments;
 
         let buy_history = "";
+        buy_history += "<table>";
         data.buy_history.forEach((item) => {
-          buy_history += `${item.company}, ${item.amount}, ${item.date}<br>`;
+          buy_history += "<tr>";
+          buy_history += `<td>${item.company}</td><td>${item.amount}</td><td>${item.date}</td>`;
+          buy_history += "</tr>";
         });
+        buy_history += "</table>";
         ostohistoria.innerHTML = buy_history;
 
         let sell_history = "";
+        sell_history += "<table>";
         data.sell_history.forEach((item) => {
-          sell_history += `${item.company}, ${item.amount}, ${item.date}<br>`;
+          sell_history += "<tr>";
+          sell_history += `<td>${item.company}</td><td>${item.amount}</td><td>${item.date}</td>`;
+          sell_history += "</tr>";
         });
+        sell_history += "</table>";
         myyntihistoria.innerHTML = sell_history;
       });
     } else {
