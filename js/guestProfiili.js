@@ -1,4 +1,4 @@
-const modaali = document.getElementById('ProfModal');
+//const modaali = document.getElementById('ProfModal');
 
 const like_form = document.querySelector("#like_form");
 const testlike_form = document.querySelector("#testlike_form");
