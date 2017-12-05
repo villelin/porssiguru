@@ -18,7 +18,7 @@ const registerSend = ((evt) => {
   const password_verify_element = document.querySelector('input[name="reg_password_verify"]');
 
 
-  const username_regex = new RegExp("^[A-Za-z_][A-Za-z0-9_]{3,14}$");
+  const username_regex = new RegExp("^[A-Za-z0-9_äöå]{3,8}$");
 
 
   let valid = true;
