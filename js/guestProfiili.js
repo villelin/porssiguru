@@ -1,3 +1,4 @@
+const modaali = document.getElementById('ProfModal');
 
 const like_form = document.querySelector("#like_form");
 const testlike_form = document.querySelector("#testlike_form");
@@ -7,7 +8,7 @@ const likes_element = document.querySelector("#user_likes");
 
 
 const openProfile = ((id) => {
-  const modaali = document.getElementById('ProfModal');
+
   modaali.style.display = "block";
 
   const data = new FormData();
@@ -34,9 +35,7 @@ const openProfile = ((id) => {
           const profiilikuva = document.querySelector("#profiilikuva");
           const likeicon = document.querySelector("#likeicon");
 
-          const form_userid = document.querySelector('input[name="user_id"');
-
-          form_userid.setAttribute("value", id);
+          modaali.setAttribute('modal_user_id', id);
 
           profiilinimi.innerHTML = data.username;
           profiilirek.innerHTML = "Rekisteröitynyt: " + data.signup;
@@ -66,9 +65,13 @@ const openProfile = ((id) => {
           profiilikuva.src = imageurl;
 
           let comments = "";
+          comments += "<table>";
           data.comments.forEach((item) => {
-            comments +=`<strong>${item.username}:</strong> ${item.text} -  ${item.date}<br>`;
+            comments += "<tr>";
+            comments +=`<td><strong>${item.username}:</strong></td><td>${item.text}</td><td>${item.date}</td>`;
+            comments += "</tr>";
           });
+          comments += "</table>";
           kommentit.innerHTML = comments;
         });
       } else {
@@ -146,14 +149,39 @@ document.querySelector("#like_form").addEventListener('submit', likeSend);
   */
 
 
+const tykkaa = ((evt) => {
+  evt.preventDefault();
+
+  const user_id = modaali.getAttribute("modal_user_id");
+
+  const data = new FormData();
+  data.append('liked_id', user_id);
+
+  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
+
+  fetch('php/like_user.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        openProfile(user_id);
+      });
+    } else {
+      like_response.innerHTML = "Palvelu ei käytössä";
+    }
+  }).catch((error) => {
+    like_response.innerHTML = "FEILAS PAHASTI";
+  });
+});
+
+
+
 const kommentoi = ((evt) => {
   evt.preventDefault();
 
   const comment_text = document.querySelector("#comment_text");
-  const user_id = document.querySelector('input[name="user_id"]');
+  const user_id = modaali.getAttribute("modal_user_id");
 
   const data = new FormData();
-  data.append('commented_id', user_id.value);
+  data.append('commented_id', user_id);
   data.append('comment', comment_text.value);
 
   const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
@@ -162,7 +190,8 @@ const kommentoi = ((evt) => {
     if (response.status === 200) {
       response.json().then((data) => {
         // päivitetään profiili
-        openProfile(user_id.value);
+        openProfile(user_id);
+        document.querySelector("#comment_form").reset();
       });
     } else {
       // virhe
@@ -173,3 +202,4 @@ const kommentoi = ((evt) => {
 });
 
 document.querySelector("#comment_form").addEventListener('submit', kommentoi);
+document.querySelector("#likeicon").addEventListener('click', tykkaa);
