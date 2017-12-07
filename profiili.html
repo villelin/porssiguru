@@ -67,17 +67,17 @@
     </div>
     <div id="kuvaModal" class="Pmodal">
         <!-- Modal content -->
-        <div class="Pmodal-content">
+        <div id="kuvaVaihtoSisalto" class="Pmodal-content">
             <span class="close">&times;</span>
             <div id="kuvaVaihto">
-                <div><img id="vaihtokuva" src="http://www.placecage.com/c/100/100" width="100px" height="100px"></div>
+                <div class="keskitys"><img id="vaihtokuva" src="http://www.placecage.com/c/100/100" width="100px" height="100px"></div>
                 <form id="upload_form" action="php/image_upload.php" method="post" enctype="multipart/form-data">
                     Valitse profiilikuva:
                     <input type="file" name="file_upload" id="file_upload">
-                    <input type="submit" value="Lataa Kuva" name="submit">
+                    <input class="variGold" type="submit" value="Lataa Kuva" name="submit">
                 </form>
-                <button id="change_image">Vaihda profiilikuva</button>
-                <p id="image_response"></p>
+                <!--<p id="image_response"></p>-->
+                <button id="change_image">Vaihda Kuva</button>
             </div>
         </div>
     </div>
