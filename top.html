@@ -92,7 +92,7 @@
 <script src="js/dropdown.js"></script>
 <script type="text/javascript">
     topListaus(true);
-    window.timeout(topListaus(true), 60000);
+    window.timeout((()=> { topListaus(true); }), 60000);
 </script>
 
 </body>

@@ -61,8 +61,11 @@
 </header>
 <main>
     <table id="toplista">
-        
+
     </table>
+    <!--<div id="newsbar">
+        <span>NEWS NEWS NEWS NEWS NEWS NEWS NEWS</span>
+    </div>-->
 </main>
 <script src="js/login.js"></script>
 <script src="js/reg.js"></script>
@@ -70,8 +73,9 @@
 <script src="js/topLista.js"></script>
 <script type="text/javascript">
     topListaus(false);
-    window.setTimeout(topListaus(false), 60000);
+    window.setTimeout((() => { topListaus(false); }), 60000);
 </script>
+<!--<script src="js/newsbar.js"></script>-->
 
 
 </body>
