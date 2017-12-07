@@ -442,6 +442,22 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 
 
+#buy_history caption,#sell_history caption{
+    text-align: left;
+}
+
+#profHistoria tr td:nth-child(1){
+    width: 40%;
+}
+#profHistoria tr td:nth-child(2){
+    text-align: left;
+    width: 20%;
+}
+#profHistoria tr td:nth-child(3){
+    text-align: right;
+    width: 40%;
+}
+
 #marginkuvateksti{
     margin-left:15px;
 }
