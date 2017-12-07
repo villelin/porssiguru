@@ -66,11 +66,11 @@ const ostaLista = (() => {
             html += `<tr>`;
             html += `<td id="osake">${company}</td>`;
             html += `<td id="hinta">${price}</td>`;
-            html += `<td id="muutos">${variety}%</td>`;
-            html += `<td>`;
-            html += `<form id="buyform" method="POST" onsubmit="ostaEvent(event, ${stock_id})">`;
-            html += `<input type="number" name="buy_amount" min="${buy_min}" max="${buy_max}" ${form_disable}>`;
-            html += `<input type="submit" value="Osta" ${form_disable}>`;
+            html += `<td  id="muutos">${variety}%</td>`;
+            html += `<td class="moTd" >`;
+            html += `<form id="buyform" style="display: inline" method="POST" onsubmit="ostaEvent(event, ${stock_id})">`;
+            html += `<input class="moInput1" type="number" name="buy_amount" min="${buy_min}" max="${buy_max}" ${form_disable}>`;
+            html += `<input class="moInput2" type="submit" value="Osta" ${form_disable}>`;
             html += `</form>`;
             html += `</td>`;
             html += `</tr>`;
