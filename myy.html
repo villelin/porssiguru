@@ -34,27 +34,32 @@
     </div>
 </header>
 <main>
-    <table>
+    <table id="myylista">
         <tr>
             <th>Osake</th>
             <th>Hinta</th>
             <th>Määrä</th>
-            <th>Arvo</th>
-            <th>kpl</th>
-            <td> </td>
+            <th>Myy kpl</th>
         </tr>
         <tr>
             <td id="osake">Alfreds Futterkiste</td>
             <td id="hinta">6</td>
             <td id="maara">666</td>
-            <td id="arvo">66666</td>
+            <!--
             <td id="kpl"><input type="number" name="sell_amount"  style="width: 100%;"></td>
-            <td id="myy"><button style="cursor: pointer"  >MYY</button></td>
+            <td id="myy"><button style="cursor: pointer"  >MYY</button></td>-->
+            <td id="myy">
+                <form id="sellform" method="POST">
+                    <input type="number" name="sell_amount">
+                    <input type="submit" value="Myy">
+                </form>
+            </td>
         </tr>
     </table>
 </main>
 <script src="js/dropdown.js"></script>
 <script src="js/user.js"></script>
 <script src="js/logout.js"></script>
+<script src="js/myynti.js"></script>
 </body>
 </html>

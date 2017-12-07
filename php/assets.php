@@ -8,6 +8,7 @@
 
 require_once('config.php');
 require_once('session.php');
+require_once('user_common.php');
 
 $response = array();
 
@@ -36,7 +37,15 @@ if (isset($_SESSION["logged_in"])) {
 
     try {
         while ($row = $sql->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-            $response[] = array("user_id" => $row[0], "stock_id" => $row[1], "company" => $row[2], "price" => $row[3], "assets" => $row[4]);
+            $stock_id = $row[1];
+            $company = $row[2];
+            $price = $row[3];
+            $assets = $row[4];
+
+            // lisätään listaan jos summa on suurempi kuin 0
+            if ($assets > 0) {
+                $response["stock"][] = array("stock_id" => $stock_id, "company" => $company, "price" => $price, "assets" => $assets);
+            }
         }
     } catch (PDOException $e) {
         // TODO: palauta jotain?

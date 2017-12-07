@@ -139,6 +139,30 @@ function getUserInfo($dbh, $user_id) {
 }
 
 
+function getUserFunds($dbh, $user_id) {
+    $query = "SELECT funds FROM user_account WHERE id='$user_id'";
+
+    $sql = $dbh->prepare($query);
+    $sql->execute();
+
+    $user_funds = 0;
+
+    try
+    {
+        if ($sql->rowCount() != 0) {
+            $row = $sql->fetch();
+            if ($row[0] != null) {
+                $user_funds = $row[0];
+            }
+        }
+    }
+    catch (PDOException $e)
+    {
+    }
+    return $user_funds;
+}
+
+
 
 function getUserWorth($dbh, $user_id) {
     // käyttäjän osakkeet
