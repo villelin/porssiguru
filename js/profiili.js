@@ -40,10 +40,10 @@ const updateProfile = (() => {
         vaihtokuva.src = imageurl;
 
         let comments = "";
-        comments += "<table>";
+        comments += "<table class='profTable'>";
         data.comments.forEach((item) => {
           comments += "<tr>";
-          comments += `<td><strong>${item.username}</strong></td><td>${item.text}</td><td>${item.date}</td>`;
+          comments += `<td class="profTd"><strong>${item.username}</strong></td><td class="profTd" >${item.text}</td><td class="profTd">${item.date}</td>`;
           comments += "</tr>";
         });
         comments += "</table>";

@@ -417,6 +417,26 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 
 }
 
+
+.profTable tr td:nth-child(1) {
+    width: 20%;
+}
+.profTable tr td:nth-child(2) {
+    width: 60%;
+    padding-right: 0;
+    padding-left: 0;
+}
+.profTable tr td:nth-child(3){
+    width: 20%;
+    text-align: right;
+    font-size: 10px;
+    color: #aaaaaa;
+
+}
+
+
+
+
 #profTop{
     display:grid;
     grid-template-columns: repeat(2, auto auto);
