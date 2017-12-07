@@ -1,4 +1,5 @@
 const ostataulukko = document.querySelector(".ostaTaulukko");
+let search_query = "";
 
 
 const ostaEvent = ((event, stock_id) => {
@@ -41,41 +42,47 @@ const ostaLista = (() => {
 
           let html="";
           data.stock.forEach((item, index) => {
-            const stock_id = item.stock_id;
-            const symbol = item.symbol;
-            const company = item.company;
-            let price = parseFloat(item.price);
-            price = price.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
-            let variety;
-            if (item.variety > 0.0) {
-              variety = `<i class="material-icons">arrow_drop_up</i>+${item.variety}`;
-            } else if (item.variety < 0.0) {
-              variety = `<i class="material-icons">arrow_drop_down</i>${item.variety}`;
-            } else {
-              variety = item.variety;
+            const company_search = item.company.toLowerCase();
+            const search = search_query.toLowerCase();
+
+            if (search == "" || company_search.includes(search)) {
+              const stock_id = item.stock_id;
+              const symbol = item.symbol;
+              const company = item.company;
+              let price = parseFloat(item.price);
+              price = price.toLocaleString('fi-FI',
+                  {style: 'currency', currency: 'EUR'});
+              let variety;
+              if (item.variety > 0.0) {
+                variety = `<i class="material-icons">arrow_drop_up</i>+${item.variety}`;
+              } else if (item.variety < 0.0) {
+                variety = `<i class="material-icons">arrow_drop_down</i>${item.variety}`;
+              } else {
+                variety = item.variety;
+              }
+
+              let buy_min = 1;
+              let buy_max = Math.floor(funds / parseFloat(item.price));
+
+              let form_disable = "";
+              if (buy_max == 0) {
+                form_disable = "disabled";
+              }
+
+              html += `<tr>`;
+              html += `<td id="osake">${company}</td>`;
+              html += `<td id="hinta">${price}</td>`;
+              html += `<td id="muutos">${variety}%</td>`;
+              html += `<td>`;
+              html += `<form id="buyform" method="POST" onsubmit="ostaEvent(event, ${stock_id})">`;
+              html += `<input type="number" name="buy_amount" min="${buy_min}" max="${buy_max}" ${form_disable}>`;
+              html += `<input type="submit" value="Osta" ${form_disable}>`;
+              html += `</form>`;
+              html += `</td>`;
+              html += `</tr>`;
+
+              //html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
             }
-
-            let buy_min = 1;
-            let buy_max = Math.floor(funds / parseFloat(item.price));
-
-            let form_disable = "";
-            if (buy_max == 0) {
-              form_disable = "disabled";
-            }
-
-            html += `<tr>`;
-            html += `<td id="osake">${company}</td>`;
-            html += `<td id="hinta">${price}</td>`;
-            html += `<td  id="muutos">${variety}%</td>`;
-            html += `<td class="moTd" >`;
-            html += `<form id="buyform" style="display: inline" method="POST" onsubmit="ostaEvent(event, ${stock_id})">`;
-            html += `<input class="moInput1" type="number" name="buy_amount" min="${buy_min}" max="${buy_max}" ${form_disable}>`;
-            html += `<input class="moInput2" type="submit" value="Osta" ${form_disable}>`;
-            html += `</form>`;
-            html += `</td>`;
-            html += `</tr>`;
-
-            //html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
           });
           ostataulukko.innerHTML = "<tr><th>Osake</th><th>Hinta/kpl</th><th>Muutos</th><th>Osta kpl</th></tr>" + html;
           //toplista.innerHTML = `<tr class="topOtsikko" ><td class="otsikkosija">SIJA</td><td>KÄYTÄJÄ</td><td></td><td class="otsikkonettovarat">NETTOVARAT</td></tr>` + html;
@@ -90,3 +97,12 @@ const ostaLista = (() => {
 });
 
 ostaLista();
+
+const searchEvent = (() => {
+  const qq = document.querySelector("#searchbox").value;
+  search_query = qq;
+  ostaLista();
+});
+
+
+document.querySelector("#searchbox").addEventListener('input', searchEvent);
