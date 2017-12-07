@@ -58,7 +58,7 @@ const ostaLista = (() => {
               } else if (item.variety < 0.0) {
                 variety = `<i class="material-icons">arrow_drop_down</i>${item.variety}`;
               } else {
-                variety = item.variety;
+                variety = `&#x00b1;${item.variety}`;
               }
 
               let buy_min = 1;
