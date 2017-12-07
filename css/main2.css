@@ -414,7 +414,6 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     text-align: right;
     font-size: 10px;
     color: #aaaaaa;
-
 }
 
 
@@ -431,11 +430,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
     text-align: right;
     font-size: 10px;
     color: #aaaaaa;
-
 }
-
-
-
 
 #profTop{
     display:grid;
