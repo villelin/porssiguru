@@ -27,6 +27,7 @@ if (isset($_SESSION['logged_in'])) {
 
         // mikään ei saa olla null
         if ($commented_id != null && $comment != null) {
+            $comment = htmlspecialchars($comment);
             if (postComment($DBH, $user_id, $commented_id, $reply_to, $comment)) {
                 $response = new OKResponse("OK");
             } else {
