@@ -114,7 +114,7 @@ function parseStockData($url, $market)
                         }
 
                         // täällä pitäis olla 3 DIV nodea...
-                        if ($element->childNodes->length == 3)
+                        if ($element->childNodes->length >= 3)
                         {
                             $company_name = null;
                             $price = null;
