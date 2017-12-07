@@ -5,7 +5,7 @@ const toplista = document.querySelector("#toplista");
 const data = new FormData();
 data.append('num', '15');
 
-const topListaus = (() => {
+const topListaus = ((showProfile) => {
   // *** KÄYTTÄJÄN TIEDOT ***
   const settings = {method: 'POST', body: data, cache: 'no-cache', credentials: 'include'};
 
@@ -28,7 +28,18 @@ const topListaus = (() => {
               urli = "uploads/" + image;
             }
 
-            html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
+            if (showProfile) {
+              html += `<tr id="topRivi" onclick="openProfile(${id})">`;
+            } else {
+              html += `<tr id="topRivi">`;
+            }
+            html += `<td class="sija">${index+1}</td>`;
+            html += `<td class="kuva"><img src="${urli}"></td>`;
+            html += `<td class="kayttaja">${name}</td>`;
+            html += `<td class="nettovarat">${assets}</td>`;
+            html += `</tr>`;
+
+            //html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
           });
           toplista.innerHTML = `<tr class="topOtsikko" ><td class="otsikkosija">SIJA</td><td>KÄYTÄJÄ</td><td></td><td class="otsikkonettovarat">NETTOVARAT</td></tr>` + html;
         }
@@ -36,16 +47,8 @@ const topListaus = (() => {
       });
     } else {
       // virhe
-      current_user.innerHTML = "";
-
     }
   }).catch((error) => {
     // virhe
   });
 });
-
-
-topListaus();
-
-
-window.setTimeout(topListaus, 60000);

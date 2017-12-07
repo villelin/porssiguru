@@ -20,7 +20,7 @@
             <h1></h1>
         </div>
         <div class="dropdown">
-            <button onclick="myFunction()" id="dropbtn" class="material-icons">menu</button>
+            <button onclick="myFunction()" id="dropbtn" class="material-icons">vpn_key</button>
             <div id="myDropdown" class="dropdown-content">
                 <a id="logout">Sign up</a>
                 <a id="login">Login</a>
@@ -60,28 +60,18 @@
     </div>
 </header>
 <main>
-    <table>
-        <tr>
-            <th>GuruLista</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tr>
-            <td><img src="http://www.placecage.com/c/100/100"></td>
-            <td><h2>1.</h2>Maria Anders</td>
-            <td><h3>105000</h3></td>
-        </tr>
-        <tr>
-            <td><img src=" http://www.placecage.com/100/100"></td>
-            <td><h2>2.</h2>Christina Berglund</td>
-            <td>102200</td>
-        </tr>
-
+    <table id="toplista">
+        
     </table>
 </main>
 <script src="js/login.js"></script>
 <script src="js/reg.js"></script>
 <script src="js/droppi.js"></script>
+<script src="js/topLista.js"></script>
+<script type="text/javascript">
+    topListaus(false);
+    window.setTimeout(topListaus(false), 60000);
+</script>
 
 
 </body>
