@@ -26,6 +26,7 @@ $currency_type_list[] = array('symbol' => 'XRP', 'name' => 'Ripples');
 $currency_type_list[] = array('symbol' => 'DASH', 'name' => 'Dash');
 
 
+echo "OK";
 
 $time_start = microtime(true);
 
@@ -39,7 +40,6 @@ $currencies = getCurrencyData($currency_type_list, "Valuutta");
 $time_end = microtime(true);
 
 $total_time = $time_end - $time_start;
-echo "Haku vei aikaa " . $total_time . " sekuntia<br>";
 
 // listat yhteen
 $full_list = array_merge($xhel_list, $fnfi_list, $currencies);
@@ -48,7 +48,8 @@ $full_list = array_merge($xhel_list, $fnfi_list, $currencies);
 updateStockDatabase($DBH, $full_list);
 
 
-
+/*
+echo "Haku vei aikaa " . $total_time . " sekuntia<br>";
 echo "<table>";
 echo "<tr>";
 echo "<th>Symboli</th>";
@@ -68,7 +69,7 @@ foreach ($full_list as $entry)
     echo "</tr>";
 }
 echo "</table>";
-
+*/
 
 
 /*
