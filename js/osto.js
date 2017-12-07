@@ -1,58 +1,92 @@
-const buy_form = document.querySelector("#buy_form");
-const buy_response = document.querySelector("#buy_response");
+const ostataulukko = document.querySelector(".ostaTaulukko");
 
 
-const buySend = ((evt) => {
-  evt.preventDefault();
+const ostaEvent = ((event, stock_id) => {
+  event.preventDefault();
 
-  const stockid_element = document.querySelector('input[name="buy_stock_id"]');
-  const amount_element = document.querySelector('input[name="buy_amount"]');
+  const amount = event.target.querySelector('input[name="buy_amount"]').value;
 
   const data = new FormData();
-  data.append('stock_id', stockid_element.value);
-  data.append('amount', amount_element.value);
+  data.append('stock_id', stock_id);
+  data.append('amount', amount);
   data.append('type', 'buy');
 
   const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
 
   fetch('php/transaction.php', settings).then((response) => {
-
     if (response.status === 200) {
       response.json().then((data) => {
-        let message = "";
-        if (data.error == true) {
-
-
-
-          message += "VIRHE: ";
-        }
-
+        // TODO: virheilmoitukset
+        ostaLista();
+        // päivitä käyttäjän rahan näyttö
         updateUserInfo();
-        message += data.message;
-        buy_response.innerHTML = message;
       });
     } else {
-      buy_response.innerHTML = "Palvelu ei käytössä";
+      // virhe
     }
   }).catch((error) => {
-    buy_response.innerHTML = "FEILAS PAHASTI";
+    // virhe
   });
 });
 
 
+const ostaLista = (() => {
+  const settings = {method: 'POST', credentials: 'include'};
 
+  fetch('php/get_stock_data.php', settings).then((response) => {
+    if (response.status === 200) {
+      response.json().then((data) => {
+        if (data != null) {
+          const funds = parseFloat(data.funds);
 
-  let html="";
-  data.forEach((item) => {
-    const stock = item.stock_id;
+          let html="";
+          data.stock.forEach((item, index) => {
+            const stock_id = item.stock_id;
+            const symbol = item.symbol;
+            const company = item.company;
+            let price = parseFloat(item.price);
+            price = price.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
+            let variety;
+            if (item.variety > 0.0) {
+              variety = `<i class="material-icons">arrow_drop_up</i>+${item.variety}`;
+            } else if (item.variety < 0.0) {
+              variety = `<i class="material-icons">arrow_drop_down</i>${item.variety}`;
+            } else {
+              variety = item.variety;
+            }
 
-    let price = parseFloat(item.price);
-    price = price.toLocaleString('fi-FI', {style: 'currency', currency: 'EUR'});
+            let buy_min = 1;
+            let buy_max = Math.floor(funds / parseFloat(item.price));
 
-    html += `<form method="post" id="buy_form"><tr><td>eka</td><td>${stock}</td><td>${price}</td><td><input type="number" name="buy_amount"></td><td><input type="submit" value="Submit"></td></tr></form>`;
+            let form_disable = "";
+            if (buy_max == 0) {
+              form_disable = "disabled";
+            }
+
+            html += `<tr>`;
+            html += `<td id="osake">${company}</td>`;
+            html += `<td id="hinta">${price}</td>`;
+            html += `<td id="muutos">${variety}%</td>`;
+            html += `<td>`;
+            html += `<form id="buyform" method="POST" onsubmit="ostaEvent(event, ${stock_id})">`;
+            html += `<input type="number" name="buy_amount" min="${buy_min}" max="${buy_max}" ${form_disable}>`;
+            html += `<input type="submit" value="Osta" ${form_disable}>`;
+            html += `</form>`;
+            html += `</td>`;
+            html += `</tr>`;
+
+            //html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
+          });
+          ostataulukko.innerHTML = "<tr><th>Osake</th><th>Hinta/kpl</th><th>Muutos</th><th>Osta kpl</th></tr>" + html;
+          //toplista.innerHTML = `<tr class="topOtsikko" ><td class="otsikkosija">SIJA</td><td>KÄYTÄJÄ</td><td></td><td class="otsikkonettovarat">NETTOVARAT</td></tr>` + html;
+        }
+      });
+    } else {
+      // virhe
+    }
+  }).catch((error) => {
+    // virhe
   });
+});
 
-
-
-
-document.querySelector("#buy_form").addEventListener('submit', buySend);
+ostaLista();

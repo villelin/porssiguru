@@ -7,22 +7,28 @@
  */
 
 require_once('config.php');
+require_once('session.php');
+require_once('user_common.php');
 
 $response = array();
 
-$query = "SELECT symbol, company, category, price, variety FROM stock ORDER BY category, symbol";
-$sql = $DBH->prepare($query);
-$sql->execute();
+if (isset($_SESSION['logged_in'])) {
+    $user_id = $_SESSION['user_id'];
 
-try
-{
-    while ($row = $sql->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
-        $response[] = array("symbol" => $row[0], "company" => $row[1], "price" => $row[3], "variety" => $row[4], "category" => $row[2]);
+    $user_funds = getUserFunds($DBH, $user_id);
+
+    $response["funds"] = $user_funds;
+
+    $query = "SELECT id, symbol, company, category, price, variety FROM stock ORDER BY company";
+    $sql = $DBH->prepare($query);
+    $sql->execute();
+
+    try {
+        while ($row = $sql->fetch(PDO::FETCH_NUM, PDO::FETCH_ORI_NEXT)) {
+            $response["stock"][] = array("stock_id" => $row[0], "company" => $row[2], "price" => $row[4], "variety" => $row[5]);
+        }
+    } catch (PDOException $e) {
     }
-}
-catch (PDOException $e)
-{
-    $response[] = "";
 }
 
 $json = json_encode($response);
