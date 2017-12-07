@@ -115,7 +115,7 @@ function getUserRank($dbh, $user_id) {
 
 
 function getUserInfo($dbh, $user_id) {
-    $query = "SELECT username, image, funds, description, DATE_FORMAT(signup_date, '%d/%m/%Y') AS 'signup'
+    $query = "SELECT username, image, funds, description, DATE_FORMAT(signup_date, '%d.%m.%Y') AS 'signup'
               FROM user_account
               WHERE id='$user_id'";
     $sql = $dbh->prepare($query);
@@ -229,7 +229,7 @@ function getUserWorth($dbh, $user_id) {
 
 
 function getUserComments($dbh, $user_id) {
-    $query = "SELECT c.id, c.username, m.comment_text, m.parent_id, DATE_FORMAT(m.comment_date, '%d/%m/%Y %k:%i:%s') AS 'comment_date'
+    $query = "SELECT c.id, c.username, m.comment_text, m.parent_id, DATE_FORMAT(m.comment_date, '%d.%m.%Y %k:%i:%s') AS 'comment_date'
               FROM user_account AS u, user_account AS c, comment AS m
               WHERE m.user_id=u.id AND m.commenter_id=c.id AND u.id='$user_id'";
 
@@ -271,7 +271,7 @@ function countUserLikes($dbh, $user_id) {
 
 
 function getBuyHistory($dbh, $user_id) {
-    $query = "SELECT s.company, amount, DATE_FORMAT(tst, '%d/%m/%Y %k:%i:%s') AS 'tst'
+    $query = "SELECT s.company, amount, DATE_FORMAT(tst, '%d.%m.%Y %k:%i:%s') AS 'tst'
               FROM stock_event, stock AS s
               WHERE transaction_type='Buy' AND s.id=stock_id AND user_id='$user_id'
               ORDER BY tst DESC";
@@ -292,7 +292,7 @@ function getBuyHistory($dbh, $user_id) {
 
 
 function getSellHistory($dbh, $user_id) {
-    $query = "SELECT s.company, amount, DATE_FORMAT(tst, '%d/%m/%Y %k:%i:%s') AS 'tst'
+    $query = "SELECT s.company, amount, DATE_FORMAT(tst, '%d.%m.%Y %k:%i:%s') AS 'tst'
               FROM stock_event, stock AS s
               WHERE transaction_type='Sell' AND s.id=stock_id AND user_id='$user_id'
               ORDER BY tst DESC";
