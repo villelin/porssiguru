@@ -19,7 +19,6 @@ $currency_type_list[] = array('symbol' => 'XAG', 'name' => 'Hopea (unssi)');
 $currency_type_list[] = array('symbol' => 'BTC', 'name' => 'Bitcoin');
 $currency_type_list[] = array('symbol' => 'BCH', 'name' => 'Bitcoin-Cash');
 $currency_type_list[] = array('symbol' => 'ETH', 'name' => 'Ethereum');
-$currency_type_list[] = array('symbol' => 'DOGE', 'name' => 'Dogecoin');
 $currency_type_list[] = array('symbol' => 'LTC', 'name' => 'Litecoin');
 $currency_type_list[] = array('symbol' => 'XMR', 'name' => 'Monero');
 $currency_type_list[] = array('symbol' => 'XRP', 'name' => 'Ripples');
