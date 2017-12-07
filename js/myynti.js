@@ -55,10 +55,10 @@ const myyLista = (() => {
               html += `<td id="osake">${company}</td>`;
               html += `<td id="hinta">${price}</td>`;
               html += `<td id="maara">${amount}</td>`;
-              html += `<td>`;
+              html += `<td class="moTd">`;
               html += `<form id="sellform" method="POST" onsubmit="myyEvent(event, ${stock_id})">`;
-              html += `<input type="number" name="sell_amount" min="${sell_min}" max="${sell_max}">`;
-              html += `<input type="submit" value="Myy">`;
+              html += `<input class="moInput1" type="number" name="sell_amount" min="${sell_min}" max="${sell_max}">`;
+              html += `<input class="moInput2" type="submit" value="Myy">`;
               html += `</form>`;
               html += `</td>`;
               html += `</tr>`;
