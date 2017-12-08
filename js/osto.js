@@ -76,7 +76,7 @@ const ostaLista = (() => {
               html += `<td class="moTd" >`;
               html += `<form id="buyform" method="POST" onsubmit="ostaEvent(event, ${stock_id})">`;
               html += `<input class="moInput1" type="number" name="buy_amount" min="${buy_min}" max="${buy_max}" ${form_disable}>`;
-              html += `<input class="moInput2" type="submit" value="Osta" ${form_disable}>`;
+              html += `<input class="moInput2" type="submit" value="OSTA" ${form_disable}>`;
               html += `</form>`;
               html += `</td>`;
               html += `</tr>`;
@@ -84,7 +84,7 @@ const ostaLista = (() => {
               //html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
             }
           });
-          ostataulukko.innerHTML = "<tr><th>Osake</th><th>Hinta/kpl</th><th>Muutos</th><th>Osta kpl</th></tr>" + html;
+          ostataulukko.innerHTML = "<tr class='tableOtsikot'><th>OSAKE</th><th>HINTA/kpl</th><th class='muutosOtsake'>MUUTOS</th><th class='oikealle'>OSTA kpl</th></tr>" + html;
           //toplista.innerHTML = `<tr class="topOtsikko" ><td class="otsikkosija">SIJA</td><td>KÄYTÄJÄ</td><td></td><td class="otsikkonettovarat">NETTOVARAT</td></tr>` + html;
         }
       });

@@ -179,28 +179,8 @@ form{
     text-align: left;
 }
 
-#myylista form{
-display: inline;
 
-}
 
-.ostaTaulukko form{
-    display: inline;
-}
-
-.moInput1{
-    width: auto;
-    min-width: 80px;
-
-}
-.moInput2{
-    width: auto;
-
-}
-
-.moTd{
-    text-align: right;
-}
 form input {
 
 }
@@ -504,7 +484,6 @@ form#upload_form{
 }
 
 
-
 .kuvaModal img{
     cursor: pointer;
 }
@@ -513,7 +492,7 @@ form#upload_form{
     align-self: end;
 }
 
-/* PG - PORSSIGURU muutos */
+/* PG - PORSSIGURU otsake muutos */
 #lol {
     display: none;
 }
@@ -567,6 +546,118 @@ form#upload_form{
 }
 
 
+/* OSTO TABLE*/
+
+
+
+.ostaTaulukko tr td:nth-child(1) {
+padding-right: 0;
+
+}
+.ostaTaulukko  tr td:nth-child(2) {
+
+    padding-right: 0;
+    padding-left: 0;
+    text-align: right;
+
+}
+.ostaTaulukko  tr td:nth-child(3){
+
+
+    text-align: right;
+    font-size: 11px;
+    color: #aaaaaa;
+    padding-right: 0;
+}
+
+.ostaTaulukko  tr td:nth-child(4){
+    min-width: 125px;
+    text-align: right;
+    font-size: 11px;
+    color: #aaaaaa;
+
+
+}
+
+#searchbox{
+    min-width: 100px;
+    max-width: 200px;
+}
+td#muutos{
+ display: none;
+}
+.muutosOtsake{
+    display: none;
+}
+
+#myylista form{
+    display: inline;
+
+}
+
+.ostaTaulukko{
+    font-size: 14px;
+}
+.ostaTaulukko form{
+    display: inline;
+
+}
+
+.moInput1{
+    height: 36px;
+    max-width: 50px;
+    padding: 5px;
+    margin-right: 5px;
+
+}
+.moInput2{
+    width: auto;
+    padding: 5px;
+    height: 36px;
+  
+
+}
+
+.moTd{
+
+padding-left: 0px;
+
+}
+
+.tableOtsikot{
+    color: #aaaaaa;
+}
+
+.tableOtsikot  th:nth-child(1) {
+
+
+}
+.tableOtsikot   th:nth-child(2) {
+
+    padding-right: 0;
+    text-align: right;
+
+}
+.tableOtsikot   th:nth-child(3){
+text-align: right;
+    padding-right: 0;
+
+}
+
+.tableOtsikot  th:nth-child(4){
+padding-right: 13px;
+
+}
+
+
+
+
+
+
+
+.oikealle{
+    text-align: right;
+}
 
 .keskitys{
     text-align: center;
@@ -595,6 +686,16 @@ form#upload_form{
         font-size: 25px;
     }
 
+    .ostaTaulukko{
+        font-size: 16px;
+    }
+
+    td#muutos{
+        display: block;
+    }
+    .muutosOtsake{
+        display: block;
+    }
 
 
 

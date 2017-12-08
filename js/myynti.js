@@ -58,14 +58,14 @@ const myyLista = (() => {
               html += `<td class="moTd">`;
               html += `<form id="sellform" method="POST" onsubmit="myyEvent(event, ${stock_id})">`;
               html += `<input class="moInput1" type="number" name="sell_amount" min="${sell_min}" max="${sell_max}">`;
-              html += `<input class="moInput2" type="submit" value="Myy">`;
+              html += `<input class="moInput2" type="submit" value="MYY">`;
               html += `</form>`;
               html += `</td>`;
               html += `</tr>`;
 
               //html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
             });
-            myylista.innerHTML = "<tr><th>Osake</th><th>Hinta/kpl</th><th>Määrä</th><th>Myy kpl</th></tr>" +
+            myylista.innerHTML = "<tr class='tableOtsikot'><th>OSAKE</th><th>HINTA/kpl</th><th>MÄÄRÄ</th><th class='keskitys'>MYY/kpl</th></tr>" +
                 html;
             //toplista.innerHTML = `<tr class="topOtsikko" ><td class="otsikkosija">SIJA</td><td>KÄYTÄJÄ</td><td></td><td class="otsikkonettovarat">NETTOVARAT</td></tr>` + html;
           } else {
