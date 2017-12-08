@@ -184,6 +184,9 @@ display: inline;
 
 }
 
+.ostaTaulukko form{
+    display: inline;
+}
 
 .moInput1{
     width: auto;
