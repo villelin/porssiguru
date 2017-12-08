@@ -52,13 +52,11 @@ const ostaLista = (() => {
               let price = parseFloat(item.price);
               price = price.toLocaleString('fi-FI',
                   {style: 'currency', currency: 'EUR'});
-              let variety;
+              let variety="";
               if (item.variety > 0.0) {
-                variety = `<i class="material-icons">arrow_drop_up</i>+${item.variety}`;
+                variety = `<i class="material-icons">arrow_drop_up</i>+${item.variety}%`;
               } else if (item.variety < 0.0) {
-                variety = `<i class="material-icons">arrow_drop_down</i>${item.variety}`;
-              } else {
-                variety = `&#x00b1;${item.variety}`;
+                variety = `<i class="material-icons">arrow_drop_down</i>${item.variety}%`;
               }
 
               let buy_min = 1;
@@ -72,7 +70,7 @@ const ostaLista = (() => {
               html += `<tr>`;
               html += `<td id="osake">${company}</td>`;
               html += `<td id="hinta">${price}</td>`;
-              html += `<td id="muutos">${variety}%</td>`;
+              html += `<td id="muutos">${variety}</td>`;
               html += `<td class="moTd" >`;
               html += `<form id="buyform" method="POST" onsubmit="ostaEvent(event, ${stock_id})">`;
               html += `<input class="moInput1" type="number" name="buy_amount" min="${buy_min}" max="${buy_max}" ${form_disable}>`;
