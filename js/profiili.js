@@ -51,7 +51,7 @@ const updateProfile = (() => {
 
         let buy_history = "";
         buy_history += "<table>";
-        buy_history += "<caption><strong>Ostot:</strong></caption>"
+        buy_history += "<caption><strong>OSTOT</strong></caption>"
         data.buy_history.forEach((item) => {
           buy_history += "<tr>";
           buy_history += `<td>${item.company}</td><td>${item.amount} kpl</td><td>${item.date}</td>`;
@@ -62,7 +62,7 @@ const updateProfile = (() => {
 
         let sell_history = "";
         sell_history += "<table>";
-        sell_history += "<caption><strong>Myynnit:</strong></caption>"
+        sell_history += "<caption><strong>MYYNNIT</strong></caption>"
         data.sell_history.forEach((item) => {
           sell_history += "<tr>";
           sell_history += `<td>${item.company}</td><td>${item.amount} kpl</td><td>${item.date}</td>`;
