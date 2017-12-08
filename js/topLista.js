@@ -51,4 +51,6 @@ const topListaus = ((showProfile) => {
   }).catch((error) => {
     // virhe
   });
+
+  window.setTimeout((() => { topListaus(showProfile); }), 60000);
 });
