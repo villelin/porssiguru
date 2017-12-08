@@ -12,64 +12,6 @@ require_once('config.php');
 // Alpha Vantage API:n käyttöavain
 define("apikey", "F07XVL4DE169DFQY");
 
-// haettavien valuuttojen lista
-$currency_type_list = array();
-$currency_type_list[] = array('symbol' => 'XAU', 'name' => 'Kulta (unssi)');
-$currency_type_list[] = array('symbol' => 'XAG', 'name' => 'Hopea (unssi)');
-$currency_type_list[] = array('symbol' => 'BTC', 'name' => 'Bitcoin');
-$currency_type_list[] = array('symbol' => 'BCH', 'name' => 'Bitcoin-Cash');
-$currency_type_list[] = array('symbol' => 'ETH', 'name' => 'Ethereum');
-$currency_type_list[] = array('symbol' => 'LTC', 'name' => 'Litecoin');
-$currency_type_list[] = array('symbol' => 'XMR', 'name' => 'Monero');
-$currency_type_list[] = array('symbol' => 'XRP', 'name' => 'Ripples');
-$currency_type_list[] = array('symbol' => 'DASH', 'name' => 'Dash');
-
-
-echo "OK";
-
-$time_start = microtime(true);
-
-// Helsinki lista
-$xhel_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/XHEL", "Helsinki");
-// First North lista
-$fnfi_list = parseStockData("https://beta.kauppalehti.fi/porssi/kurssit/FNFI", "First North");
-// Valuutat
-$currencies = getCurrencyData($currency_type_list, "Valuutta");
-
-$time_end = microtime(true);
-
-$total_time = $time_end - $time_start;
-
-// listat yhteen
-$full_list = array_merge($xhel_list, $fnfi_list, $currencies);
-
-// päivitetään tietokanta
-updateStockDatabase($DBH, $full_list);
-
-
-/*
-echo "Haku vei aikaa " . $total_time . " sekuntia<br>";
-echo "<table>";
-echo "<tr>";
-echo "<th>Symboli</th>";
-echo "<th>Yhtiö</th>";
-echo "<th>Hinta</th>";
-echo "<th>Muutos</th>";
-echo "<th>Kategoria</th>";
-echo "</tr>";
-foreach ($full_list as $entry)
-{
-    echo "<tr>";
-    echo "<td>" . $entry["symbol"] . "</td>";
-    echo "<td>" . $entry["company"] . "</td>";
-    echo "<td>" . $entry["price"] . "</td>";
-    echo "<td>" . $entry["change"] . "</td>";
-    echo "<td>" . $entry["category"] . "</td>";
-    echo "</tr>";
-}
-echo "</table>";
-*/
-
 
 /*
  * Parsii pörssitiedot Kauppalehden pörssisivuilta
