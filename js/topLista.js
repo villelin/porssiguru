@@ -34,7 +34,7 @@ const topListaus = ((showProfile) => {
               html += `<tr id="topRivi">`;
             }
             html += `<td class="sija">${index+1}</td>`;
-            html += `<td class="kuva"><img src="${urli}"></td>`;
+            html += `<td class="kuva"><img style="width: 60px" src="${urli}"></td>`;
             html += `<td class="kayttaja">${name}</td>`;
             html += `<td class="nettovarat">${assets}</td>`;
             html += `</tr>`;

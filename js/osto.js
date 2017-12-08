@@ -82,7 +82,7 @@ const ostaLista = (() => {
               //html += `<tr id="topRivi" onclick="openProfile(${id})"><td class="sija">${index + 1}</td><td class="kuva"><img src="${urli}"></td><td class="kayttaja">${name}</td><td class="nettovarat">${assets} </td></tr>`;
             }
           });
-          ostataulukko.innerHTML = "<tr class='tableOtsikot'><th>OSAKE</th><th>HINTA/kpl</th><th class='muutosOtsake'>MUUTOS</th><th class='oikealle'>OSTA kpl</th></tr>" + html;
+          ostataulukko.innerHTML = "<tr class='tableOtsikot'><th>OSAKE</th><th>HINTA</th><th class='muutosOtsake'>MUUTOS</th><th class='oikealle'></th></tr>" + html;
           //toplista.innerHTML = `<tr class="topOtsikko" ><td class="otsikkosija">SIJA</td><td>KÄYTÄJÄ</td><td></td><td class="otsikkonettovarat">NETTOVARAT</td></tr>` + html;
         }
       });
