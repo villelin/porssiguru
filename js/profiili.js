@@ -7,6 +7,7 @@ const profiilikuva = document.querySelector("#pKuva");
 const ostohistoria = document.querySelector("#buy_history");
 const myyntihistoria = document.querySelector("#sell_history");
 const kommentit = document.querySelector("#profKommentit p");
+const likes_element = document.querySelector("#user_likes");
 
 const rank = document.querySelector("#profLuvutA h2");
 
@@ -24,6 +25,7 @@ const updateProfile = (() => {
         since.innerHTML = "Rekisteröitynyt: " + data.signup;
         rank.innerHTML = data.rank;
         usertext.innerHTML = data.description;
+        likes_element.innerHTML = data.likes;
 
         arvopaperit.innerHTML = parseFloat(data.worth).toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
 
