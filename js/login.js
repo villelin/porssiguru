@@ -21,13 +21,14 @@ const loginSend = ((evt) => {
         let message = "";
         if (data.error == true) {
           message += "VIRHE: ";
+          message += data.message;
+/*          login_form.reset();*/
+          logStatus.innerHTML = message;
+          //current_user.innerHTML = `Käyttäjä: ${data.username}`;
         } else {
           window.location.replace('top.html');
         }
-        message += data.message;
-        login_form.reset();
-        logStatus.innerHTML = message;
-        //current_user.innerHTML = `Käyttäjä: ${data.username}`;
+
       });
     }
   }).catch((error) => {

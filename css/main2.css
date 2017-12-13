@@ -571,6 +571,9 @@ form#upload_form{
 #topRivi table {
     margin: 10px;
 }
+#topRivi{
+    cursor: pointer;
+}
 
 /* OSTO JA MYYNTI TABLE*/
 
