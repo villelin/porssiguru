@@ -137,9 +137,18 @@ li{
     box-shadow: 1px 0px 7px 0px #878787;
     margin: 5px 5px 5px 5px;
 
-
-
 }
+
+#kommenttiNimi{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#kommenttiText{
+    font-size: 14px;
+    font-weight: normal;
+}
+
 #profHistoria{
     display:grid;
     grid-row-gap: 1em;
@@ -147,6 +156,11 @@ li{
     box-shadow: 1px 0px 7px 0px #878787;
     margin: 5px;
 }
+
+#profiilinimi{
+    font-size: 25px;
+}
+
 
 #topLista tr{
     display:grid;
@@ -575,6 +589,15 @@ form#upload_form{
     cursor: pointer;
 }
 
+#topRivi:hover{
+    background: #d7c390;
+
+    outline:0;
+    transition: background-color 0.4s ease-out;
+}
+
+
+
 /* OSTO JA MYYNTI TABLE*/
 
 
@@ -621,6 +644,9 @@ form#upload_form{
 }
 td#muutos{
     display: none;
+    padding-top: 15px;
+    text-align: center;
+
 }
 .muutosOtsake{
     display: none;
@@ -758,6 +784,7 @@ td#muutos{
 
     td#muutos{
         display: block;
+
     }
     .muutosOtsake{
         display: block;

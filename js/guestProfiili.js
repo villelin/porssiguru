@@ -72,7 +72,7 @@ const openProfile = ((id) => {
           comments += "<table class='profTable'>";
           data.comments.forEach((item) => {
             comments += "<tr>";
-            comments +=`<td class="profTd"><strong>${item.username}:</strong></td><td class="profTd">${item.text}</td><td class="profTd">${item.date}</td>`;
+            comments +=`<td class="profTd"><strong id="kommenttiNimi">${item.username}:</strong></td><td id="kommenttiText" class="profTd">${item.text}</td><td class="profTd">${item.date}</td>`;
             comments += "</tr>";
           });
           comments += "</table>";
@@ -86,71 +86,6 @@ const openProfile = ((id) => {
     });
   }
 });
-
-
-
-// *** KÄYTTÄJÄSTÄ TYKKÄYKSET ***
-  /*
-
-const likes_data = new FormData();
-// TODO: tänne käyttäjä jonka tykkäykset halutaan
-//likes_data.append('liked_id', 'USER_ID');
-
-const likes_settings = { method: 'POST', body: likes_data, cache: 'no-cache', credentials: 'include' };
-
-fetch('php/get_user_likes.php', likes_settings).then((response) => {
-  if (response.status === 200) {
-    response.json().then((data) => {
-
-
-      if (data.likes != null) {
-        likes_element.innerHTML = data.likes;
-      }
-
-
-    });
-  } else {
-    // virhe
-    likes_element.innerHTML = "";
-  }
-}).catch((error) => {
-  // virhe
-  likes_element.innerHTML = "";
-});
-
-
-
-const likeSend = ((evt) => {
-  evt.preventDefault();
-
-  const liked_element = document.querySelector('input[name="liked_id"]');
-
-  const data = new FormData();
-  data.append('liked_id', liked_element.value);
-
-  const settings = { method: 'POST', body: data, cache: 'no-cache', credentials: 'include' };
-
-  fetch('php/like_user.php', settings).then((response) => {
-    if (response.status === 200) {
-      response.json().then((data) => {
-        let message = "";
-        if (data.error == true) {
-          message += "VIRHE: ";
-        }
-        message += data.message;
-        like_response.innerHTML = message;
-      });
-    } else {
-      like_response.innerHTML = "Palvelu ei käytössä";
-    }
-  }).catch((error) => {
-    like_response.innerHTML = "FEILAS PAHASTI";
-  });
-});
-
-
-document.querySelector("#like_form").addEventListener('submit', likeSend);
-  */
 
 
 const tykkaa = ((evt) => {

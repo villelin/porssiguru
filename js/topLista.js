@@ -31,7 +31,7 @@ const topListaus = ((showProfile) => {
             if (showProfile) {
               html += `<tr id="topRivi" onclick="openProfile(${id})">`;
             } else {
-              html += `<tr id="topRivi">`;
+              html += `<tr id="topRivi2">`;
             }
             html += `<td class="sija">${index+1}</td>`;
             html += `<td class="kuva"><img style="width: 60px" src="${urli}"></td>`;

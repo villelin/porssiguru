@@ -54,9 +54,9 @@ const ostaLista = (() => {
                   {style: 'currency', currency: 'EUR'});
               let variety="";
               if (item.variety > 0.0) {
-                variety = `<i class="material-icons">arrow_drop_up</i>+${item.variety}%`;
+                variety = `<i class="material-icons" style=" color: green; vertical-align: middle">arrow_drop_up</i>+${item.variety}%`;
               } else if (item.variety < 0.0) {
-                variety = `<i class="material-icons">arrow_drop_down</i>${item.variety}%`;
+                variety = `<i class="material-icons" style="color: red; vertical-align: middle">arrow_drop_down</i>${item.variety}%`;
               }
 
               let buy_min = 1;
