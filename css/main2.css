@@ -140,13 +140,14 @@ li{
 }
 
 #kommenttiNimi{
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
 }
 
 #kommenttiText{
-    font-size: 14px;
+    font-size: 11px;
     font-weight: normal;
+    padding-top: 12px;
 }
 
 #profHistoria{
@@ -401,6 +402,7 @@ tr:nth-child(even) {background-color: #f2f2f2;}
 }
 #user_comments tr td:nth-child(1) {
     width: 20%;
+
 }
 #user_comments tr td:nth-child(2) {
     width: 60%;
@@ -645,7 +647,8 @@ form#upload_form{
 td#muutos{
     display: none;
     padding-top: 15px;
-    text-align: center;
+    padding-left: 15px;
+    text-align: left;
 
 }
 .muutosOtsake{
@@ -714,8 +717,12 @@ td#muutos{
 
 }
 .tableOtsikot   th:nth-child(3){
-    text-align: right;
+
     padding-right: 0;
+    text-align: left;
+    padding-left: 19px;
+}
+
 
 }
 
@@ -788,9 +795,17 @@ td#muutos{
     }
     .muutosOtsake{
         display: block;
+
+    }
+    #kommenttiNimi{
+        font-size: 14px;
+        font-weight: bold;
     }
 
-
+    #kommenttiText{
+        font-size: 14px;
+        font-weight: normal;
+    }
 
 
 }
